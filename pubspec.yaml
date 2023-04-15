@@ -1,0 +1,23 @@
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+#
+# XYZ Utils
+#
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+name: xyz_pod
+description: A Provider/Riverpod layer for easier development
+publish_to: none
+version: 0.1.0
+environment:
+  sdk: '>=3.0.0-218.1.beta <4.0.0'
+  flutter: ">=1.17.0"
+dependencies:
+  xyz_utils:
+    git:
+      url: https://github.com/robmllze/xyz_utils.git
+      ref: master
+  flutter_riverpod: ^2.3.1
+  flutter:
+    sdk: flutter
+dev_dependencies:
+  flutter_lints: ^2.0.0
