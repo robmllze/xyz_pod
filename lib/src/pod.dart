@@ -33,14 +33,14 @@ class Pod<T> extends StateNotifier<DisposableValue> {
   /// Callbacks to execute each time the value changes.
   final callbacks = Callbacks<T, TCallback<T>>();
 
-  final bool pleaseDisposeMe;
+  final bool requestDispose;
 
-  Pod(T initial, {this.pleaseDisposeMe = false}) : super(DisposableValue(initial)) {
+  Pod(T initial, {this.requestDispose = false}) : super(DisposableValue(initial)) {
     this._provider = StateNotifierProvider((_) => this);
   }
 
   Pod.pass(Pod other)
-      : pleaseDisposeMe = other.pleaseDisposeMe,
+      : requestDispose = other.requestDispose,
         super(other.state) {
     this._provider = StateNotifierProvider((_) => this);
   }
@@ -171,6 +171,7 @@ class Pod<T> extends StateNotifier<DisposableValue> {
       this.mounted,
       "Usage error: Pod has been disposed and is no longer usable",
     );
+
     Future<Map<dynamic, dynamic>?>? task() async {
       final stateOld = this.value;
       if (!(equals?.call(stateOld, stateNew) ?? stateOld == stateNew)) {
@@ -229,6 +230,13 @@ class Pod<T> extends StateNotifier<DisposableValue> {
       this.state.dispose(true);
       super.dispose();
       debugLogAlert("Disposed Pod of type ${this._provider.runtimeType}");
+    }
+  }
+
+  /// Calls [dispose] if [requestDispose] is true.
+  Future<void> disposeIfRequested() async {
+    if (this.requestDispose) {
+      await this.dispose();
     }
   }
 }
