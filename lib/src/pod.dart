@@ -162,7 +162,7 @@ class Pod<T> extends StateNotifier<DisposableValue<T>> {
   /// optional equals parameter allows for custom equality checks between the
   /// old and new values.
   Future<Map<dynamic, dynamic>?> set(
-    T stateNew, {
+    RefData<T> stateNew, {
     FEquality<T>? equals,
     bool shouldExecuteCallbacks = true,
     Duration? delay,
@@ -172,12 +172,12 @@ class Pod<T> extends StateNotifier<DisposableValue<T>> {
       "Usage error: Pod has been disposed and is no longer usable",
     );
     Future<Map<dynamic, dynamic>?>? task() async {
-      final stateOld = this.value;
-      if (!(equals?.call(stateOld, stateNew) ?? stateOld == stateNew)) {
-        this.value = stateNew;
+      final stateOld = this.state.value;
+      if (!(equals?.call(stateOld.data, stateNew.data) ?? stateOld.data == stateNew.data)) {
+        this.value = stateNew.data;
         this.state = this.state.pass;
         if (shouldExecuteCallbacks) {
-          return await callbacks.callAll(stateNew);
+          return await callbacks.callAll(stateNew.data);
         }
       }
       return null;
@@ -241,9 +241,10 @@ class Pod<T> extends StateNotifier<DisposableValue<T>> {
     DisposableValue<T> stateOld,
     DisposableValue<T> stateNew,
   ) {
-    if (stateOld.value.ref != stateNew.value.ref) {
-      return false;
+    if (stateOld.value.ref == stateNew.value.ref) {
+      return !identical(stateOld, stateNew);
     }
-    return !identical(stateOld, stateNew);
+
+    return false;
   }
 }
