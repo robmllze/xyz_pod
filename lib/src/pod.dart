@@ -4,7 +4,7 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-// ignore_for_file: unnecessary_this, avoid_renaming_method_parameters
+// ignore_for_file: unnecessary_this
 
 import 'dart:async';
 
@@ -23,7 +23,7 @@ import 'equality.dart';
 /// prevent memory leaks.
 ///
 /// To connect the `Pod` to the UI, use a `Consumer` widget.
-class Pod<T> extends StateNotifier<DisposableValue<T>> {
+class Pod<T> extends StateNotifier<DisposableValue> {
   //
   //
   //
@@ -35,11 +35,11 @@ class Pod<T> extends StateNotifier<DisposableValue<T>> {
 
   final bool pleaseDisposeMe;
 
-  Pod(T initial, {this.pleaseDisposeMe = false}) : super(DisposableValue<T>(RefData<T>(initial))) {
+  Pod(T initial, {this.pleaseDisposeMe = false}) : super(DisposableValue(initial)) {
     this._provider = StateNotifierProvider((_) => this);
   }
 
-  Pod.pass(Pod<T> other)
+  Pod.pass(Pod other)
       : pleaseDisposeMe = other.pleaseDisposeMe,
         super(other.state) {
     this._provider = StateNotifierProvider((_) => this);
@@ -53,11 +53,11 @@ class Pod<T> extends StateNotifier<DisposableValue<T>> {
 
   Type get genericType => T;
 
-  T get value => this.state.value.data;
+  T get value => this.state.value as T;
 
-  set value(T value) => this.state.value = RefData<T>(value);
+  set value(T value) => this.state.value = value;
 
-  T? tryValueAs() => letAs<T>(this.state.value.data);
+  T? tryValueAs() => letAs<T>(this.state.value);
 
   T valueAs() => this.value;
 
@@ -80,7 +80,7 @@ class Pod<T> extends StateNotifier<DisposableValue<T>> {
       this.mounted,
       "Usage error: Pod has been disposed and is no longer usable",
     );
-    return (ref.watch(this._provider) as DisposableValue<T>).value as E;
+    return (ref.watch(this._provider) as DisposableValue).value as E;
   }
 
   /// Executes the given `task` immediately if there's no delay, otherwise waits
@@ -163,7 +163,6 @@ class Pod<T> extends StateNotifier<DisposableValue<T>> {
   /// old and new values.
   Future<Map<dynamic, dynamic>?> set(
     T stateNew, {
-    dynamic ref,
     FEquality<T>? equals,
     bool shouldExecuteCallbacks = true,
     Duration? delay,
@@ -173,13 +172,12 @@ class Pod<T> extends StateNotifier<DisposableValue<T>> {
       "Usage error: Pod has been disposed and is no longer usable",
     );
     Future<Map<dynamic, dynamic>?>? task() async {
-      final stateNew1 = RefData<T>(stateNew, ref);
-      final stateOld = this.state.value;
-      if (!(equals?.call(stateOld.data, stateNew1.data) ?? stateOld.data == stateNew1.data)) {
-        this.state.value = stateNew1;
+      final stateOld = this.value;
+      if (!(equals?.call(stateOld, stateNew) ?? stateOld == stateNew)) {
+        this.value = stateNew;
         this.state = this.state.pass;
         if (shouldExecuteCallbacks) {
-          return await callbacks.callAll(stateNew1.data);
+          return await callbacks.callAll(stateNew);
         }
       }
       return null;
@@ -232,21 +230,5 @@ class Pod<T> extends StateNotifier<DisposableValue<T>> {
       super.dispose();
       debugLogAlert("Disposed Pod of type ${this._provider.runtimeType}");
     }
-  }
-
-  //
-  //
-  //
-
-  @override
-  bool updateShouldNotify(
-    DisposableValue<T> stateOld,
-    DisposableValue<T> stateNew,
-  ) {
-    if (stateOld.value.ref == stateNew.value.ref) {
-      return !identical(stateOld, stateNew);
-    }
-
-    return false;
   }
 }
