@@ -39,7 +39,7 @@ class Pod<T> extends StateNotifier<DisposableValue> {
     this._provider = StateNotifierProvider((_) => this);
   }
 
-  factory Pod.requestDispose(T initial) => Pod(initial, requestDispose: true);
+  factory Pod.temp(T initial) => Pod(initial, requestDispose: true);
 
   Pod.pass(Pod other)
       : requestDispose = other.requestDispose,
@@ -241,4 +241,11 @@ class Pod<T> extends StateNotifier<DisposableValue> {
       await this.dispose();
     }
   }
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+extension PodExtension<T> on T {
+  Pod<T> toPod() => Pod<T>(this);
+  Pod<T> toTempPod() => Pod<T>.temp(this);
 }
