@@ -4,7 +4,7 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-// ignore_for_file: unnecessary_this
+// ignore_for_file: unnecessary_this, avoid_renaming_method_parameters
 
 import 'dart:async';
 
@@ -23,7 +23,7 @@ import 'equality.dart';
 /// prevent memory leaks.
 ///
 /// To connect the `Pod` to the UI, use a `Consumer` widget.
-class Pod<T> extends StateNotifier<DisposableValue> {
+class Pod<T> extends StateNotifier<DisposableValue<T>> {
   //
   //
   //
@@ -35,11 +35,11 @@ class Pod<T> extends StateNotifier<DisposableValue> {
 
   final bool pleaseDisposeMe;
 
-  Pod(T initial, {this.pleaseDisposeMe = false}) : super(DisposableValue(initial)) {
+  Pod(T initial, {this.pleaseDisposeMe = false}) : super(DisposableValue<T>(RefData<T>(initial))) {
     this._provider = StateNotifierProvider((_) => this);
   }
 
-  Pod.pass(Pod other)
+  Pod.pass(Pod<T> other)
       : pleaseDisposeMe = other.pleaseDisposeMe,
         super(other.state) {
     this._provider = StateNotifierProvider((_) => this);
@@ -53,11 +53,11 @@ class Pod<T> extends StateNotifier<DisposableValue> {
 
   Type get genericType => T;
 
-  T get value => this.state.value as T;
+  T get value => this.state.value.data;
 
-  set value(T value) => this.state.value = value;
+  set value(T value) => this.state.value = RefData<T>(value);
 
-  T? tryValueAs() => letAs<T>(this.state.value);
+  T? tryValueAs() => letAs<T>(this.state.value.data);
 
   T valueAs() => this.value;
 
@@ -80,7 +80,7 @@ class Pod<T> extends StateNotifier<DisposableValue> {
       this.mounted,
       "Usage error: Pod has been disposed and is no longer usable",
     );
-    return (ref.watch(this._provider) as DisposableValue).value as E;
+    return (ref.watch(this._provider) as DisposableValue<T>).value as E;
   }
 
   /// Executes the given `task` immediately if there's no delay, otherwise waits
@@ -230,5 +230,20 @@ class Pod<T> extends StateNotifier<DisposableValue> {
       super.dispose();
       debugLogAlert("Disposed Pod of type ${this._provider.runtimeType}");
     }
+  }
+
+  //
+  //
+  //
+
+  @override
+  bool updateShouldNotify(
+    DisposableValue<T> stateOld,
+    DisposableValue<T> stateNew,
+  ) {
+    if (stateOld.value.ref != stateNew.value.ref) {
+      return false;
+    }
+    return !identical(stateOld, stateNew);
   }
 }

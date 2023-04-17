@@ -7,10 +7,13 @@
 name: xyz_pod
 description: A Provider/Riverpod layer for easier development
 publish_to: none
-version: 0.1.0
+version: 0.2.0
 environment:
   sdk: '>=3.0.0-218.1.beta <4.0.0'
   flutter: ">=1.17.0"
+dependency_overrides:
+  xyz_utils:
+    path: ../xyz_utils
 dependencies:
   xyz_utils:
     git:

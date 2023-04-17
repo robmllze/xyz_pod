@@ -134,12 +134,10 @@ packages:
   xyz_utils:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: cf64d054a943336a30f51fb1387645d29f4413a1
-      url: "https://github.com/robmllze/xyz_utils.git"
-    source: git
-    version: "0.4.0"
+      path: "../xyz_utils"
+      relative: true
+    source: path
+    version: "0.5.0"
 sdks:
   dart: ">=3.0.0-218.1.beta <4.0.0"
   flutter: ">=3.0.0"

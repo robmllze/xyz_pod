@@ -105,7 +105,7 @@
     },
     {
       "name": "xyz_utils",
-      "rootUri": "file:///Users/robmllze/.pub-cache/git/xyz_utils-cf64d054a943336a30f51fb1387645d29f4413a1/",
+      "rootUri": "../../xyz_utils",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -116,7 +116,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-04-15T18:31:32.251494Z",
+  "generated": "2023-04-17T20:09:40.947598Z",
   "generator": "pub",
   "generatorVersion": "3.0.0-218.1.beta"
 }
