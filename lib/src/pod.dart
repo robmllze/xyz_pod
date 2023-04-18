@@ -245,7 +245,7 @@ class Pod<T> extends StateNotifier<DisposableValue> {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-extension ToPod<T> on T {
-  Pod<T> toPod() => Pod<T>(this);
-  Pod<T> toTempPod() => Pod<T>.temp(this);
-}
+// extension ToPod<T> on T {
+//   Pod<T> toPod() => Pod<T>(this);
+//   Pod<T> toTempPod() => Pod<T>.temp(this);
+// }
