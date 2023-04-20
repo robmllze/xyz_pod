@@ -6,6 +6,8 @@
 
 // ignore_for_file: unnecessary_this
 
+import 'package:xyz_utils/xyz_utils.dart';
+
 import 'pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -13,12 +15,12 @@ import 'pod.dart';
 /// A collection of Pods associated with a key.
 ///
 /// Provides a way to dispose all the Pods at once and access them via their key.
-class PodMap<K, V, P extends Pod<V>> {
+class PodMap<K, V> {
   //
   //
   //
 
-  final Map<K, P> pods;
+  final Map<K, Pod<V>> pods;
 
   //
   //
@@ -30,7 +32,7 @@ class PodMap<K, V, P extends Pod<V>> {
   //
   //
 
-  P? operator [](K key) => pods[key];
+  Pod<V>? operator [](K key) => pods[key];
 
   //
   //
@@ -52,6 +54,17 @@ class PodMap<K, V, P extends Pod<V>> {
   void dispose() {
     for (final b in this.pods.values) {
       b.dispose();
+    }
+    this.pods.clear();
+  }
+
+  //
+  //
+  //
+
+  void disposeIfRequested() {
+    for (final b in this.pods.values) {
+      b.disposeIfRequested();
     }
     this.pods.clear();
   }
