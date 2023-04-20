@@ -7,7 +7,7 @@
 name: xyz_pod
 description: A Provider/Riverpod layer for easier development
 publish_to: none
-version: 0.3.3
+version: 0.3.4
 environment:
   sdk: '>=3.0.0-218.1.beta <4.0.0'
   flutter: ">=1.17.0"
