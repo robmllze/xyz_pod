@@ -13,12 +13,12 @@ import 'pod.dart';
 /// A collection of Pods associated with a key.
 ///
 /// Provides a way to dispose all the Pods at once and access them via their key.
-class PodMap<K, V extends Pod> {
+class PodMap<K, V, P extends Pod<V>> {
   //
   //
   //
 
-  final Map<K, V> pods;
+  final Map<K, P> pods;
 
   //
   //
@@ -30,7 +30,20 @@ class PodMap<K, V extends Pod> {
   //
   //
 
-  V? operator [](K key) => pods[key];
+  P? operator [](K key) => pods[key];
+
+  //
+  //
+  //
+
+  Map<K, V> value() {
+    return this.pods.map(
+      (final key, final pod) {
+        final value = pod.value;
+        return MapEntry(key, value);
+      },
+    );
+  }
 
   //
   //
