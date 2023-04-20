@@ -39,7 +39,7 @@ class Pod<T> extends StateNotifier<DisposableValue> {
     this._provider = StateNotifierProvider((_) => this);
   }
 
-  factory Pod.temp(T initial) => Pod(initial, requestDispose: true);
+  factory Pod.temp(T initial) => Pod<T>(initial, requestDispose: true);
 
   Pod.pass(Pod other)
       : requestDispose = other.requestDispose,
@@ -77,12 +77,12 @@ class Pod<T> extends StateNotifier<DisposableValue> {
   /// ...
   /// final value = myPod.watch<String>(ref);
   /// ```
-  E watch<E extends T>(WidgetRef ref) {
+  T watch(WidgetRef ref) {
     assert(
       this.mounted,
       "Usage error: Pod has been disposed and is no longer usable",
     );
-    return (ref.watch(this._provider) as DisposableValue).value as E;
+    return (ref.watch(this._provider) as DisposableValue).value as T;
   }
 
   /// Executes the given `task` immediately if there's no delay, otherwise waits
