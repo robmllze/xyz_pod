@@ -9,8 +9,8 @@ description: A Provider/Riverpod layer for easier development
 publish_to: none
 version: 0.3.5
 environment:
-  sdk: '>=3.0.0-218.1.beta <4.0.0'
-  flutter: ">=1.17.0"
+  sdk: '>= 3.0.0 < 4.0.0' 
+  flutter: '>= 3.10.0 < 4.0.0'
 dependency_overrides:
   xyz_utils:
     path: ../xyz_utils
