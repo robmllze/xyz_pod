@@ -33,13 +33,13 @@ class Pod<T> extends StateNotifier<DisposableValue> {
   /// Callbacks to execute each time the value changes.
   final callbacks = Callbacks<T, TCallback<T>>();
 
-  Future<(void Function(), bool)> initCallbacks(
+  Future<void Function()> addCallbackAndCall(
     Future<dynamic> Function(dynamic, T) callback, {
     dynamic callbackKey,
   }) async {
     final remover = callbacks.add(callback);
-    final state = await callbacks.call(callbackKey, this.value);
-    return (remover, state);
+    await callbacks.call(callbackKey, this.value);
+    return remover;
   }
 
   final bool requestDispose;
