@@ -6,6 +6,8 @@
 
 // ignore_for_file: unnecessary_this
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -49,10 +51,25 @@ class PodMap<K, V> {
   //
   //
 
-  void dispose() {
-    for (final b in this.pods.values) {
-      b.dispose();
+  Map<K, V> watch(WidgetRef? ref) {
+    final results = <K, V>{};
+    for (final pod in this.pods.entries) {
+      final k = pod.key;
+      final v = pod.value;
+      final temp = ref == null ? v.value : v.watch(ref);
+      if (temp != null) {
+        results[k] = temp;
+      }
     }
+    return results;
+  }
+
+  //
+  //
+  //
+
+  Future<void> dispose() async {
+    await Future.forEach(this.pods.values, (final e) => e.dispose());
     this.pods.clear();
   }
 
@@ -60,10 +77,8 @@ class PodMap<K, V> {
   //
   //
 
-  void disposeIfRequested() {
-    for (final b in this.pods.values) {
-      b.disposeIfRequested();
-    }
+  Future<void> disposeIfRequested() async {
+    await Future.forEach(this.pods.values, (final e) => e.disposeIfRequested());
     this.pods.clear();
   }
 }
