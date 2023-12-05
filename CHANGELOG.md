@@ -41,7 +41,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Addressed "The package description is too long."
 
-
 ## [0.2.0] - [2023-12-05]
 
 ### Added
