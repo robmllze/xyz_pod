@@ -10,7 +10,6 @@ XYZ Pod is a Flutter package designed to streamline and enhance state management
 - **MultiPodBuilder**: Handles complex state management scenarios involving multiple `Pod` objects.
 - **Pods**: A class that encapsulates up to 26 `Pod` objects of different types for comprehensive state management.
 
-
 ## Preferred Over ValueNotifier
 
 ### Simplified State Management with Complex Types
