@@ -65,7 +65,7 @@ void dispose() {
 
 ## Contributing
 
-Contributions to XYZ Pod are welcome. Please read the contributing guidelines before submitting your pull requests.
+Contributions to XYZ Pod are welcome.
 
 ## License
 
