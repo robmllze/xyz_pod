@@ -21,22 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive documentation and examples for each component.
 - Unit tests for key functionalities.
 
-### Changed
-
-- N/A
-
-### Deprecated
-
-- N/A
-
-### Removed
-
-- N/A
+## [0.1.1] - [2023-12-05]
 
 ### Fixed
 
-- N/A
-
-### Security
-
-- N/A
+- Fixed typos in documentation.

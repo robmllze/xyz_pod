@@ -11,20 +11,27 @@
 
 name: xyz_pod
 description: A Flutter package designed for efficient state management.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/robmllze/xyz_pod
+
+## -----------------------------------------------------------------------------
+
 environment:
+
   sdk: '>=3.0.0 <4.0.0'
   flutter: ">=1.17.0"
+
+## -----------------------------------------------------------------------------
+
 dependencies:
+
   flutter:
     sdk: flutter
+
+## -----------------------------------------------------------------------------
+
 dev_dependencies:
+
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.1
-flutter:
-# dependency_overrides:
-#   meta: ^1.11.0
-#   web: ^0.4.0
-#   material_color_utilities: ^0.8.0
