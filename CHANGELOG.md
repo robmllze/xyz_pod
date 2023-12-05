@@ -32,5 +32,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Addressed "The package description is too short."
-- Addressed "lib/src/multi_pod_builder.dart doesn't match the Dart formatter."
-- Addressed "llib/src/pods.dart doesn't match the Dart formatter."
+- Addressed "lib/src/multi_pod_builder.dart doesn't match the Dart formatter." (no luck!)
+- Addressed "llib/src/pods.dart doesn't match the Dart formatter." (no luck!)
+
+## [0.1.3] - [2023-12-05]
+
+### Fixed
+
+- Addressed "The package description is too long."
