@@ -21,7 +21,7 @@ class MultiPodBuilder<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T
   //
 
   MultiPodBuilder({
-    Key? key,
+    super.key,
     required Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>
         pods,
     required Widget Function(
@@ -29,7 +29,6 @@ class MultiPodBuilder<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T
       Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>,
     ) builder,
   }) : super(
-          key: key,
           pods: pods.toList(),
           builder: (final context, final values) {
             return builder(
