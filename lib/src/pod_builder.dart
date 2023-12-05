@@ -33,9 +33,17 @@ class PodBuilder<T> extends StatefulWidget {
   //
   //
 
+  /// The child widget of this `PodBuilder`.
+  final Widget? child;
+
+  //
+  //
+  //
+
   /// A builder function that is called every time the `Pod`'s value changes.
-  /// It takes the current `BuildContext` and the current value of the `Pod`, and returns a `Widget`.
-  final Widget Function(BuildContext, T?) builder;
+  /// It takes the current `BuildContext`, the child `Widget` and the current
+  /// value of the `Pod`, and returns a `Widget`.
+  final Widget Function(BuildContext, Widget?, T?) builder;
 
   //
   //
@@ -48,10 +56,11 @@ class PodBuilder<T> extends StatefulWidget {
   ///   - `pod`: The `Pod` object this widget listens to.
   ///   - `builder`: A function that builds the UI based on the `Pod`'s value.
   const PodBuilder({
-    Key? key,
+    super.key,
     this.pod,
+    this.child,
     required this.builder,
-  }) : super(key: key);
+  });
 
   //
   //
@@ -94,7 +103,11 @@ class PodBuilderState<T> extends State<PodBuilder<T>> {
   Widget build(BuildContext context) {
     // Use the provided builder function to build the widget
     // using the current value of the Pod.
-    return widget.builder(context, widget.pod?.value);
+    return widget.builder(
+      context,
+      widget.child,
+      widget.pod?.value,
+    );
   }
 
   //

@@ -32,10 +32,17 @@ class PodListBuilder extends StatefulWidget {
   //
   //
 
-  /// A builder function that takes the current `BuildContext` and a list of current
-  /// values of the `pods`. It returns a `Widget` that is rebuilt every time one of
-  /// the `Pod` objects notifies its listeners.
-  final Widget Function(BuildContext, List) builder;
+  /// The child widget of this `PodBuilder`.
+  final Widget? child;
+
+  //
+  //
+  //
+
+  /// A builder function that takes the current `BuildContext`, the child `Widget`
+  /// and a list of current values of the `pods`. It returns a `Widget` that is
+  /// rebuilt every time one of the `Pod` objects notifies its listeners.
+  final Widget Function(BuildContext, Widget?, List) builder;
 
   //
   //
@@ -48,10 +55,11 @@ class PodListBuilder extends StatefulWidget {
   ///   - `pods`: A list of `Pod` objects to listen to.
   ///   - `builder`: A function that builds the UI based on the `pods`.
   const PodListBuilder({
-    Key? key,
-    required this.pods,
+    super.key,
+    this.pods = const [],
+    this.child,
     required this.builder,
-  }) : super(key: key);
+  });
 
   //
   //
@@ -111,7 +119,7 @@ class PodListBuilderState extends State<PodListBuilder> {
   @override
   Widget build(BuildContext context) {
     // Build the widget using the provided builder function.
-    return widget.builder(context, widget.pods.map((e) => e?.value).toList());
+    return widget.builder(context, widget.child, widget.pods.map((e) => e?.value).toList());
   }
 
   //

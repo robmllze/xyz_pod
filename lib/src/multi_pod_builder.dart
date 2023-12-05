@@ -24,15 +24,18 @@ class MultiPodBuilder<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T
     super.key,
     required Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>
         pods,
+    Widget? child,
     required Widget Function(
       BuildContext,
+      Widget?,
       Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>,
     ) builder,
   }) : super(
           pods: pods.toList(),
-          builder: (final context, final values) {
+          builder: (final context, final child, final values) {
             return builder(
               context,
+              child,
               Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>(
                 podA: values.elementAtOrNull(0),
                 podB: values.elementAtOrNull(1),

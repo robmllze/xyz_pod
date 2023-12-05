@@ -50,7 +50,7 @@ class CounterPageState extends State<CounterPage> {
         // Consume the value of the Pod in your UI.
         child: PodBuilder<int>(
           pod: pCounter,
-          builder: (context, value) => Text(
+          builder: (context, child, value) => Text(
             'Counter Value: ${value.toString()}',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
