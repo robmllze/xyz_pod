@@ -29,7 +29,7 @@ To use XYZ Pod in your Flutter project, add the following dependency to your `pu
 
 ```yaml
 dependencies:
-  xyz_pod: ^0.2.0
+  xyz_pod: ^0.3.0
 ```
 
 ## Usage

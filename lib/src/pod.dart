@@ -9,6 +9,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 import 'package:flutter/widgets.dart';
+import 'package:xyz_pod/src/pod_builder.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -20,7 +21,7 @@ import 'package:flutter/widgets.dart';
 /// requires implementation within a widget's lifecycle.
 ///
 /// Generic Type:
-///   - `T`: The type of value the `Pod` holds.
+/// - `T`: The type of value the `Pod` holds.
 class Pod<T> extends ValueNotifier<T> {
   //
   //
@@ -38,8 +39,8 @@ class Pod<T> extends ValueNotifier<T> {
   /// Creates a new `Pod` instance with the given initial value.
   ///
   /// Parameters:
-  ///   - `value`: The initial value of the `Pod`.
-  ///   - `isTemp` (optional): Marks the `Pod` as temporary if set to `true`.
+  /// - `value`: The initial value of the `Pod`.
+  /// - `isTemp` (optional): Marks the `Pod` as temporary if set to `true`.
   ///     Defaults to `false`.
   Pod(super.value, {this.isTemp = false});
 
@@ -52,7 +53,7 @@ class Pod<T> extends ValueNotifier<T> {
   /// requires implementation within a widget's lifecycle.
   ///
   /// Parameters:
-  ///   - `value`: The initial value of the temporary `Pod`.
+  /// - `value`: The initial value of the temporary `Pod`.
   Pod.temp(T value) : this(value, isTemp: true);
 
   //
@@ -65,7 +66,7 @@ class Pod<T> extends ValueNotifier<T> {
   /// ensuring it does not interfere with the UI rendering process.
   ///
   /// Parameters:
-  ///   - `value`: The new value to set for the `Pod`.
+  /// - `value`: The new value to set for the `Pod`.
   Future<void> set(T value) async {
     await Future.delayed(Duration.zero, () {
       this.value = value;
@@ -82,7 +83,7 @@ class Pod<T> extends ValueNotifier<T> {
   /// The update is applied after the current build phase, similar to `set`.
   ///
   /// Parameters:
-  ///   - `updater`: A function that takes the current value and returns the updated value.
+  /// - `updater`: A function that takes the current value and returns the updated value.
   Future<void> update(T Function(T) updater) async {
     await Future.delayed(Duration.zero, () {
       value = updater(value);
@@ -102,6 +103,14 @@ class Pod<T> extends ValueNotifier<T> {
     await Future.delayed(Duration.zero, () {
       notifyListeners();
     });
+  }
+
+  //
+  //
+  //
+
+  Widget build(Widget Function(T? value) builder) {
+    return PodBuilder.value(pod: this, builder: builder);
   }
 
   //

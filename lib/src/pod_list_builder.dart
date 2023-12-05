@@ -51,14 +51,15 @@ class PodListBuilder extends StatefulWidget {
   /// Constructs a `PodListBuilder` widget.
   ///
   /// Parameters:
-  ///   - `key`: An identifier for this widget in the widget tree.
-  ///   - `pods`: A list of `Pod` objects to listen to.
-  ///   - `builder`: A function that builds the UI based on the `pods`.
+  /// - `key`: An identifier for this widget in the widget tree.
+  /// - `pods`: A list of `Pod` objects to listen to.
+  /// - `builder`: A function that builds the UI based on the `pods`.
+  /// - `child` (optional): A child widget to be passed to the builder function.
   const PodListBuilder({
     super.key,
     this.pods = const [],
-    this.child,
     required this.builder,
+    this.child,
   });
 
   //
