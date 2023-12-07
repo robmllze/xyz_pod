@@ -79,3 +79,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed issue with example in `README.md`.
+
+## [0.4.0] - [2023-12-07]
+
+### Added
+
+- Added a `PodListBuilder.values` constructor.
+- Added a `MultiPodBuilder.values` constructor.

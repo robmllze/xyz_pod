@@ -67,4 +67,24 @@ class MultiPodBuilder<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T
             );
           },
         );
+
+  //
+  //
+  //
+
+  factory MultiPodBuilder.values({
+    Key? key,
+    required Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>
+        pods,
+    required Widget Function(
+      BuildContext,
+      Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>,
+    ) builder,
+  }) {
+    return MultiPodBuilder<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X,
+        Y, Z>(
+      pods: pods,
+      builder: (_, __, values) => builder(_, values),
+    );
+  }
 }
