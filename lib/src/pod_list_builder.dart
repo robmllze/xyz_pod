@@ -88,7 +88,7 @@ class PodListBuilder<T extends dynamic> extends StatefulWidget {
   //
 
   @override
-  PodListBuilderState createState() => PodListBuilderState();
+  PodListBuilderState<T> createState() => PodListBuilderState<T>();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

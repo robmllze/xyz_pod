@@ -92,3 +92,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Minor bug fix.
+
+## [0.4.2] - [2023-12-07]
+
+### Fixed
+
+- Minor bug fix.
