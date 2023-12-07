@@ -57,7 +57,7 @@ class PodListBuilder<T extends dynamic> extends StatefulWidget {
   /// - `child` (optional): A child widget to be passed to the builder function.
   const PodListBuilder({
     super.key,
-    this.pods = const <Pod<T>?>[],
+    this.pods = const [],
     required this.builder,
     this.child,
   });
