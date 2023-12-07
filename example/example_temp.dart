@@ -58,9 +58,9 @@ class MyText extends StatefulWidget {
   //
 
   const MyText({
-    Key? key,
+    super.key,
     required this.pText,
-  }) : super(key: key);
+  });
 
   //
   //
@@ -79,9 +79,9 @@ class MyTextState extends State<MyText> {
 
   @override
   Widget build(BuildContext context) {
-    return PodBuilder(
+    return PodBuilder.value(
       pod: widget.pText,
-      builder: (context, child, value) {
+      builder: (value) {
         return Text(
           value ?? '',
           style: Theme.of(context).textTheme.bodyLarge,

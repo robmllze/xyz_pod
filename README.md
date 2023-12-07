@@ -29,7 +29,7 @@ To use XYZ Pod in your Flutter project, add the following dependency to your `pu
 
 ```yaml
 dependencies:
-  xyz_pod: ^0.3.1
+  xyz_pod: ^0.3.2
 ```
 
 ## Usage
@@ -42,9 +42,9 @@ import 'package:xyz_pod/xyz_pod.dart';
 final pCounter = Pod<int>(0);
 
 // 3. Consume the value of the Pod in your UI.
-PodBuilder<String>(
+PodBuilder.value(
   pod: pCounter,
-  builder: (context, value) => Text(value),
+  builder: (counter) => Text("${counter}"),
 )
 
 // 4. Set the value of the Pod anywhere in your code.

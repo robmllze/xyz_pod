@@ -68,3 +68,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Addressed "Found no Flutter in your PATH. Could not determine the current Flutter version."
+
+## [0.3.2] - [2023-12-07]
+
+### Changed
+
+- Updated `temp_example.dart`.
+- Renamed `temp_example.dart` to `example_temp.dart`.
+
+### Fixed
+
+- Fixed issue with example in `README.md`.
