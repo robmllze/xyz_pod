@@ -53,3 +53,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added a `PodBuilder.value` constructor.
 - Added a `Pod.build` method
+
+# [0.3.1] - [2023-12-07]
+
+### Added
+
+- Added `NOTES.md` to the project.
+
+### Changed
+
+- Changed the `README.md` file.
+- Changed Flutter minimum version to `3.0.0`.
+
+### Fixed
+
+- Addressed "Found no Flutter in your PATH. Could not determine the current Flutter version."

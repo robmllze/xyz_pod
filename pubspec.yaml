@@ -11,15 +11,15 @@
 
 name: xyz_pod
 description: XYZ Pod is a Flutter package designed to streamline and enhance state management in Flutter applications. It's based on Flutter's ValueNotifier.
-version: 0.3.0
+version: 0.3.1
 repository: https://github.com/robmllze/xyz_pod
 
 ## -----------------------------------------------------------------------------
 
 environment:
 
-  sdk: '>=3.0.0 <4.0.0'
-  flutter: ">=1.17.0"
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0"
 
 ## -----------------------------------------------------------------------------
 
