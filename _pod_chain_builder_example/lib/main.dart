@@ -33,7 +33,11 @@ void main() {
               },
               child: Text("Increment"),
             ),
-            PodChainBuilder.value(
+            PodChainBuilder(
+              pod: Pod.temp(123),
+              builder: (value) => Text(value.toString()),
+            ),
+            PodChainBuilder(
               pod: pService,
               mapper: (e) => e?.subService.pCounter,
               builder: (value) => Text(value.toString()),

@@ -111,3 +111,19 @@
 ### Changed
 
 - Minor changes
+
+## [0.7.0]
+
+### Changed
+
+- Changed all current default constructors to named constructors (`.def`)
+- Changed all `.value` or `.values` constructors to default constructors.
+- Changed README.md to reflect the changes.
+- Changed the `PodChainBuilder` from a `StatelessWidget` to a `StatefulWidget` so that it can auto-dispose its `Pod` objects if they are marked as temp;
+- All builders can now return `null` to return a `SizedBox.shrink()` widget.
+
+### Removed
+
+- Removed `Pods` class
+- Removed `MultiPodBuilder` class
+- Commented out `ChainPod` class since it is not yet ready for release.

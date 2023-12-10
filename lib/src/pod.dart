@@ -110,7 +110,7 @@ class Pod<T> extends ValueNotifier<T> {
   //
 
   Widget build(Widget Function(T? value) builder) {
-    return PodBuilder.value(pod: this, builder: builder);
+    return PodBuilder(pod: this, builder: builder);
   }
 
   //
@@ -121,7 +121,7 @@ class Pod<T> extends ValueNotifier<T> {
   ///
   /// This is useful for resource management, ensuring that temporary instances
   /// are properly disposed of when no longer needed.
-  void disposeIfTemp() {
+  void disposeIfMarkedAsTemp() {
     if (this.markedAsTemp) {
       dispose();
     }

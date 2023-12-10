@@ -43,7 +43,7 @@ class PodBuilder<T> extends StatefulWidget {
   /// A builder function that is called every time the `Pod`'s value changes.
   /// It takes the current `BuildContext`, the child `Widget` and the current
   /// value of the `Pod`, and returns a `Widget`.
-  final Widget Function(BuildContext, Widget?, T?)? builder;
+  final Widget? Function(BuildContext, Widget?, T?)? builder;
 
   //
   //
@@ -56,7 +56,7 @@ class PodBuilder<T> extends StatefulWidget {
   /// - `pod`: The `Pod` object this widget listens to.
   /// - `builder`: A function that builds the UI based on the `Pod`'s value.
   /// - `child` (optional): A child widget to be passed to the builder function.
-  const PodBuilder({
+  const PodBuilder.def({
     super.key,
     this.pod,
     this.builder,
@@ -73,12 +73,12 @@ class PodBuilder<T> extends StatefulWidget {
   /// - `key`: An identifier for this widget in the widget tree.
   /// - `pod`: The `Pod` object this widget listens to.
   /// - `builder`: A function that builds the UI based on the `Pod`'s value.
-  factory PodBuilder.value({
+  factory PodBuilder({
     Key? key,
     Pod<T>? pod,
-    required Widget Function(T?) builder,
+    required Widget? Function(T?) builder,
   }) {
-    return PodBuilder<T>(
+    return PodBuilder<T>.def(
       pod: pod,
       builder: (_, __, value) => builder(value),
     );
@@ -89,12 +89,12 @@ class PodBuilder<T> extends StatefulWidget {
   //
 
   @override
-  PodBuilderState<T> createState() => PodBuilderState<T>();
+  State<PodBuilder<T>> createState() => _PodBuilderState<T>();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class PodBuilderState<T> extends State<PodBuilder<T>> {
+class _PodBuilderState<T> extends State<PodBuilder<T>> {
   //
   //
   //
@@ -131,7 +131,7 @@ class PodBuilderState<T> extends State<PodBuilder<T>> {
           widget.pod?.value,
         ) ??
         widget.child ??
-        const SizedBox();
+        const SizedBox.shrink();
   }
 
   //
@@ -142,7 +142,7 @@ class PodBuilderState<T> extends State<PodBuilder<T>> {
   void dispose() {
     // Remove the listener from the Pod when the widget is disposed.
     widget.pod?.removeListener(_update);
-    widget.pod?.disposeIfTemp();
+    widget.pod?.disposeIfMarkedAsTemp();
     super.dispose();
   }
 }

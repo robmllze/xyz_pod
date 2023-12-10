@@ -79,7 +79,7 @@ class MyTextState extends State<MyText> {
 
   @override
   Widget build(BuildContext context) {
-    return PodBuilder.value(
+    return PodBuilder(
       pod: widget.pText,
       builder: (value) {
         return Text(
@@ -97,7 +97,7 @@ class MyTextState extends State<MyText> {
   @override
   void dispose() {
     // Dispose pText if it is temporary.
-    widget.pText.disposeIfTemp();
+    widget.pText.disposeIfMarkedAsTemp();
     super.dispose();
   }
 }

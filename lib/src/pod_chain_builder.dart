@@ -14,7 +14,7 @@ import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class PodChainBuilder<A, B> extends StatelessWidget {
+class PodChainBuilder<A, B> extends StatefulWidget {
   //
   //
   //
@@ -28,7 +28,7 @@ class PodChainBuilder<A, B> extends StatelessWidget {
   //
   //
 
-  const PodChainBuilder({
+  const PodChainBuilder.def({
     super.key,
     this.pod,
     this.mapper,
@@ -40,53 +40,81 @@ class PodChainBuilder<A, B> extends StatelessWidget {
   //
   //
 
-  factory PodChainBuilder.value({
+  factory PodChainBuilder({
     Key? key,
     Pod<A>? pod,
-    Widget Function(B?)? builder,
     Pod<B>? Function(A?)? mapper,
+    Widget? Function(B?)? builder,
   }) {
-    return PodChainBuilder<A, B>(
+    return PodChainBuilder<A, B>.def(
       key: key,
       pod: pod,
       mapper: mapper,
       builder: builder != null
-          ? (_, __, value) => builder(letAsOrNull(value))
+          ? (_, __, value) => builder(_letAsOrNull(value))
           : null,
     );
   }
+
+  //
+  //
+  //
+
+  @override
+  State<PodChainBuilder<A, B>> createState() => _PodChainBuilderState<A, B>();
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class _PodChainBuilderState<A, B> extends State<PodChainBuilder<A, B>> {
   //
   //
   //
 
   @override
   Widget build(BuildContext context) {
-    return PodBuilder(
-      pod: pod,
+    return PodBuilder.def(
+      pod: widget.pod,
       builder: (context, widget, value) => _buildChain(context, widget, value),
-      child: child,
+      child: widget.child,
     );
   }
 
   //
   //
   //
+  //
 
-  Widget _buildChain(BuildContext context, Widget? child, dynamic value) {
-    final pod = mapper?.call(value);
+  Widget _buildChain(
+    BuildContext context,
+    Widget? child,
+    dynamic value,
+  ) {
+    final pod = widget.mapper?.call(value);
     if (pod is Pod) {
-      return PodChainBuilder<dynamic, dynamic>(
+      return PodChainBuilder<dynamic, dynamic>.def(
         pod: pod,
-        mapper: (e) => mapper?.call(letAsOrNull(e)),
-        builder: (a, b, c) => builder?.call(a, b, c),
+        mapper: (e) => widget.mapper?.call(_letAsOrNull(e)),
+        builder: (a, b, c) => widget.builder?.call(a, b, c),
         child: child,
       );
     } else {
-      return builder?.call(context, child, value) ?? const SizedBox();
+      return widget.builder?.call(context, child, value) ??
+          const SizedBox.shrink();
     }
+  }
+
+  //
+  //
+  //
+
+  @override
+  void dispose() {
+    widget.pod?.disposeIfMarkedAsTemp();
+    super.dispose();
   }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-T? letAsOrNull<T>(dynamic value) => value is T ? value : null;
+T? _letAsOrNull<T>(dynamic value) => value is T ? value : null;

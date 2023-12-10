@@ -16,6 +16,4 @@ library xyz_pod;
 export 'src/pod.dart';
 export 'src/pod_builder.dart';
 export 'src/pod_list_builder.dart';
-export 'src/pods.dart';
-export 'src/multi_pod_builder.dart';
 export 'src/pod_chain_builder.dart';
