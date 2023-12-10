@@ -50,7 +50,9 @@ class PodChainBuilder<A, B> extends StatelessWidget {
       key: key,
       pod: pod,
       mapper: mapper,
-      builder: builder != null ? (_, __, value) => builder(letAsOrNull(value)) : null,
+      builder: builder != null
+          ? (_, __, value) => builder(letAsOrNull(value))
+          : null,
     );
   }
   //
