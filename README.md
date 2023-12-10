@@ -160,6 +160,7 @@ This package is released under the MIT License.
 ## Contact
 
 **Author:** Robert Mollentze
+
 **Email:** robmllze@gmail.com
 
 For more information, questions, or feedback, feel free to contact me.
