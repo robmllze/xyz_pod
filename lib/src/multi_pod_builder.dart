@@ -14,21 +14,23 @@ import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class MultiPodBuilder<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>
-    extends PodListBuilder {
+class MultiPodBuilder<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S,
+    T, U, V, W, X, Y, Z> extends PodListBuilder {
   //
   //
   //
 
   MultiPodBuilder({
     super.key,
-    required Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>
+    required Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U,
+            V, W, X, Y, Z>
         pods,
     Widget? child,
     required Widget Function(
       BuildContext,
       Widget?,
-      Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>,
+      Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W,
+          X, Y, Z>,
     ) builder,
   }) : super(
           pods: pods.toList(),
@@ -36,7 +38,8 @@ class MultiPodBuilder<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T
             return builder(
               context,
               child,
-              Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>(
+              Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T,
+                  U, V, W, X, Y, Z>(
                 podA: values.elementAtOrNull(0),
                 podB: values.elementAtOrNull(1),
                 podC: values.elementAtOrNull(2),
@@ -74,15 +77,17 @@ class MultiPodBuilder<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T
 
   factory MultiPodBuilder.values({
     Key? key,
-    required Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>
+    required Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U,
+            V, W, X, Y, Z>
         pods,
     required Widget Function(
       BuildContext,
-      Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z>,
+      Pods<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W,
+          X, Y, Z>,
     ) builder,
   }) {
-    return MultiPodBuilder<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X,
-        Y, Z>(
+    return MultiPodBuilder<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R,
+        S, T, U, V, W, X, Y, Z>(
       pods: pods,
       builder: (_, __, values) => builder(_, values),
     );

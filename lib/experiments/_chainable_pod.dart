@@ -37,6 +37,7 @@ class ChainablePod<A, B> extends Pod<A> {
   //
   //
 
+  @override
   Future<void> set(
     A newValue, {
     bool disposeChain = true,
@@ -54,6 +55,7 @@ class ChainablePod<A, B> extends Pod<A> {
   //
   //
 
+  @override
   Future<void> update(
     A Function(A) updater, {
     bool disposeChain = true,
@@ -72,6 +74,7 @@ class ChainablePod<A, B> extends Pod<A> {
   //
   //
 
+  @override
   Future<void> refresh() async {
     await Future.delayed(Duration.zero, notifyListeners);
   }
@@ -104,7 +107,9 @@ class ChainablePod<A, B> extends Pod<A> {
   //
 
   ChainablePod<B, C>? _valueAsPodOrNull<C>() {
-    return currentValue is ChainablePod<B, C> ? currentValue as ChainablePod<B, C> : null;
+    return currentValue is ChainablePod<B, C>
+        ? currentValue as ChainablePod<B, C>
+        : null;
   }
 
   //
