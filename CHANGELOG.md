@@ -98,3 +98,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Minor bug fix.
+
+## [0.5.0] - [2023-12-10]
+
+### Added
+
+- Added the `PodChainBuilder` for building UIs in response to changes in a chain of `Pod` objects.

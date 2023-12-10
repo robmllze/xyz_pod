@@ -8,14 +8,8 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
-
 import 'package:flutter/widgets.dart';
 import 'package:xyz_pod/src/pod_builder.dart';
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-typedef Pod<T> = ChainablePod<dynamic, T>;
-typedef DynamicPod = ChainablePod<dynamic, dynamic>;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -28,7 +22,7 @@ typedef DynamicPod = ChainablePod<dynamic, dynamic>;
 ///
 /// Generic Type:
 /// - `T`: The type of value the `Pod` holds.
-class ChainablePod<A, B> extends ValueNotifier<A> {
+class Pod<T> extends ValueNotifier<T> {
   //
   //
   //
@@ -36,7 +30,7 @@ class ChainablePod<A, B> extends ValueNotifier<A> {
   /// Marks the `Pod` as temporary. Temporary `Pod` instances can be flagged
   /// for automatic disposal when used within a widget that supports this
   /// feature.
-  bool markedAsTemp;
+  bool isTemp;
 
   //
   //
@@ -48,7 +42,7 @@ class ChainablePod<A, B> extends ValueNotifier<A> {
   /// - `value`: The initial value of the `Pod`.
   /// - `isTemp` (optional): Marks the `Pod` as temporary if set to `true`.
   ///     Defaults to `false`.
-  ChainablePod(super.value, {bool temp = false}) : markedAsTemp = temp;
+  Pod(super.value, {this.isTemp = false});
 
   //
   //
@@ -60,7 +54,7 @@ class ChainablePod<A, B> extends ValueNotifier<A> {
   ///
   /// Parameters:
   /// - `value`: The initial value of the temporary `Pod`.
-  ChainablePod.temp(A initialValue) : this(initialValue, temp: true);
+  Pod.temp(T value) : this(value, isTemp: true);
 
   //
   //
@@ -73,15 +67,9 @@ class ChainablePod<A, B> extends ValueNotifier<A> {
   ///
   /// Parameters:
   /// - `value`: The new value to set for the `Pod`.
-  Future<void> set(
-    A newValue, {
-    bool disposeChain = true,
-  }) async {
+  Future<void> set(T value) async {
     await Future.delayed(Duration.zero, () {
-      if (currentValue is Pod && disposeChain) {
-        (currentValue as Pod).dispose();
-      }
-      currentValue = newValue;
+      this.value = value;
       notifyListeners();
     });
   }
@@ -96,16 +84,9 @@ class ChainablePod<A, B> extends ValueNotifier<A> {
   ///
   /// Parameters:
   /// - `updater`: A function that takes the current value and returns the updated value.
-  Future<void> update(
-    A Function(A) updater, {
-    bool disposeChain = true,
-  }) async {
+  Future<void> update(T Function(T) updater) async {
     await Future.delayed(Duration.zero, () {
-      final newValue = updater(currentValue);
-      if (currentValue is Pod && disposeChain) {
-        (currentValue as Pod).dispose();
-      }
-      currentValue = newValue;
+      value = updater(value);
       notifyListeners();
     });
   }
@@ -119,123 +100,30 @@ class ChainablePod<A, B> extends ValueNotifier<A> {
   /// This method is useful when the internal state has changed in a way
   /// that is not captured by a simple value assignment.
   Future<void> refresh() async {
-    await Future.delayed(Duration.zero, notifyListeners);
+    await Future.delayed(Duration.zero, () {
+      notifyListeners();
+    });
   }
 
   //
   //
   //
 
-  Widget build(Widget Function(dynamic) builder) {
-    return PodBuilder<A, B>.value(pod: this, builder: builder);
+  Widget build(Widget Function(T? value) builder) {
+    return PodBuilder.value(pod: this, builder: builder);
   }
 
   //
   //
   //
 
-  /// Returns the last value in the `Pod` chain.
-  @override
-  A get value => this.last.currentValue;
-
-  //
-  //
-  //
-
-  /// Returns the current value of the `Pod`.
-  A get currentValue => super.value;
-
-  //
-  //
-  //
-
-  /// Sets the current value of the `Pod`.
-  @protected
-  set currentValue(A newValue) => super.value = newValue;
-
-  //
-  //
-  //
-
-  ChainablePod<B, C>? _valueAsPodOrNull<C>() {
-    return currentValue is ChainablePod<B, C> ? currentValue as ChainablePod<B, C> : null;
-  }
-
-  //
-  //
-  //
-
-  /// Returns the length of the Pod chain.
-  int get length => (_valueAsPodOrNull()?.length ?? 0) + 1;
-
-  //
-  //
-  //
-
-  /// Returns the Pod chain.
-  List<ChainablePod> get chain {
-    final chain = <ChainablePod>[];
-    void addToChain(dynamic v) {
-      if (v is ChainablePod) {
-        chain.add(v);
-        addToChain(v.currentValue);
-      }
-    }
-
-    addToChain(this);
-    return chain;
-  }
-
-  //
-  //
-  //
-
-  /// Returns the next `Pod` in the chain.
-  ChainablePod<B, C>? nextOrNull<C>() {
-    return _valueAsPodOrNull<C>()
-      ?..removeListener(notifyListeners)
-      ..addListener(notifyListeners);
-  }
-
-  //
-  //
-  //
-
-  /// Returns the last `Pod` in the chain.
-  ChainablePod get last {
-    ChainablePod? temp = nextOrNull();
-    while (true) {
-      final next = temp?.nextOrNull();
-      if (next == null) {
-        return temp ?? this;
-      }
-      temp = next;
-    }
-  }
-
-  //
-  //
-  //
-
-  @override
-  String toString() => this.value.toString();
-
-  //
-  //
-  //
-
-  /// Disposes the `Pod` chain if it is marked as" temp".
-  void disposeIfMarkedAsTemp() {
-    if (this.markedAsTemp) {
+  /// Disposes of the `Pod` if it is marked as temporary.
+  ///
+  /// This is useful for resource management, ensuring that temporary instances
+  /// are properly disposed of when no longer needed.
+  void disposeIfTemp() {
+    if (this.isTemp) {
       dispose();
     }
-  }
-
-  /// Disposes the `Pod` chain.
-  @override
-  void dispose() {
-    print("disposing ${this.runtimeType}");
-    super.dispose();
-    _valueAsPodOrNull()?.dispose();
   }
 }

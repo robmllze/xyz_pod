@@ -20,13 +20,13 @@ import '/xyz_pod.dart';
 ///
 /// This widget is useful for managing and responding to the state changes of multiple
 /// `Pod` objects within the Flutter UI.
-class PodListBuilder extends StatefulWidget {
+class PodListBuilder<T extends dynamic> extends StatefulWidget {
   //
   //
   //
 
   /// A list of `Pod` objects. The widget listens to changes in these objects.
-  final List<ChainablePod?> pods;
+  final List<Pod<T>?> pods;
 
   //
   //
@@ -42,7 +42,7 @@ class PodListBuilder extends StatefulWidget {
   /// A builder function that takes the current `BuildContext`, the child `Widget`
   /// and a list of current values of the `pods`. It returns a `Widget` that is
   /// rebuilt every time one of the `Pod` objects notifies its listeners.
-  final Widget Function(BuildContext, Widget?, List) builder;
+  final Widget Function(BuildContext, Widget?, List<T?>) builder;
 
   //
   //
@@ -74,10 +74,10 @@ class PodListBuilder extends StatefulWidget {
   /// - `builder`: A function that builds the UI based on the `pods`.
   factory PodListBuilder.values({
     Key? key,
-    List<ChainablePod> pods = const [],
-    required Widget Function(List) builder,
+    List<Pod<T>> pods = const [],
+    required Widget Function(List<T?>) builder,
   }) {
-    return PodListBuilder(
+    return PodListBuilder<T>(
       pods: pods,
       builder: (_, __, values) => builder(values),
     );
@@ -88,12 +88,12 @@ class PodListBuilder extends StatefulWidget {
   //
 
   @override
-  PodListBuilderState createState() => PodListBuilderState();
+  PodListBuilderState<T> createState() => PodListBuilderState<T>();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class PodListBuilderState<T extends dynamic> extends State<PodListBuilder> {
+class PodListBuilderState<T extends dynamic> extends State<PodListBuilder<T>> {
   //
   //
   //
@@ -112,7 +112,7 @@ class PodListBuilderState<T extends dynamic> extends State<PodListBuilder> {
   //
 
   @override
-  void didUpdateWidget(PodListBuilder oldWidget) {
+  void didUpdateWidget(PodListBuilder<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     // Remove listeners from old Pods and add listeners to new Pods.
     for (final oldPod in oldWidget.pods) {
@@ -157,7 +157,7 @@ class PodListBuilderState<T extends dynamic> extends State<PodListBuilder> {
     // Remove listeners from all Pods when the widget is disposed.
     for (final pod in widget.pods) {
       pod?.removeListener(_update);
-      pod?.disposeIfMarkedAsTemp();
+      pod?.disposeIfTemp();
     }
     super.dispose();
   }
