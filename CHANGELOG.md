@@ -127,3 +127,9 @@
 - Removed `Pods` class
 - Removed `MultiPodBuilder` class
 - Commented out `ChainPod` class since it is not yet ready for release.
+
+## [0.7.1]
+
+### Fixed
+
+- Fixed typos in `README.md`.

@@ -19,7 +19,7 @@ The Pod class simplifies state management, especially when dealing with complex 
 
 With the PodListBuilder, you can effortlessly manage and respond to changes in multiple state objects within a single widget. This capability is a significant enhancement over the traditional ValueNotifier, which requires manual management of multiple listeners and can quickly become cumbersome in complex applications.
 
-## Chain State Management with PodChainBuilder
+### Chain State Management with PodChainBuilder
 
 The PodChainBuilder is designed to handle a sequence or "chain" of Pod objects. It extends the capabilities of individual Pods by allowing developers to manage and respond to changes across a series of interconnected state objects.
 
@@ -32,7 +32,7 @@ To use XYZ Pod in your Flutter project, add the following dependency to your `pu
 
 ```yaml
 dependencies:
-  xyz_pod: ^0.7.0
+  xyz_pod: ^0.7.1
 ```
 
 ## Using the PodBuilder
