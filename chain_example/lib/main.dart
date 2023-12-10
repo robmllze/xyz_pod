@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xyz_pod/xyz_pod.dart';
 
-final pTest = Pod<Pod<Pod<int>?>?>(null);
+final pTest = Pod(null);
 
 void main() {
   runApp(const MyApp());
@@ -38,14 +38,41 @@ class _MyAppState extends State<MyApp> {
               ),
               TextButton(
                 onPressed: () {
-                  pTest.pChild()?.pChild()?.update((e) => (e as int) + 1);
+                  pTest.last.update((e) => (e as int) + 1);
+                  //pTest.child()?.child()?.update((e) => (e as int) + 1);
+                  //pTest.child()?.update((e) => (e as int) + 1);
                 },
                 child: Text("INCREMENT"),
               ),
-              PodBuilder.value(
-                pod: pTest,
+              TextButton(
+                onPressed: () {
+                  print(pTest.length);
+                },
+                child: Text("FORWARD LENGTH"),
+              ),
+              TextButton(
+                onPressed: () {
+                  pTest.dispose();
+                },
+                child: Text("DISPOSE"),
+              ),
+              TextButton(
+                onPressed: () {
+                  print(pTest.chain.length);
+                },
+                child: Text("FORWARD CHAIN"),
+              ),
+              TextButton(
+                onPressed: () {
+                  pTest.chain.reversed.forEach((e) => e.dispose());
+                },
+                child: Text("DISPOSE CHAIN"),
+              ),
+              PodListBuilder.values(
+                pods: [pTest],
                 builder: (final value) {
-                  return Text("${value?.value?.value}");
+                  print("!!!");
+                  return Text("${value.last}");
                 },
               ),
             ],

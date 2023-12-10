@@ -9,14 +9,15 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'dart:collection';
-
 import 'package:flutter/widgets.dart';
 import 'package:xyz_pod/src/pod_builder.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef Pod<T> = Pod2<T, dynamic>;
+typedef Pod<T> = ChainablePod<dynamic, T>;
+typedef DynamicPod = ChainablePod<dynamic, dynamic>;
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// `Pod<T>` is a state management class that extends `ValueNotifier<T>`.
 /// It offers advanced features for handling state changes in Flutter apps.
@@ -27,11 +28,15 @@ typedef Pod<T> = Pod2<T, dynamic>;
 ///
 /// Generic Type:
 /// - `T`: The type of value the `Pod` holds.
-class Pod2<A, B> extends ValueNotifier<A> {
+class ChainablePod<A, B> extends ValueNotifier<A> {
+  //
+  //
+  //
+
   /// Marks the `Pod` as temporary. Temporary `Pod` instances can be flagged
   /// for automatic disposal when used within a widget that supports this
   /// feature.
-  bool isTemp;
+  bool markedAsTemp;
 
   //
   //
@@ -43,7 +48,7 @@ class Pod2<A, B> extends ValueNotifier<A> {
   /// - `value`: The initial value of the `Pod`.
   /// - `isTemp` (optional): Marks the `Pod` as temporary if set to `true`.
   ///     Defaults to `false`.
-  Pod2(super.value, {this.isTemp = false});
+  ChainablePod(super.value, {bool temp = false}) : markedAsTemp = temp;
 
   //
   //
@@ -55,7 +60,7 @@ class Pod2<A, B> extends ValueNotifier<A> {
   ///
   /// Parameters:
   /// - `value`: The initial value of the temporary `Pod`.
-  Pod2.temp(A value) : this(value, isTemp: true);
+  ChainablePod.temp(A initialValue) : this(initialValue, temp: true);
 
   //
   //
@@ -68,9 +73,15 @@ class Pod2<A, B> extends ValueNotifier<A> {
   ///
   /// Parameters:
   /// - `value`: The new value to set for the `Pod`.
-  Future<void> set(A value) async {
+  Future<void> set(
+    A newValue, {
+    bool disposeChain = true,
+  }) async {
     await Future.delayed(Duration.zero, () {
-      this.value = value;
+      if (currentValue is Pod && disposeChain) {
+        (currentValue as Pod).dispose();
+      }
+      currentValue = newValue;
       notifyListeners();
     });
   }
@@ -85,9 +96,16 @@ class Pod2<A, B> extends ValueNotifier<A> {
   ///
   /// Parameters:
   /// - `updater`: A function that takes the current value and returns the updated value.
-  Future<void> update(A Function(A) updater) async {
+  Future<void> update(
+    A Function(A) updater, {
+    bool disposeChain = true,
+  }) async {
     await Future.delayed(Duration.zero, () {
-      value = updater(value);
+      final newValue = updater(currentValue);
+      if (currentValue is Pod && disposeChain) {
+        (currentValue as Pod).dispose();
+      }
+      currentValue = newValue;
       notifyListeners();
     });
   }
@@ -101,88 +119,123 @@ class Pod2<A, B> extends ValueNotifier<A> {
   /// This method is useful when the internal state has changed in a way
   /// that is not captured by a simple value assignment.
   Future<void> refresh() async {
-    await Future.delayed(Duration.zero, () {
-      notifyListeners();
-    });
+    await Future.delayed(Duration.zero, notifyListeners);
   }
 
   //
   //
   //
 
-  Widget build(Widget Function(A? value) builder) {
-    return PodBuilder.value(pod: this, builder: builder);
+  Widget build(Widget Function(dynamic) builder) {
+    return PodBuilder<A, B>.value(pod: this, builder: builder);
   }
 
   //
   //
   //
 
-  /// Disposes of the `Pod` if it is marked as temporary.
-  ///
-  /// This is useful for resource management, ensuring that temporary instances
-  /// are properly disposed of when no longer needed.
-  void disposeIfTemp() {
-    if (this.isTemp) {
+  /// Returns the last value in the `Pod` chain.
+  @override
+  A get value => this.last.currentValue;
+
+  //
+  //
+  //
+
+  /// Returns the current value of the `Pod`.
+  A get currentValue => super.value;
+
+  //
+  //
+  //
+
+  /// Sets the current value of the `Pod`.
+  @protected
+  set currentValue(A newValue) => super.value = newValue;
+
+  //
+  //
+  //
+
+  ChainablePod<B, C>? _valueAsPodOrNull<C>() {
+    return currentValue is ChainablePod<B, C> ? currentValue as ChainablePod<B, C> : null;
+  }
+
+  //
+  //
+  //
+
+  /// Returns the length of the Pod chain.
+  int get length => (_valueAsPodOrNull()?.length ?? 0) + 1;
+
+  //
+  //
+  //
+
+  /// Returns the Pod chain.
+  List<ChainablePod> get chain {
+    final chain = <ChainablePod>[];
+    void addToChain(dynamic v) {
+      if (v is ChainablePod) {
+        chain.add(v);
+        addToChain(v.currentValue);
+      }
+    }
+
+    addToChain(this);
+    return chain;
+  }
+
+  //
+  //
+  //
+
+  /// Returns the next `Pod` in the chain.
+  ChainablePod<B, C>? nextOrNull<C>() {
+    return _valueAsPodOrNull<C>()
+      ?..removeListener(notifyListeners)
+      ..addListener(notifyListeners);
+  }
+
+  //
+  //
+  //
+
+  /// Returns the last `Pod` in the chain.
+  ChainablePod get last {
+    ChainablePod? temp = nextOrNull();
+    while (true) {
+      final next = temp?.nextOrNull();
+      if (next == null) {
+        return temp ?? this;
+      }
+      temp = next;
+    }
+  }
+
+  //
+  //
+  //
+
+  @override
+  String toString() => this.value.toString();
+
+  //
+  //
+  //
+
+  /// Disposes the `Pod` chain if it is marked as" temp".
+  void disposeIfMarkedAsTemp() {
+    if (this.markedAsTemp) {
       dispose();
     }
   }
 
-  //
-  //
-  //
-
+  /// Disposes the `Pod` chain.
   @override
   void dispose() {
-    final children = Queue<Pod2>();
-
-    void addToChildren(A value) {
-      if (value is Pod2) {
-        children.addFirst(value);
-        addToChildren(value.value);
-      }
-    }
-
-    addToChildren(value);
-
-    for (final child in children) {
-      child.dispose();
-    }
-
-    Text("Disposing");
+    print("disposing ${this.runtimeType}");
     super.dispose();
+    _valueAsPodOrNull()?.dispose();
   }
-
-  //
-  //
-  //
-
-  Pod2<B, C>? pChild<C>() {
-    if (value is Pod2<B, C>) {
-      final pod = value as Pod2<B, C>;
-      pod.removeListener(notifyListeners);
-      pod.addListener(notifyListeners);
-      return value as Pod2<B, C>;
-    }
-    return null;
-  }
-
-  //
-  //
-  //
-
-  @override
-  operator ==(Object other) {
-    if (other is Pod2) {
-      return other.value == value;
-    }
-    return false;
-  }
-
-  //
-  //
-  //
-
-  @override
-  int get hashCode => value.hashCode;
 }
