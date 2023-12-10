@@ -1,6 +1,6 @@
 # XYZ Pod
 
-XYZ Pod (xyz_pod) is a Flutter package designed to streamline and enhance state management in Flutter applications. It offers a suite of tools including `Pod`, `PodBuilder`, `PodListBuilder`, `PodChainBuilder`, and `Pods` classes, each tailored to handle different aspects of state management with ease and flexibility.
+XYZ Pod (xyz_pod) is a Flutter package designed to streamline and enhance state management in Flutter applications. It offers a suite of tools including `Pod`, `PodBuilder`, `PodListBuilder`, `PodChainBuilder`, classes, each tailored to handle different aspects of state management with ease and flexibility.
 
 ## Features
 
