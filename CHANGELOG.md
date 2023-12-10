@@ -1,15 +1,10 @@
 # Changelog
 
-All notable changes to the XYZ Pod project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [Unreleased]
 
 - Initial planning and design of the project.
 
-## [0.1.0] - [2023-12-05]
+## [0.1.0]
 
 ### Added
 
@@ -21,13 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive documentation and examples for each component.
 - Unit tests for key functionalities.
 
-## [0.1.1] - [2023-12-05]
+## [0.1.1]
 
 ### Fixed
 
 - Fixed typos in documentation.
 
-## [0.1.2] - [2023-12-05]
+## [0.1.2]
 
 ### Fixed
 
@@ -35,26 +30,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Addressed "lib/src/multi_pod_builder.dart doesn't match the Dart formatter." (no luck!)
 - Addressed "llib/src/pods.dart doesn't match the Dart formatter." (no luck!)
 
-## [0.1.3] - [2023-12-05]
+## [0.1.3]
 
 ### Fixed
 
 - Addressed "The package description is too long."
 
-## [0.2.0] - [2023-12-05]
+## [0.2.0]
 
 ### Added
 
 - Added a child parameter to the Pods.
 
-## [0.3.0] - [2023-12-05]
+## [0.3.0]
 
 ### Added
 
 - Added a `PodBuilder.value` constructor.
 - Added a `Pod.build` method
 
-# [0.3.1] - [2023-12-07]
+## [0.3.1]
 
 ### Added
 
@@ -69,7 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Addressed "Found no Flutter in your PATH. Could not determine the current Flutter version."
 
-## [0.3.2] - [2023-12-07]
+## [0.3.2]
 
 ### Changed
 
@@ -80,26 +75,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed issue with example in `README.md`.
 
-## [0.4.0] - [2023-12-07]
+## [0.4.0]
 
 ### Added
 
 - Added a `PodListBuilder.values` constructor.
 - Added a `MultiPodBuilder.values` constructor.
 
-## [0.4.1] - [2023-12-07]
+## [0.4.1]
 
 ### Fixed
 
 - Minor bug fix.
 
-## [0.4.2] - [2023-12-07]
+## [0.4.2]
 
 ### Fixed
 
 - Minor bug fix.
 
-## [0.5.0] - [2023-12-10]
+## [0.5.0]
 
 ### Added
 
