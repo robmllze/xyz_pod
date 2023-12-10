@@ -14,24 +14,18 @@ import 'package:xyz_pod/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class ChainablePod<A, B> extends Pod<A> {
+class ChainPod<A, B> extends Pod<A> {
   //
   //
   //
 
-  bool markedAsTemp;
-
-  //
-  //
-  //
-
-  ChainablePod(super.value, {bool temp = false}) : markedAsTemp = temp;
+  ChainPod(super.value, {super.temp});
 
   //
   //
   //
 
-  ChainablePod.temp(A initialValue) : this(initialValue, temp: true);
+  ChainPod.temp(A initialValue) : this(initialValue, temp: true);
 
   //
   //
@@ -43,8 +37,8 @@ class ChainablePod<A, B> extends Pod<A> {
     bool disposeChain = true,
   }) async {
     await Future.delayed(Duration.zero, () {
-      if (currentValue is ChainablePod && disposeChain) {
-        (currentValue as ChainablePod).dispose();
+      if (currentValue is ChainPod && disposeChain) {
+        (currentValue as ChainPod).dispose();
       }
       currentValue = newValue;
       notifyListeners();
@@ -62,8 +56,8 @@ class ChainablePod<A, B> extends Pod<A> {
   }) async {
     await Future.delayed(Duration.zero, () {
       final newValue = updater(currentValue);
-      if (currentValue is ChainablePod && disposeChain) {
-        (currentValue as ChainablePod).dispose();
+      if (currentValue is ChainPod && disposeChain) {
+        (currentValue as ChainPod).dispose();
       }
       currentValue = newValue;
       notifyListeners();
@@ -106,10 +100,8 @@ class ChainablePod<A, B> extends Pod<A> {
   //
   //
 
-  ChainablePod<B, C>? _valueAsPodOrNull<C>() {
-    return currentValue is ChainablePod<B, C>
-        ? currentValue as ChainablePod<B, C>
-        : null;
+  ChainPod<B, C>? _valueAsPodOrNull<C>() {
+    return currentValue is ChainPod<B, C> ? currentValue as ChainPod<B, C> : null;
   }
 
   //
@@ -124,10 +116,10 @@ class ChainablePod<A, B> extends Pod<A> {
   //
 
   /// Returns the Pod chain.
-  List<ChainablePod> get chain {
-    final chain = <ChainablePod>[];
+  List<ChainPod> get chain {
+    final chain = <ChainPod>[];
     void addToChain(dynamic v) {
-      if (v is ChainablePod) {
+      if (v is ChainPod) {
         chain.add(v);
         addToChain(v.currentValue);
       }
@@ -142,7 +134,7 @@ class ChainablePod<A, B> extends Pod<A> {
   //
 
   /// Returns the next `Pod` in the chain.
-  ChainablePod<B, C>? nextOrNull<C>() {
+  ChainPod<B, C>? nextOrNull<C>() {
     return _valueAsPodOrNull<C>()
       ?..removeListener(notifyListeners)
       ..addListener(notifyListeners);
@@ -153,8 +145,8 @@ class ChainablePod<A, B> extends Pod<A> {
   //
 
   /// Returns the last `Pod` in the chain.
-  ChainablePod get last {
-    ChainablePod? temp = nextOrNull();
+  ChainPod get last {
+    ChainPod? temp = nextOrNull();
     while (true) {
       final next = temp?.nextOrNull();
       if (next == null) {
@@ -170,17 +162,6 @@ class ChainablePod<A, B> extends Pod<A> {
 
   @override
   String toString() => this.value.toString();
-
-  //
-  //
-  //
-
-  /// Disposes the `Pod` chain if it is marked as" temp".
-  void disposeIfMarkedAsTemp() {
-    if (this.markedAsTemp) {
-      dispose();
-    }
-  }
 
   //
   //

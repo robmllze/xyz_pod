@@ -105,3 +105,9 @@
 ### Added
 
 - Improved the `PodChainBuilder`.
+
+## [0.6.1]
+
+### Changed
+
+- Minor changes
