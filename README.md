@@ -32,7 +32,7 @@ To use XYZ Pod in your Flutter project, add the following dependency to your `pu
 
 ```yaml
 dependencies:
-  xyz_pod: ^0.7.1
+  xyz_pod: ^0.7.2
 ```
 
 ## Using the PodBuilder

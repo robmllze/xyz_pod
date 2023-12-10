@@ -133,3 +133,9 @@
 ### Fixed
 
 - Fixed typos in `README.md`.
+
+## [0.7.2]
+
+### Fixed
+
+- Fixed type bug with `PodListBuilder`.
