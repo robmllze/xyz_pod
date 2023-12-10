@@ -99,3 +99,9 @@
 ### Added
 
 - Added the `PodChainBuilder` for building UIs in response to changes in a chain of `Pod` objects.
+
+## [0.6.0]
+
+### Added
+
+- Improved the `PodChainBuilder`.

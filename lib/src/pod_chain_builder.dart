@@ -14,15 +14,15 @@ import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class PodChainBuilder extends StatelessWidget {
+class PodChainBuilder<A, B> extends StatelessWidget {
   //
   //
   //
 
   final Widget? child;
-  final Pod? pod;
-  final Pod? Function(dynamic)? chainBuilder;
-  final Widget Function(BuildContext, Widget?, Pod?, dynamic)? builder;
+  final Pod<A>? pod;
+  final Pod<B>? Function(A?)? mapper;
+  final Widget? Function(BuildContext, Widget?, B?)? builder;
 
   //
   //
@@ -31,7 +31,7 @@ class PodChainBuilder extends StatelessWidget {
   const PodChainBuilder({
     super.key,
     this.pod,
-    this.chainBuilder,
+    this.mapper,
     this.builder,
     this.child,
   });
@@ -42,19 +42,15 @@ class PodChainBuilder extends StatelessWidget {
 
   factory PodChainBuilder.value({
     Key? key,
-    Pod? pod,
-    Widget Function(dynamic)? builder,
-    Pod? Function(dynamic)? chainBuilder,
+    Pod<A>? pod,
+    Widget Function(B?)? builder,
+    Pod<B>? Function(A?)? mapper,
   }) {
-    return PodChainBuilder(
+    return PodChainBuilder<A, B>(
       key: key,
       pod: pod,
-      chainBuilder: chainBuilder,
-      builder: builder != null
-          ? (_, __, ___, value) {
-              return builder(value);
-            }
-          : null,
+      mapper: mapper,
+      builder: builder != null ? (_, __, value) => builder(letAsOrNull(value)) : null,
     );
   }
   //
@@ -75,16 +71,16 @@ class PodChainBuilder extends StatelessWidget {
   //
 
   Widget _buildChain(BuildContext context, Widget? child, dynamic value) {
-    final pod = chainBuilder?.call(value);
-    if (pod != null) {
-      return PodChainBuilder(
+    final pod = mapper?.call(value);
+    if (pod is Pod) {
+      return PodChainBuilder<dynamic, dynamic>(
         pod: pod,
-        chainBuilder: chainBuilder,
-        builder: builder,
+        mapper: (e) => mapper?.call(letAsOrNull(e)),
+        builder: (a, b, c) => builder?.call(a, b, c),
         child: child,
       );
     } else {
-      return builder?.call(context, child, pod, value) ?? const SizedBox();
+      return builder?.call(context, child, value) ?? const SizedBox();
     }
   }
 }

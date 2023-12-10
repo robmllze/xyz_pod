@@ -1,0 +1,12 @@
+name: _pod_chain_builder_example
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+
+  xyz_pod:
+    path: ../
+
+  flutter:
+    sdk: flutter
