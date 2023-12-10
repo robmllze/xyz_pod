@@ -8,10 +8,15 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
+
+import 'dart:collection';
+
 import 'package:flutter/widgets.dart';
 import 'package:xyz_pod/src/pod_builder.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+typedef Pod<T> = Pod2<T, dynamic>;
 
 /// `Pod<T>` is a state management class that extends `ValueNotifier<T>`.
 /// It offers advanced features for handling state changes in Flutter apps.
@@ -22,11 +27,7 @@ import 'package:xyz_pod/src/pod_builder.dart';
 ///
 /// Generic Type:
 /// - `T`: The type of value the `Pod` holds.
-class Pod<T> extends ValueNotifier<T> {
-  //
-  //
-  //
-
+class Pod2<A, B> extends ValueNotifier<A> {
   /// Marks the `Pod` as temporary. Temporary `Pod` instances can be flagged
   /// for automatic disposal when used within a widget that supports this
   /// feature.
@@ -42,7 +43,7 @@ class Pod<T> extends ValueNotifier<T> {
   /// - `value`: The initial value of the `Pod`.
   /// - `isTemp` (optional): Marks the `Pod` as temporary if set to `true`.
   ///     Defaults to `false`.
-  Pod(super.value, {this.isTemp = false});
+  Pod2(super.value, {this.isTemp = false});
 
   //
   //
@@ -54,7 +55,7 @@ class Pod<T> extends ValueNotifier<T> {
   ///
   /// Parameters:
   /// - `value`: The initial value of the temporary `Pod`.
-  Pod.temp(T value) : this(value, isTemp: true);
+  Pod2.temp(A value) : this(value, isTemp: true);
 
   //
   //
@@ -67,7 +68,7 @@ class Pod<T> extends ValueNotifier<T> {
   ///
   /// Parameters:
   /// - `value`: The new value to set for the `Pod`.
-  Future<void> set(T value) async {
+  Future<void> set(A value) async {
     await Future.delayed(Duration.zero, () {
       this.value = value;
       notifyListeners();
@@ -84,7 +85,7 @@ class Pod<T> extends ValueNotifier<T> {
   ///
   /// Parameters:
   /// - `updater`: A function that takes the current value and returns the updated value.
-  Future<void> update(T Function(T) updater) async {
+  Future<void> update(A Function(A) updater) async {
     await Future.delayed(Duration.zero, () {
       value = updater(value);
       notifyListeners();
@@ -109,7 +110,7 @@ class Pod<T> extends ValueNotifier<T> {
   //
   //
 
-  Widget build(Widget Function(T? value) builder) {
+  Widget build(Widget Function(A? value) builder) {
     return PodBuilder.value(pod: this, builder: builder);
   }
 
@@ -126,4 +127,62 @@ class Pod<T> extends ValueNotifier<T> {
       dispose();
     }
   }
+
+  //
+  //
+  //
+
+  @override
+  void dispose() {
+    final children = Queue<Pod2>();
+
+    void addToChildren(A value) {
+      if (value is Pod2) {
+        children.addFirst(value);
+        addToChildren(value.value);
+      }
+    }
+
+    addToChildren(value);
+
+    for (final child in children) {
+      child.dispose();
+    }
+
+    Text("Disposing");
+    super.dispose();
+  }
+
+  //
+  //
+  //
+
+  Pod2<B, C>? pChild<C>() {
+    if (value is Pod2<B, C>) {
+      final pod = value as Pod2<B, C>;
+      pod.removeListener(notifyListeners);
+      pod.addListener(notifyListeners);
+      return value as Pod2<B, C>;
+    }
+    return null;
+  }
+
+  //
+  //
+  //
+
+  @override
+  operator ==(Object other) {
+    if (other is Pod2) {
+      return other.value == value;
+    }
+    return false;
+  }
+
+  //
+  //
+  //
+
+  @override
+  int get hashCode => value.hashCode;
 }
