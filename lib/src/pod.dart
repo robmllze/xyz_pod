@@ -117,6 +117,21 @@ class Pod<T> extends ValueNotifier<T> {
   //
   //
 
+
+  /// Adds a listener that is automatically removed after the first execution.
+  void addSingleExecutionListener(VoidCallback listener) {
+    late final VoidCallback tempLlistener;
+    tempLlistener = () {
+      listener();
+      removeListener(tempLlistener);
+    };
+    addListener(tempLlistener);
+  }
+
+  //
+  //
+  //
+
   /// Disposes of the `Pod` if it is marked as temporary.
   ///
   /// This is useful for resource management, ensuring that temporary instances

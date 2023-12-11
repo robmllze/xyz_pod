@@ -139,3 +139,9 @@
 ### Fixed
 
 - Fixed type bug with `PodListBuilder`.
+
+## [0.8.0]
+
+### Added
+
+- Added a `singleExecutionListener` method to `Pod` which allows for a listener to be executed only once, and then removed.

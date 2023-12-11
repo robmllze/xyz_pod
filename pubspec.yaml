@@ -11,7 +11,7 @@
 
 name: xyz_pod
 description: XYZ Pod is a Flutter package designed to streamline and enhance state management in Flutter applications. It's based on Flutter's ValueNotifier.
-version: 0.7.2
+version: 0.8.0
 repository: https://github.com/robmllze/xyz_pod
 
 ## -----------------------------------------------------------------------------
@@ -34,4 +34,5 @@ dev_dependencies:
 
   flutter_test:
     sdk: flutter
+    
   flutter_lints: ^3.0.1
