@@ -117,7 +117,6 @@ class Pod<T> extends ValueNotifier<T> {
   //
   //
 
-
   /// Adds a listener that is automatically removed after the first execution.
   void addSingleExecutionListener(VoidCallback listener) {
     late final VoidCallback tempLlistener;

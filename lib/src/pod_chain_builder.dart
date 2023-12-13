@@ -21,14 +21,14 @@ class PodChainBuilder<A, B> extends StatefulWidget {
 
   final Widget? child;
   final Pod<A>? pod;
-  final Pod<B>? Function(A?)? mapper;
-  final Widget? Function(BuildContext, Widget?, B?)? builder;
+  final Pod<dynamic>? Function(dynamic)? mapper;
+  final Widget? Function(BuildContext, Widget?, dynamic)? builder;
 
   //
   //
   //
 
-  const PodChainBuilder.def({
+  const PodChainBuilder._def({
     super.key,
     this.pod,
     this.mapper,
@@ -40,18 +40,38 @@ class PodChainBuilder<A, B> extends StatefulWidget {
   //
   //
 
+  factory PodChainBuilder.def({
+    Key? key,
+    Pod<A>? pod,
+    Pod<dynamic>? Function(dynamic)? mapper,
+    Widget? Function(BuildContext, Widget?, B?)? builder,
+    Widget? child,
+  }) {
+    return PodChainBuilder<A, B>._def(
+      key: key,
+      pod: pod,
+      mapper: mapper,
+      builder: builder != null ? (a, b, c) => builder(a, b, c.as) : null,
+      child: child,
+    );
+  }
+
+  //
+  //
+  //
+
   factory PodChainBuilder({
     Key? key,
     Pod<A>? pod,
-    Pod<B>? Function(A?)? mapper,
+    Pod<dynamic>? Function(dynamic)? mapper,
     Widget? Function(B?)? builder,
   }) {
-    return PodChainBuilder<A, B>.def(
+    return PodChainBuilder<A, B>._def(
       key: key,
       pod: pod,
       mapper: mapper,
       builder: builder != null
-          ? (_, __, value) => builder(_letAsOrNull(value))
+          ? (_, __, value) => builder(_letAsTypeOrNull<B>(value))
           : null,
     );
   }
@@ -92,10 +112,10 @@ class _PodChainBuilderState<A, B> extends State<PodChainBuilder<A, B>> {
   ) {
     final pod = widget.mapper?.call(value);
     if (pod is Pod) {
-      return PodChainBuilder<dynamic, dynamic>.def(
+      return PodChainBuilder._def(
         pod: pod,
-        mapper: (e) => widget.mapper?.call(_letAsOrNull(e)),
-        builder: (a, b, c) => widget.builder?.call(a, b, c),
+        mapper: widget.mapper,
+        builder: widget.builder,
         child: child,
       );
     } else {
@@ -117,4 +137,4 @@ class _PodChainBuilderState<A, B> extends State<PodChainBuilder<A, B>> {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-T? _letAsOrNull<T>(dynamic value) => value is T ? value : null;
+T? _letAsTypeOrNull<T>(dynamic value) => value is T ? value : null;

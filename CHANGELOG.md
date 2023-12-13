@@ -145,3 +145,10 @@
 ### Added
 
 - Added a `singleExecutionListener` method to `Pod` which allows for a listener to be executed only once, and then removed.
+
+## [0.9.0]
+
+### Updated
+
+- Updated the `PodChainBuilder` to allow for easier type checking.
+
