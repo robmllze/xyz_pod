@@ -70,6 +70,30 @@ class PodRemapper<T> extends StatefulWidget {
   //
   //
 
+  factory PodRemapper.first({
+    Key? key,
+    Iterable<Pod?> pods = const [],
+    PodRemappers remappers = const {},
+    Widget? Function(BuildContext, Widget?, T value)? builder,
+    Widget? Function(BuildContext, Widget?)? nullBuilder,
+    Widget? child,
+  }) {
+    return PodRemapper<T>(
+      key: key,
+      pods: pods.nonNulls,
+      remappers: remappers,
+      builder: builder != null
+          ? (context, child, values) => builder(context, child, values.first)
+          : null,
+      emptyBuilder: nullBuilder,
+      child: child,
+    );
+  }
+
+  //
+  //
+  //
+
   @override
   State<PodRemapper> createState() => _PodRemapperState();
 }

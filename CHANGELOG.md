@@ -166,3 +166,9 @@ Enhanced the default constructors for Pods to include context and child paramete
 
 - Updated `README.md`.
 
+## [0.10.2]
+
+### Added
+
+- Added the `PodRemapper.first` constructor.
+
