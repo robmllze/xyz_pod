@@ -16,25 +16,12 @@
 - Comprehensive documentation and examples for each component.
 - Unit tests for key functionalities.
 
-## [0.1.1]
-
-### Fixed
-
-- Fixed typos in documentation.
-
-## [0.1.2]
-
-### Fixed
-
-- Addressed "The package description is too short."
-- Addressed "lib/src/multi_pod_builder.dart doesn't match the Dart formatter." (no luck!)
-- Addressed "llib/src/pods.dart doesn't match the Dart formatter." (no luck!)
-
 ## [0.1.3]
 
 ### Fixed
 
-- Addressed "The package description is too long."
+- Fixed typos in documentation.
+- Addressed package description issues.
 
 ## [0.2.0]
 
@@ -42,133 +29,76 @@
 
 - Added a child parameter to the Pods.
 
-## [0.3.0]
-
-### Added
-
-- Added a `PodBuilder.value` constructor.
-- Added a `Pod.build` method
-
-## [0.3.1]
-
-### Added
-
-- Added `NOTES.md` to the project.
-
-### Changed
-
-- Changed the `README.md` file.
-- Changed Flutter minimum version to `3.0.0`.
-
-### Fixed
-
-- Addressed "Found no Flutter in your PATH. Could not determine the current Flutter version."
-
 ## [0.3.2]
 
-### Changed
-
-- Updated `temp_example.dart`.
-- Renamed `temp_example.dart` to `example_temp.dart`.
-
-### Fixed
-
-- Fixed issue with example in `README.md`.
-
-## [0.4.0]
-
 ### Added
 
-- Added a `PodListBuilder.values` constructor.
-- Added a `MultiPodBuilder.values` constructor.
+- `PodBuilder.value` constructor and `Pod.build` method.
+- `NOTES.md` to the project.
 
-## [0.4.1]
+### Changed
+
+- Updated `README.md` and Flutter minimum version to `3.0.0`.
+- Updated and renamed `temp_example.dart` to `example_temp.dart`.
 
 ### Fixed
 
-- Minor bug fix.
+- Addressed Flutter PATH issue.
+- Fixed example issues in `README.md`.
 
 ## [0.4.2]
 
+### Added
+
+- `PodListBuilder.values` and `MultiPodBuilder.values` constructors.
+
 ### Fixed
 
-- Minor bug fix.
-
-## [0.5.0]
-
-### Added
-
-- Added the `PodChainBuilder` for building UIs in response to changes in a chain of `Pod` objects.
-
-## [0.6.0]
-
-### Added
-
-- Improved the `PodChainBuilder`.
+- Minor bug fixes.
 
 ## [0.6.1]
 
+### Added
+
+- `PodChainBuilder` for building UIs with a chain of `Pod` objects.
+- Improvements to `PodChainBuilder`.
+
 ### Changed
 
-- Minor changes
-
-## [0.7.0]
-
-### Changed
-
-- Changed all current default constructors to named constructors (`.def`)
-- Changed all `.value` or `.values` constructors to default constructors.
-- Changed README.md to reflect the changes.
-- Changed the `PodChainBuilder` from a `StatelessWidget` to a `StatefulWidget` so that it can auto-dispose its `Pod` objects if they are marked as temp;
-- All builders can now return `null` to return a `SizedBox.shrink()` widget.
-
-### Removed
-
-- Removed `Pods` class
-- Removed `MultiPodBuilder` class
-- Commented out `ChainPod` class since it is not yet ready for release.
-
-## [0.7.1]
-
-### Fixed
-
-- Fixed typos in `README.md`.
+- Minor changes.
 
 ## [0.7.2]
 
+### Changed
+
+- Default constructors to named constructors (`.def`).
+- `.value`/`.values` constructors to default constructors.
+- Updated `README.md` and `PodChainBuilder` to `StatefulWidget`.
+- All builders can now return `null` for a `SizedBox.shrink()`.
+
+### Removed
+
+- `Pods` and `MultiPodBuilder` classes.
+- Commented out `ChainPod` class.
+
 ### Fixed
 
-- Fixed type bug with `PodListBuilder`.
+- Typos in `README.md` and type bug with `PodListBuilder`.
 
 ## [0.8.0]
 
 ### Added
 
-- Added a `singleExecutionListener` method to `Pod` which allows for a listener to be executed only once, and then removed.
+- `singleExecutionListener` method to `Pod`.
 
-## [0.9.0]
-
-### Updated
-
-- Updated the `PodChainBuilder` to allow for easier type checking.
-
-- [0.10.0]
-
-### Added
-Introduced the PodRemapper widget, a powerful tool for managing state remapping across multiple Pods in a more dynamic and flexible manner.
-
-### Updated
-Enhanced the default constructors for Pods to include context and child parameters, enabling more intuitive and context-aware state management within the Flutter widget tree.
-
-## [0.10.1]
-
-### Updated
-
-- Updated `README.md`.
-
-## [0.10.2]
+## [0.10.3]
 
 ### Added
 
-- Added the `PodRemapper.first` constructor.
+- `PodRemapper` widget and `PodRemapper.first` constructor.
 
+### Updated
+
+- `PodChainBuilder` for easier type checking.
+- Default constructors for Pods with context and child parameters.
+- `README.md`.

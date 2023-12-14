@@ -172,8 +172,17 @@ class _PodRemapperState extends State<PodRemapper> {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 typedef PodChainFunctions = Iterable<Pod<dynamic>> Function(dynamic);
+
 typedef PodRemappers = Iterable<MapEntry<Type, PodChainFunctions>>;
 
 MapEntry<Type, PodChainFunctions> remap<T, A>(Iterable<Pod<A>> Function(T) f) {
   return MapEntry(T, (dynamic a) => f(a as T));
+}
+
+MapEntry<Type, PodChainFunctions> remapSingle<T, A>(Pod<A> Function(T) f) {
+  return remap<T, A>((a) => [f(a)]);
+}
+
+MapEntry<Type, PodChainFunctions> remapMultiple<T, A>(Iterable<Pod<A>> Function(T) f) {
+  return remap<T, A>(f);
 }
