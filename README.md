@@ -84,67 +84,6 @@ PodListBuilder(
 )
 ```
 
-## Using the PodRemapper
-
-```dart
-// Define your service classes and models.
-
-class AuthService {
-  final userDataService = UserDataService();
-}
-
-class UserDataService {
-  final pUserData = Pod<UserDataModel?>(null);
-}
-
-class UserDataModel {
-  final String name;
-  UserDataModel(this.name);
-
-  // Implement fromJson, toJson, etc., as needed.
-}
-
-// Create a Pod for your service.
-
-final pAuthService = Pod(AuthService());
-
-// Set up PodRemappers for your service chain.
-
-PodRemappers authServiceRemappers = [
-  remap<AuthService, UserDataModel?>((e) => [e.userDataService.pUserData]),
-];
-
-// Use the PodRemapper in your UI to dynamically update based on Pod changes.
-
-void main() {
-  runApp(
-    MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: PodRemapper<UserDataModel>(
-            pods: [pAuthService],
-            remappers: authServiceRemappers,
-            builder: (context, child, values) {
-              final userData = values.first; // values will never be empty.
-              return Text(userData?.name ?? 'User Name Unavailable');
-            },
-            emptyBuilder: (context, child) => Text("Loading..."),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-// Ensure proper disposal of Pods when no longer needed.
-
-void disposeServices() {
-  pAuthService.value.userDataService.pUserData.dispose();
-  pAuthService.dispose();
-}
-
-```
-
 ## Contributing
 
 Contributions to XYZ Pod are welcome.

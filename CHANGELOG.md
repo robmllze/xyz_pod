@@ -97,9 +97,22 @@
 
 - `PodRemapper` widget and `PodRemapper.first` constructor.
 
+### Removed
+
+- `PodChainBuilder` and replaced with `PodRemapper`.
+
 ### Updated
 
-- `PodChainBuilder` for easier type checking.
 - Default constructors for Pods with context and child parameters.
 - `README.md`.
 - Simplified the `remap` functions.
+
+## [0.10.5]
+
+### Changed
+
+- Simplified the remappers.
+
+### Removed
+
+- `remap` functions.
