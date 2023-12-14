@@ -81,9 +81,9 @@ class MyTextState extends State<MyText> {
   Widget build(BuildContext context) {
     return PodBuilder(
       pod: widget.pText,
-      builder: (value) {
+      builder: (context, child, text) {
         return Text(
-          value ?? '',
+          text,
           style: Theme.of(context).textTheme.bodyLarge,
         );
       },

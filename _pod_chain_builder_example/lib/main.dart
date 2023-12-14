@@ -1,98 +1,257 @@
-// -----------------------------------------------------------------------------
-
 import 'package:flutter/material.dart';
 import 'package:xyz_pod/xyz_pod.dart';
 
+mixin ServiceMixin {
+  Future<void> startService();
+  Future<void> stopService();
+}
+
+// -----------------------------------------------------------------------------
+//
+// 1. Create a service for each feature of your app.
+//
 // -----------------------------------------------------------------------------
 
-class Service {
-  Service() {
-    print("Service created");
-  }
-  final pSubService = Pod<SubService?>(null);
+class AuthenticationService with ServiceMixin {
+  final pIsAuthenticated = Pod<bool>(false);
+  final pIdToken = Pod<String?>(null);
 
-  static Pod<dynamic>? subSubServiceCounterMapper(e) {
-    switch (e.runtimeType) {
-      case Service:
-        return (e as Service).pSubService;
-      case SubService:
-        return (e as SubService).pSubSubService;
-      case SubSubService:
-        return (e as SubSubService).pCounter;
-      default:
-        return null;
-    }
+  AuthenticationService() {
+    print("AuthenticationService created");
+  }
+
+  Future<void> startService() async {
+    await stopService();
+    // ...
+  }
+
+  Future<void> stopService() async {
+    // ...
   }
 }
 
 // -----------------------------------------------------------------------------
 
-class SubService {
-  SubService() {
-    print("SubService created");
+class DatabaseService with ServiceMixin {
+  final pUserDataService = Pod<UserDataService?>(null);
+  final pConnectionService = Pod<ContactsService?>(null);
+
+  DatabaseService() {
+    print("DatabaseService created");
   }
-  final pSubSubService = Pod<SubSubService?>(null);
+
+  Future<void> startService() async {
+    stopService();
+    await pUserDataService.set(UserDataService());
+    await pConnectionService.set(ContactsService());
+  }
+
+  Future<void> stopService() async {
+    await pUserDataService.set(null);
+    await pConnectionService.set(null);
+  }
+
+  // ...
 }
 
 // -----------------------------------------------------------------------------
 
-class SubSubService {
-  SubSubService() {
-    print("SubSubService created");
+class UserDataService with ServiceMixin {
+  final pUserModel = Pod<UserModel?>(null);
+
+  UserDataService() {
+    print("UserDataService created");
   }
-  final Pod<int> pCounter = Pod<int>(0);
+
+  @override
+  Future<void> startService() async {
+    await stopService();
+    pUserModel.set(
+      UserModel(
+        name: "Holden Ford",
+        email: "holden.ford@gmail.com",
+      ),
+    );
+    // ...
+  }
+
+  @override
+  Future<void> stopService() async {
+    pUserModel.set(null);
+  }
+
+  // ...
+}
+
+class UserModel {
+  final String name;
+  final String email;
+
+  UserModel({
+    required this.name,
+    required this.email,
+  });
 }
 
 // -----------------------------------------------------------------------------
 
-final Pod<Service?> pService = Pod<Service?>(null);
+class ContactsService with ServiceMixin {
+  ContactsService() {
+    print("ContactsService created");
+  }
 
+  @override
+  Future<void> startService() async {
+    await stopService();
+    // ...
+  }
+
+  @override
+  Future<void> stopService() async {
+    // ...
+  }
+
+  // ...
+}
+
+// -----------------------------------------------------------------------------
+
+/// A service that handes push notifications.
+class PushNotificationService with ServiceMixin {
+  PushNotificationService() {
+    print("PushNotificationService created");
+  }
+
+  @override
+  Future<void> startService() async {
+    await stopService();
+    // ...
+  }
+
+  @override
+  Future<void> stopService() async {
+    // ...
+  }
+
+  // ...
+}
+
+// -----------------------------------------------------------------------------
+//
+// 2. Create an app service to hold the global state of your application.
+//
+// -----------------------------------------------------------------------------
+
+final appService = AppService();
+
+class AppService with ServiceMixin {
+  final pAuthenticationService = Pod<AuthenticationService?>(null);
+  final pDatabaseService = Pod<DatabaseService?>(null);
+  final pPushNotificationService = Pod<PushNotificationService?>(null);
+
+  AppService() {
+    print("AppService created");
+  }
+
+  @override
+  Future<void> startService() async {
+    await stopService();
+    await pAuthenticationService.set(AuthenticationService());
+    await pAuthenticationService.value?.startService();
+    await pDatabaseService.set(DatabaseService());
+    await pDatabaseService.value?.startService();
+    await pPushNotificationService.set(PushNotificationService());
+    await pPushNotificationService.value?.startService();
+    // ...
+  }
+
+  @override
+  Future<void> stopService() async {
+    // ...
+    await pAuthenticationService.value?.stopService();
+    await pAuthenticationService.set(null);
+    await pDatabaseService.value?.stopService();
+    await pDatabaseService.set(null);
+    await pPushNotificationService.value?.stopService();
+    await pPushNotificationService.set(null);
+  }
+
+  // ...
+}
+
+// -----------------------------------------------------------------------------
+//
+// 3. Consume this information in your UI.
+//
 // -----------------------------------------------------------------------------
 
 void main() {
   runApp(
     MaterialApp(
-      home: Scaffold(
-        body: Column(
+      home: Material(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(
+            FilledButton(
               onPressed: () {
-                pService.set(Service());
+                appService.startService();
               },
-              child: Text("Init Service"),
-            ),
-            TextButton(
-              onPressed: () {
-                pService.value?.pSubService.set(SubService());
-              },
-              child: Text("Init SubService"),
+              child: Text("Start AppService"),
             ),
             TextButton(
               onPressed: () {
-                pService.value?.pSubService.value?.pSubSubService
-                    .set(SubSubService());
+                appService.stopService();
               },
-              child: Text("Init SubSubService"),
+              child: Text("Stop AppService"),
+            ),
+            FilledButton(
+              onPressed: () {
+                appService.pDatabaseService.value?.pUserDataService.value?.startService();
+              },
+              child: Text("Start UserService (if it exists)"),
             ),
             TextButton(
               onPressed: () {
-                pService
-                    .value?.pSubService.value?.pSubSubService.value?.pCounter
-                    .update((e) => e + 1);
+                appService.pDatabaseService.value?.pUserDataService.value?.stopService();
               },
-              child: Text("Increment pCounter"),
+              child: Text("Stop UserService (if it exists)"),
             ),
-            PodChainBuilder(
-              pod: Pod.temp(123),
-              builder: (value) => Text(value.toString()),
-            ),
-            PodChainBuilder<Service?, int>(
-              pod: pService,
-              mapper: Service.subSubServiceCounterMapper,
-              builder: (value) {
-                print("${value.runtimeType}");
-                return Text(value.toString());
+            FilledButton(
+              onPressed: () {
+                appService.pDatabaseService.value?.pUserDataService.value?.pUserModel.update(
+                  (e) => e != null
+                      ? UserModel(name: "${e.name}!", email: e.email)
+                      : UserModel(
+                          name: "Bob Marley",
+                          email: "bob.marley@yahoo.wtf",
+                        ),
+                );
               },
+              child: Text("Add '!' to name"),
+            ),
+            const SizedBox(height: 80.0),
+            // Create a PodRemapper to listen to multiple Pods and remap them
+            // to one or more values of type UserModel.
+            PodRemapper<UserModel>(
+              // Provide some pods to listen to. They can be null or non-null.
+              pods: [
+                appService.pDatabaseService.value?.pUserDataService,
+                appService.pDatabaseService,
+              ],
+              // Remap the pods to other pods.
+              remappers: [
+                remap<DatabaseService, UserDataService?>((e) => [e.pUserDataService]),
+                remap<UserDataService, UserModel?>((e) => [e.pUserModel]),
+              ],
+              builder: (context, child, Iterable<UserModel> values) {
+                final userModel = values.first; // values will never be empty.
+                return Text("${userModel.name}");
+              },
+              // If values are empty, show a placeholder.
+              emptyBuilder: (context, child) {
+                return child;
+              },
+              child: Text("Loading..."),
             ),
           ],
         ),

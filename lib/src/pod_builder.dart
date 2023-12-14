@@ -20,14 +20,14 @@ import '/xyz_pod.dart';
 ///
 /// Generic Type:
 /// - `T`: The type of value the `Pod` holds.
-class PodBuilder<T> extends StatefulWidget {
+class PodBuilder<P> extends StatefulWidget {
   //
   //
   //
 
   /// The `Pod` object that this builder is listening to.
   /// The builder will be triggered to rebuild whenever this `Pod` notifies its listeners.
-  final Pod<T>? pod;
+  final Pod<P>? pod;
 
   //
   //
@@ -43,7 +43,13 @@ class PodBuilder<T> extends StatefulWidget {
   /// A builder function that is called every time the `Pod`'s value changes.
   /// It takes the current `BuildContext`, the child `Widget` and the current
   /// value of the `Pod`, and returns a `Widget`.
-  final Widget? Function(BuildContext, Widget?, T?)? builder;
+  final Widget? Function(BuildContext, Widget?, P)? builder;
+
+  //
+  //
+  //
+
+  final Widget? Function(BuildContext, Widget?)? placeholderBuilder;
 
   //
   //
@@ -56,10 +62,11 @@ class PodBuilder<T> extends StatefulWidget {
   /// - `pod`: The `Pod` object this widget listens to.
   /// - `builder`: A function that builds the UI based on the `Pod`'s value.
   /// - `child` (optional): A child widget to be passed to the builder function.
-  const PodBuilder.def({
+  const PodBuilder({
     super.key,
     this.pod,
     this.builder,
+    this.placeholderBuilder,
     this.child,
   });
 
@@ -67,34 +74,19 @@ class PodBuilder<T> extends StatefulWidget {
   //
   //
 
-  /// Constructs a `PodBuilder` widget.
-  ///
-  /// Parameters:
-  /// - `key`: An identifier for this widget in the widget tree.
-  /// - `pod`: The `Pod` object this widget listens to.
-  /// - `builder`: A function that builds the UI based on the `Pod`'s value.
-  factory PodBuilder({
-    Key? key,
-    Pod<T>? pod,
-    required Widget? Function(T?) builder,
-  }) {
-    return PodBuilder<T>.def(
-      pod: pod,
-      builder: (_, __, value) => builder(value),
-    );
-  }
-
-  //
-  //
-  //
-
   @override
-  State<PodBuilder<T>> createState() => _PodBuilderState<T>();
+  State<PodBuilder<P>> createState() => _PodBuilderState<P>();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _PodBuilderState<T> extends State<PodBuilder<T>> {
+class _PodBuilderState<P> extends State<PodBuilder<P>> {
+  //
+  //
+  //
+
+  late final Widget staticChild;
+
   //
   //
   //
@@ -102,6 +94,8 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
   @override
   void initState() {
     super.initState();
+    // Initialize the static child widget
+    staticChild = widget.child ?? const SizedBox.shrink();
     // Add a listener to the Pod. The listener calls _update to rebuild the widget.
     widget.pod?.addListener(_update);
   }
@@ -123,15 +117,25 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
 
   @override
   Widget build(BuildContext context) {
-    // Use the provided builder function to build the widget
-    // using the current value of the Pod.
-    return widget.builder?.call(
-          context,
-          widget.child,
-          widget.pod?.value,
-        ) ??
-        widget.child ??
-        const SizedBox.shrink();
+    final p = widget.pod?.value;
+    if (p is P) {
+      return widget.builder?.call(
+            context,
+            staticChild,
+            p,
+          ) ??
+          widget.placeholderBuilder?.call(
+            context,
+            staticChild,
+          ) ??
+          staticChild;
+    } else {
+      return widget.placeholderBuilder?.call(
+            context,
+            staticChild,
+          ) ??
+          staticChild;
+    }
   }
 
   //

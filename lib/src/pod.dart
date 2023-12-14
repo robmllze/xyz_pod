@@ -22,7 +22,7 @@ import 'package:xyz_pod/src/pod_builder.dart';
 ///
 /// Generic Type:
 /// - `T`: The type of value the `Pod` holds.
-class Pod<T> extends ValueNotifier<T> {
+class Pod<V> extends ValueNotifier<V> {
   //
   //
   //
@@ -54,7 +54,7 @@ class Pod<T> extends ValueNotifier<T> {
   ///
   /// Parameters:
   /// - `initialValue`: The initial value of the temporary `Pod`.
-  Pod.temp(T initialValue) : this(initialValue, temp: true);
+  Pod.temp(V initialValue) : this(initialValue, temp: true);
 
   //
   //
@@ -67,7 +67,7 @@ class Pod<T> extends ValueNotifier<T> {
   ///
   /// Parameters:
   /// - `value`: The new value to set for the `Pod`.
-  Future<void> set(T newValue) async {
+  Future<void> set(V newValue) async {
     await Future.delayed(Duration.zero, () {
       value = newValue;
       notifyListeners();
@@ -86,7 +86,7 @@ class Pod<T> extends ValueNotifier<T> {
   /// Parameters:
   /// - `updater`: A function that takes the current value and returns the
   /// updated value.
-  Future<void> update(T Function(T) updater) async {
+  Future<void> update(V Function(V) updater) async {
     await Future.delayed(Duration.zero, () {
       value = updater(value);
       notifyListeners();
@@ -109,8 +109,8 @@ class Pod<T> extends ValueNotifier<T> {
   //
   //
 
-  Widget build(Widget Function(T? value) builder) {
-    return PodBuilder(pod: this, builder: builder);
+  Widget build(Widget Function(V? v) builder) {
+    return PodBuilder(pod: this, builder: (_, __, v) => builder(v));
   }
 
   //

@@ -26,7 +26,7 @@ class PodListBuilder extends StatefulWidget {
   //
 
   /// A list of `Pod` objects. The widget listens to changes in these objects.
-  final List<Pod?> pods;
+  final Iterable<Pod?> pods;
 
   //
   //
@@ -42,7 +42,7 @@ class PodListBuilder extends StatefulWidget {
   /// A builder function that takes the current `BuildContext`, the child `Widget`
   /// and a list of current values of the `pods`. It returns a `Widget` that is
   /// rebuilt every time one of the `Pod` objects notifies its listeners.
-  final Widget? Function(BuildContext, Widget?, List) builder;
+  final Widget? Function(BuildContext, Widget?, Iterable) builder;
 
   //
   //
@@ -55,33 +55,12 @@ class PodListBuilder extends StatefulWidget {
   /// - `pods`: A list of `Pod` objects to listen to.
   /// - `builder`: A function that builds the UI based on the `pods`.
   /// - `child` (optional): A child widget to be passed to the builder function.
-  const PodListBuilder.def({
+  const PodListBuilder({
     super.key,
     this.pods = const [],
     required this.builder,
     this.child,
   });
-
-  //
-  //
-  //
-
-  /// Constructs a `PodListBuilder` widget.
-  ///
-  /// Parameters:
-  /// - `key`: An identifier for this widget in the widget tree.
-  /// - `pods`: A list of `Pod` objects to listen to.
-  /// - `builder`: A function that builds the UI based on the `pods`.
-  factory PodListBuilder({
-    Key? key,
-    List<Pod?> pods = const [],
-    required Widget? Function(List) builder,
-  }) {
-    return PodListBuilder.def(
-      pods: pods,
-      builder: (_, __, values) => builder(values),
-    );
-  }
 
   //
   //
@@ -98,9 +77,18 @@ class _PodListBuilderState extends State<PodListBuilder> {
   //
   //
 
+  late final Widget staticChild;
+
+  //
+  //
+  //
+
   @override
   void initState() {
     super.initState();
+    // Initialize the static child widget.
+    staticChild = widget.child ?? const SizedBox.shrink();
+
     // Add listeners to each Pod in the list.
     for (final pod in widget.pods) {
       pod?.addListener(_update);
@@ -141,8 +129,8 @@ class _PodListBuilderState extends State<PodListBuilder> {
   Widget build(BuildContext context) {
     return widget.builder(
           context,
-          widget.child,
-          widget.pods.map((e) => e?.value).toList(),
+          staticChild,
+          widget.pods.map((e) => e?.value),
         ) ??
         const SizedBox.shrink();
   }

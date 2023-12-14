@@ -19,9 +19,9 @@ The Pod class simplifies state management, especially when dealing with complex 
 
 With the PodListBuilder, you can effortlessly manage and respond to changes in multiple state objects within a single widget. This capability is a significant enhancement over the traditional ValueNotifier, which requires manual management of multiple listeners and can quickly become cumbersome in complex applications.
 
-### Chain State Management with PodChainBuilder
+### Chain State Management with PodRemapper
 
-The PodChainBuilder is designed to handle a sequence or "chain" of Pod objects. It extends the capabilities of individual Pods by allowing developers to manage and respond to changes across a series of interconnected state objects.
+The PodRemapper represents an evolution in state management for Flutter applications. It goes beyond the linear chaining of Pod objects, providing a more flexible and dynamic way to listen to and remap state from multiple sources. With PodRemapper, developers can easily orchestrate state dependencies and transformations across different parts of their application, enhancing both modularity and responsiveness in handling complex state scenarios.
 
 ### Safe and Consistent State Updates
 A standout feature of Pod is its use of Future.delayed(Duration.zero) for state updates, ensuring that changes are applied asynchronously and safely. This approach prevents common issues associated with modifying state during the build phase of the widget tree, a challenge often encountered with ValueNotifier. By automatically scheduling updates to the next event loop cycle, Pod ensures consistent and error-free UI updates.
@@ -83,14 +83,13 @@ PodListBuilder(
 )
 ```
 
-## Using the PodChainBuilder
+## Using the PodRemapper
 
 ```dart
-// 1. Create some service chain.
+// Define your service classes and models.
 
 class AuthService {
   final userDataService = UserDataService();
-  final newsUpdatesService = NewsUpdatesService();
 }
 
 class UserDataService {
@@ -98,55 +97,51 @@ class UserDataService {
 }
 
 class UserDataModel {
-  // ... fromJson, toJson, etc.
+  final String name;
+  UserDataModel(this.name);
+
+  // Implement fromJson, toJson, etc., as needed.
 }
 
-class NewsUpdatesService {
-  final pNewsUpdatesData = Pod<NewsUpdatesDataModel?>(null);
-}
-
-class NewsUpdatesDataModel {
-  // ... fromJson, toJson, etc.
-}
-
-// 2. Create a Pod for the service chain.
+// Create a Pod for your service.
 
 final pAuthService = Pod(AuthService());
 
-// 3. Consume the values of the Pods in your UI.
+// Set up PodRemappers for your service chain.
+
+PodRemappers authServiceRemappers = [
+  remap<AuthService, UserDataModel?>((e) => [e.userDataService.pUserData]),
+];
+
+// Use the PodRemapper in your UI to dynamically update based on Pod changes.
 
 void main() {
   runApp(
     MaterialApp(
       home: Scaffold(
-        body: Column(
-          children: [
-            TextButton(
-              onPressed: () async {
-                await pAuthService.value.userDataService.pUserData.update((e) => e..name = "Bob");
-              },
-              child: Text("Call me Bob"),
-            ),
-            PodChainBuilder(
-              pod: pAuthService,
-              mapper: (e) => e?.userDataService.pUserData,
-              builder: (value) => Text(value.name),
-            ),
-          ],
+        body: Center(
+          child: PodRemapper<UserDataModel>(
+            pods: [pAuthService],
+            remappers: authServiceRemappers,
+            builder: (context, child, values) {
+              final userData = values.first; // values will never be empty.
+              return Text(userData?.name ?? 'User Name Unavailable');
+            },
+            emptyBuilder: (context, child) => Text("Loading..."),
+          ),
         ),
       ),
     ),
   );
 }
 
-// 4. Dispose the Pods when they are no longer needed. You may want to create dispose methods for each service.
+// Ensure proper disposal of Pods when no longer needed.
 
-void dispose() {
+void disposeServices() {
   pAuthService.value.userDataService.pUserData.dispose();
-  pAuthService.value.newsUpdatesService.pNewsUpdatesData.dispose();
   pAuthService.dispose();
-  super.dispose();
 }
+
 ```
 
 ## Contributing
