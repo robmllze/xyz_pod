@@ -21,7 +21,7 @@ class PodRemapper<T> extends StatefulWidget {
 
   final Widget? child;
   final Iterable<Pod> pods;
-  final PodRemappers remappers;
+  final Iterable<PodRemapperFunctions> remappers;
   final Widget? Function(BuildContext, Widget?, Iterable)? builder;
 
   //
@@ -31,7 +31,7 @@ class PodRemapper<T> extends StatefulWidget {
   const PodRemapper._({
     super.key,
     this.pods = const [],
-    this.remappers = const {},
+    this.remappers = const [],
     this.builder,
     this.child,
   });
@@ -42,8 +42,8 @@ class PodRemapper<T> extends StatefulWidget {
 
   factory PodRemapper({
     Key? key,
-    Iterable<Pod?> pods = const [],
-    PodRemappers remappers = const {},
+    Iterable<Pod> pods = const [],
+    Iterable<PodRemapperFunctions> remappers = const [],
     Widget? Function(BuildContext, Widget?, Iterable<T> values)? builder,
     Widget? Function(BuildContext, Widget?)? emptyBuilder,
     Widget? child,
@@ -51,7 +51,7 @@ class PodRemapper<T> extends StatefulWidget {
     return PodRemapper<T>._(
       key: key,
       pods: pods.nonNulls,
-      remappers: remappers,
+      remappers: remappers.nonNulls,
       builder: builder != null
           ? (context, child, values) {
               final valuesOfType = values.whereType<T>();
@@ -72,15 +72,15 @@ class PodRemapper<T> extends StatefulWidget {
 
   factory PodRemapper.first({
     Key? key,
-    Iterable<Pod?> pods = const [],
-    PodRemappers remappers = const {},
+    Iterable<Pod> pods = const [],
+    Iterable<PodRemapperFunctions> remappers = const [],
     Widget? Function(BuildContext, Widget?, T value)? builder,
     Widget? Function(BuildContext, Widget?)? nullBuilder,
     Widget? child,
   }) {
     return PodRemapper<T>(
       key: key,
-      pods: pods.nonNulls,
+      pods: pods,
       remappers: remappers,
       builder: builder != null
           ? (context, child, values) => builder(context, child, values.first)
@@ -145,44 +145,27 @@ class _PodRemapperState extends State<PodRemapper> {
     Widget? child,
     Iterable values,
   ) {
-    final oldMappers = Map.fromEntries(widget.remappers);
-    final newMappers = Map.of(oldMappers);
-    List<Pod<dynamic>> pods = [];
-    if (oldMappers.isNotEmpty) {
+    if (widget.remappers.isNotEmpty && values.isNotEmpty) {
+      final remappersCopy = List.of(widget.remappers);
+      final pods = <Pod<dynamic>>[];
       for (final value in values) {
-        final type = value.runtimeType;
-        final temp = oldMappers[type]?.call(value);
-        if (temp != null) {
-          newMappers.remove(type);
-          pods.addAll(temp);
-        }
+        if (value == null) return staticChild;
+        final temp = remappersCopy.first.call(value);
+        pods.addAll(temp);
+        remappersCopy.removeAt(0);
+        if (remappersCopy.isEmpty) break;
       }
       return PodRemapper._(
         pods: pods,
-        remappers: newMappers.entries,
+        remappers: remappersCopy,
         builder: widget.builder,
         child: staticChild,
       );
-    } else {
-      return widget.builder?.call(context, child, values) ?? staticChild;
     }
+    return widget.builder?.call(context, child, values) ?? staticChild;
   }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef PodChainFunctions = Iterable<Pod<dynamic>> Function(dynamic);
-
-typedef PodRemappers = Iterable<MapEntry<Type, PodChainFunctions>>;
-
-MapEntry<Type, PodChainFunctions> remap<T, A>(Iterable<Pod<A>> Function(T) f) {
-  return MapEntry(T, (dynamic a) => f(a as T));
-}
-
-MapEntry<Type, PodChainFunctions> remapSingle<T>(Pod Function(T) f) {
-  return remap<T, dynamic>((a) => [f(a)]);
-}
-
-MapEntry<Type, PodChainFunctions> remapMultiple<T>(Iterable<Pod> Function(T) f) {
-  return remap<T, dynamic>(f);
-}
+typedef PodRemapperFunctions = Iterable<Pod> Function(dynamic);

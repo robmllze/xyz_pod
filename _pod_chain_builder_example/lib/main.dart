@@ -206,23 +206,19 @@ void main() {
             ),
             FilledButton(
               onPressed: () {
-                appService.pDatabaseService.value?.pUserDataService.value
-                    ?.startService();
+                appService.pDatabaseService.value?.pUserDataService.value?.startService();
               },
               child: Text("Start UserService (if it exists)"),
             ),
             TextButton(
               onPressed: () {
-                appService.pDatabaseService.value?.pUserDataService.value
-                    ?.stopService();
+                appService.pDatabaseService.value?.pUserDataService.value?.stopService();
               },
               child: Text("Stop UserService (if it exists)"),
             ),
             FilledButton(
               onPressed: () {
-                appService
-                    .pDatabaseService.value?.pUserDataService.value?.pUserModel
-                    .update(
+                appService.pDatabaseService.value?.pUserDataService.value?.pUserModel.update(
                   (e) => e != null
                       ? UserModel(name: "${e.name}!", email: e.email)
                       : UserModel(
@@ -236,21 +232,19 @@ void main() {
             const SizedBox(height: 80.0),
             // Create a PodRemapper to listen to multiple Pods and remap them
             // to one or more values of type UserModel.
-            PodRemapper<UserModel>(
+            PodRemapper(
               // Provide some pods to listen to. They can be null or non-null.
               pods: [
-                appService.pDatabaseService.value?.pUserDataService,
                 appService.pDatabaseService,
-              ],
+              ].nonNulls,
               // Remap the pods to other pods.
               remappers: [
-                remap<DatabaseService, UserDataService?>(
-                    (e) => [e.pUserDataService]),
-                remap<UserDataService, UserModel?>((e) => [e.pUserModel]),
+                (e) => [(e as DatabaseService?)?.pUserDataService].nonNulls,
+                (e) => [(e as UserDataService).pUserModel],
               ],
-              builder: (context, child, Iterable<UserModel> values) {
+              builder: (context, child, Iterable<UserModel?> values) {
                 final userModel = values.first; // values will never be empty.
-                return Text("${userModel.name}");
+                return Text("${userModel?.name}");
               },
               // If values are empty, show a placeholder.
               emptyBuilder: (context, child) {
