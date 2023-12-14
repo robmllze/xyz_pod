@@ -74,7 +74,7 @@ class PodRemapper<T> extends StatefulWidget {
     Key? key,
     Iterable<Pod> pods = const [],
     Iterable<PodRemapperFunctions> remappers = const [],
-    Widget? Function(BuildContext, Widget?, T value)? builder,
+    Widget? Function(BuildContext, Widget?, T? value)? builder,
     Widget? Function(BuildContext, Widget?)? nullBuilder,
     Widget? child,
   }) {
@@ -83,7 +83,7 @@ class PodRemapper<T> extends StatefulWidget {
       pods: pods,
       remappers: remappers,
       builder: builder != null
-          ? (context, child, values) => builder(context, child, values.first)
+          ? (context, child, values) => builder(context, child, values.firstOrNull)
           : null,
       emptyBuilder: nullBuilder,
       child: child,
@@ -149,7 +149,7 @@ class _PodRemapperState extends State<PodRemapper> {
     if (widget.remappers.isNotEmpty && nonNullValues.isNotEmpty) {
       final remappersCopy = List.of(widget.remappers);
       final pods = <Pod>[];
-      final temp = remappersCopy.first.call(nonNullValues).nonNulls;
+      final temp = remappersCopy.firstOrNull?.call(nonNullValues).nonNulls ?? [];
       pods.addAll(temp);
       remappersCopy.removeAt(0);
       return PodRemapper._(

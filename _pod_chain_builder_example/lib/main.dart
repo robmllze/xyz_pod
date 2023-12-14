@@ -239,8 +239,8 @@ void main() {
               ].nonNulls,
               // Remap the pods to other pods.
               remappers: [
-                (e) => [(e.first as DatabaseService?)?.pUserDataService],
-                (e) => [(e.first as UserDataService).pUserModel],
+                (e) => [(e.firstOrNull as DatabaseService?)?.pUserDataService],
+                (e) => [(e.firstOrNull as UserDataService).pUserModel],
               ],
               builder: (context, child, Iterable<UserModel?> values) {
                 final userModel = values.first; // values will never be empty.
