@@ -158,5 +158,11 @@
 Introduced the PodRemapper widget, a powerful tool for managing state remapping across multiple Pods in a more dynamic and flexible manner.
 
 ### Updated
-Enhanced the default constructors for Pods to include context and child parameters, enabling more intuitive and context-aware state management within the Flutter widget tree. 
+Enhanced the default constructors for Pods to include context and child parameters, enabling more intuitive and context-aware state management within the Flutter widget tree.
+
+## [0.10.1]
+
+### Updated
+
+- Updated `README.md`.
 

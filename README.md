@@ -1,13 +1,13 @@
 # XYZ Pod
 
-XYZ Pod (xyz_pod) is a Flutter package designed to streamline and enhance state management in Flutter applications. It offers a suite of tools including `Pod`, `PodBuilder`, `PodListBuilder`, `PodChainBuilder`, classes, each tailored to handle different aspects of state management with ease and flexibility.
+XYZ Pod (xyz_pod) is a Flutter package designed to streamline and enhance state management in Flutter applications. It offers a suite of tools including `Pod`, `PodBuilder`, `PodListBuilder`, `PodRemapper`, classes, each tailored to handle different aspects of state management with ease and flexibility.
 
 ## Features
 
 - **Pod**: A flexible state management object that notifies listeners of changes.
 - **PodBuilder**: A widget for building UIs in response to changes in a `Pod` object.
 - **PodListBuilder**: Manages a list of `Pod` objects and rebuilds child widgets in response to changes in any of these `Pod` objects.
-- **PodChainBuilder**: Manages a chain of `Pod` objects and rebuilds child widgets in response to changes in any of these `Pod` objects.
+- **PodRemapper**: Manages a chain of `Pod` objects and rebuilds child widgets in response to changes in any of these `Pod` objects.
 
 ## Preferred Over ValueNotifier
 
@@ -24,6 +24,7 @@ With the PodListBuilder, you can effortlessly manage and respond to changes in m
 The PodRemapper represents an evolution in state management for Flutter applications. It goes beyond the linear chaining of Pod objects, providing a more flexible and dynamic way to listen to and remap state from multiple sources. With PodRemapper, developers can easily orchestrate state dependencies and transformations across different parts of their application, enhancing both modularity and responsiveness in handling complex state scenarios.
 
 ### Safe and Consistent State Updates
+
 A standout feature of Pod is its use of Future.delayed(Duration.zero) for state updates, ensuring that changes are applied asynchronously and safely. This approach prevents common issues associated with modifying state during the build phase of the widget tree, a challenge often encountered with ValueNotifier. By automatically scheduling updates to the next event loop cycle, Pod ensures consistent and error-free UI updates.
 
 ## Getting Started

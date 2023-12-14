@@ -206,19 +206,23 @@ void main() {
             ),
             FilledButton(
               onPressed: () {
-                appService.pDatabaseService.value?.pUserDataService.value?.startService();
+                appService.pDatabaseService.value?.pUserDataService.value
+                    ?.startService();
               },
               child: Text("Start UserService (if it exists)"),
             ),
             TextButton(
               onPressed: () {
-                appService.pDatabaseService.value?.pUserDataService.value?.stopService();
+                appService.pDatabaseService.value?.pUserDataService.value
+                    ?.stopService();
               },
               child: Text("Stop UserService (if it exists)"),
             ),
             FilledButton(
               onPressed: () {
-                appService.pDatabaseService.value?.pUserDataService.value?.pUserModel.update(
+                appService
+                    .pDatabaseService.value?.pUserDataService.value?.pUserModel
+                    .update(
                   (e) => e != null
                       ? UserModel(name: "${e.name}!", email: e.email)
                       : UserModel(
@@ -240,7 +244,8 @@ void main() {
               ],
               // Remap the pods to other pods.
               remappers: [
-                remap<DatabaseService, UserDataService?>((e) => [e.pUserDataService]),
+                remap<DatabaseService, UserDataService?>(
+                    (e) => [e.pUserDataService]),
                 remap<UserDataService, UserModel?>((e) => [e.pUserModel]),
               ],
               builder: (context, child, Iterable<UserModel> values) {
