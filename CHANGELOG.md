@@ -91,7 +91,7 @@
 
 - `singleExecutionListener` method to `Pod`.
 
-## [0.10.3]
+## [0.10.4]
 
 ### Added
 
@@ -102,3 +102,4 @@
 - `PodChainBuilder` for easier type checking.
 - Default constructors for Pods with context and child parameters.
 - `README.md`.
+- Simplified the `remap` functions.

@@ -179,10 +179,10 @@ MapEntry<Type, PodChainFunctions> remap<T, A>(Iterable<Pod<A>> Function(T) f) {
   return MapEntry(T, (dynamic a) => f(a as T));
 }
 
-MapEntry<Type, PodChainFunctions> remapSingle<T, A>(Pod<A> Function(T) f) {
-  return remap<T, A>((a) => [f(a)]);
+MapEntry<Type, PodChainFunctions> remapSingle<T>(Pod Function(T) f) {
+  return remap<T, dynamic>((a) => [f(a)]);
 }
 
-MapEntry<Type, PodChainFunctions> remapMultiple<T, A>(Iterable<Pod<A>> Function(T) f) {
-  return remap<T, A>(f);
+MapEntry<Type, PodChainFunctions> remapMultiple<T>(Iterable<Pod> Function(T) f) {
+  return remap<T, dynamic>(f);
 }
