@@ -220,14 +220,14 @@ void main() {
               onPressed: () {
                 appService.pDatabaseService.value?.pUserDataService.value?.pUserModel.update(
                   (e) => e != null
-                      ? UserModel(name: "${e.name}!", email: e.email)
+                      ? UserModel(name: "${e.name}#", email: e.email)
                       : UserModel(
                           name: "Bob Marley",
                           email: "bob.marley@yahoo.wtf",
                         ),
                 );
               },
-              child: Text("Add '!' to name"),
+              child: Text("Add '#' to name"),
             ),
             const SizedBox(height: 80.0),
             // Create a PodRemapper to listen to multiple Pods and remap them
@@ -239,8 +239,8 @@ void main() {
               ].nonNulls,
               // Remap the pods to other pods.
               remappers: [
-                (e) => [(e as DatabaseService?)?.pUserDataService].nonNulls,
-                (e) => [(e as UserDataService).pUserModel],
+                (e) => [(e.first as DatabaseService?)?.pUserDataService],
+                (e) => [(e.first as UserDataService).pUserModel],
               ],
               builder: (context, child, Iterable<UserModel?> values) {
                 final userModel = values.first; // values will never be empty.

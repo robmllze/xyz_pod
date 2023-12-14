@@ -50,8 +50,8 @@ class PodRemapper<T> extends StatefulWidget {
   }) {
     return PodRemapper<T>._(
       key: key,
-      pods: pods.nonNulls,
-      remappers: remappers.nonNulls,
+      pods: pods,
+      remappers: remappers,
       builder: builder != null
           ? (context, child, values) {
               final valuesOfType = values.whereType<T>();
@@ -145,16 +145,13 @@ class _PodRemapperState extends State<PodRemapper> {
     Widget? child,
     Iterable values,
   ) {
-    if (widget.remappers.isNotEmpty && values.isNotEmpty) {
+    final nonNullValues = values.nonNulls;
+    if (widget.remappers.isNotEmpty && nonNullValues.isNotEmpty) {
       final remappersCopy = List.of(widget.remappers);
-      final pods = <Pod<dynamic>>[];
-      for (final value in values) {
-        if (value == null) return staticChild;
-        final temp = remappersCopy.first.call(value);
-        pods.addAll(temp);
-        remappersCopy.removeAt(0);
-        if (remappersCopy.isEmpty) break;
-      }
+      final pods = <Pod>[];
+      final temp = remappersCopy.first.call(nonNullValues).nonNulls;
+      pods.addAll(temp);
+      remappersCopy.removeAt(0);
       return PodRemapper._(
         pods: pods,
         remappers: remappersCopy,
@@ -168,4 +165,13 @@ class _PodRemapperState extends State<PodRemapper> {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef PodRemapperFunctions = Iterable<Pod> Function(dynamic);
+typedef PodRemapperFunctions = Iterable<Pod?> Function(Iterable<dynamic>);
+
+extension SecondToFourth<T> on Iterable<T> {
+  T get second => elementAt(1);
+  T? get secondOrNull => elementAtOrNull(1);
+  T get third => elementAt(2);
+  T? get thirdOrNull => elementAtOrNull(2);
+  T get fourth => elementAt(3);
+  T? get fourthOrNull => elementAtOrNull(3);
+}
