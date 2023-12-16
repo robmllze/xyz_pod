@@ -10,58 +10,65 @@
 //.title~
 
 import 'package:flutter/widgets.dart';
+
 import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// `PodBuilder` is a StatefulWidget in Flutter designed to build a widget tree
-/// responsive to changes in a `Pod<T>`. It rebuilds its child widget whenever the
-/// `Pod`'s value changes, making it ideal for reactive UI updates.
+/// `PodBuilder` is a special widget for Flutter that automatically calls its
+/// [builder] whenever the data in a `Pod<T>` changes.
 ///
 /// Generic Type:
-/// - `T`: The type of value the `Pod` holds.
-class PodBuilder<P> extends StatefulWidget {
+/// - `T`: The type of data the `Pod` has.
+class PodBuilder<T> extends StatefulWidget {
   //
   //
   //
 
-  /// The `Pod` object that this builder is listening to.
-  /// The builder will be triggered to rebuild whenever this `Pod` notifies its listeners.
-  final Pod<P>? pod;
+  /// The `Pod` that this builder listens to. When the `Pod`'s data changes,
+  /// this builder updates its widget.
+  final Pod<T>? pod;
 
   //
   //
   //
 
-  /// The child widget of this `PodBuilder`.
+  /// An optional child widget that can be passed to this [builder].
   final Widget? child;
 
   //
   //
   //
 
-  /// A builder function that is called every time the `Pod`'s value changes.
-  /// It takes the current `BuildContext`, the child `Widget` and the current
-  /// value of the `Pod`, and returns a `Widget`.
-  final Widget? Function(BuildContext, Widget?, P)? builder;
+  /// A function that rebuilds the widget every time the `Pod`'s data changes.
+  /// It uses the current context, the child widget, and the `Pod`'s current
+  /// data to create a new widget.
+  final Widget? Function(BuildContext, Widget?, T)? builder;
 
   //
   //
   //
 
+  /// A function to build a placeholder widget. It's used when there's no data
+  /// to show.
   final Widget? Function(BuildContext, Widget?)? placeholderBuilder;
 
   //
   //
   //
 
-  /// Constructs a `PodBuilder` widget.
+  /// Constructs a `PodBuilder` widget. This widget listens to a `Pod` and
+  /// rebuilds whenever the `Pod`'s data changes.
   ///
   /// Parameters:
-  /// - `key`: An identifier for this widget in the widget tree.
-  /// - `pod`: The `Pod` object this widget listens to.
-  /// - `builder`: A function that builds the UI based on the `Pod`'s value.
-  /// - `child` (optional): A child widget to be passed to the builder function.
+  /// - `key`: A unique identifier for this widget, used in the widget tree.
+  /// - `pod`: The `Pod` that this widget will listen to for changes.
+  /// - `builder`: A function used to build the widget's UI based on the `Pod`'s
+  ///    current data.
+  /// - `placeholderBuilder`: A function to create a placeholder widget when
+  ///   there's no data.
+  /// - `child`: An optional widget that can be used within the builder
+  ///   function.
   const PodBuilder({
     super.key,
     this.pod,
@@ -75,16 +82,18 @@ class PodBuilder<P> extends StatefulWidget {
   //
 
   @override
-  State<PodBuilder<P>> createState() => _PodBuilderState<P>();
+  State<PodBuilder<T>> createState() => _PodBuilderState<T>();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _PodBuilderState<P> extends State<PodBuilder<P>> {
+class _PodBuilderState<T> extends State<PodBuilder<T>> {
   //
   //
   //
 
+  // This widget is a constant part of the UI and doesn't change with the Pod's
+  // data.
   late final Widget staticChild;
 
   //
@@ -94,9 +103,11 @@ class _PodBuilderState<P> extends State<PodBuilder<P>> {
   @override
   void initState() {
     super.initState();
-    // Initialize the static child widget
+    // Sets the static child widget. If 'child' is not provided, a default
+    // empty space is used.
     staticChild = widget.child ?? const SizedBox.shrink();
-    // Add a listener to the Pod. The listener calls _update to rebuild the widget.
+    // Registers a listener to the Pod. When the Pod's data changes, '_update'
+    // is called to rebuild this widget.
     widget.pod?.addListener(_update);
   }
 
@@ -106,6 +117,8 @@ class _PodBuilderState<P> extends State<PodBuilder<P>> {
 
   /// Internal method to trigger a rebuild of the widget.
   void _update() {
+    // Checks if the widget is still in the widget tree before setting state to
+    // prevent runtime errors.
     if (mounted) {
       setState(() {});
     }
@@ -117,26 +130,34 @@ class _PodBuilderState<P> extends State<PodBuilder<P>> {
 
   @override
   Widget build(BuildContext context) {
-    final p = widget.pod?.value;
-    if (p is P) {
+    // Retrieves the current value from the Pod.
+    final value = widget.pod?.value;
+    if (value is T) {
+      // Builds the widget based on the Pod's value. If the value is present,
+      // it uses the 'builder' function; otherwise, it falls back to the
+      // '_fallbackBuilder'.
       return widget.builder?.call(
             context,
             staticChild,
-            p,
+            value,
           ) ??
-          widget.placeholderBuilder?.call(
-            context,
-            staticChild,
-          ) ??
-          staticChild;
+          _fallbackBuilder(context);
     } else {
-      return widget.placeholderBuilder?.call(
-            context,
-            staticChild,
-          ) ??
-          staticChild;
+      return _fallbackBuilder(context);
     }
   }
+
+  //
+  //
+  //
+
+  /// Internal method to build a fallback widget when the Pod's value is null.
+  Widget _fallbackBuilder(BuildContext context) =>
+      widget.placeholderBuilder?.call(
+        context,
+        staticChild,
+      ) ??
+      staticChild;
 
   //
   //
@@ -150,5 +171,3 @@ class _PodBuilderState<P> extends State<PodBuilder<P>> {
     super.dispose();
   }
 }
-
-

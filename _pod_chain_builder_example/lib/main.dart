@@ -232,7 +232,7 @@ void main() {
             const SizedBox(height: 80.0),
             // Create a PodRemapper to listen to multiple Pods and remap them
             // to one or more values of type UserModel.
-            PodRemapper(
+            PodRebuilder(
               // Provide some pods to listen to. They can be null or non-null.
               pods: [
                 appService.pDatabaseService,

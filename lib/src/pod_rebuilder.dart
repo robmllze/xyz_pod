@@ -14,7 +14,7 @@ import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class PodRemapper<T> extends StatefulWidget {
+class PodRebuilder<T> extends StatefulWidget {
   //
   //
   //
@@ -28,7 +28,7 @@ class PodRemapper<T> extends StatefulWidget {
   //
   //
 
-  const PodRemapper._({
+  const PodRebuilder._({
     super.key,
     this.pods = const [],
     this.remappers = const [],
@@ -40,7 +40,7 @@ class PodRemapper<T> extends StatefulWidget {
   //
   //
 
-  factory PodRemapper({
+  factory PodRebuilder({
     Key? key,
     Iterable<Pod> pods = const [],
     Iterable<PodRemapperFunctions> remappers = const [],
@@ -48,7 +48,7 @@ class PodRemapper<T> extends StatefulWidget {
     Widget? Function(BuildContext, Widget?)? emptyBuilder,
     Widget? child,
   }) {
-    return PodRemapper<T>._(
+    return PodRebuilder<T>._(
       key: key,
       pods: pods,
       remappers: remappers,
@@ -70,7 +70,7 @@ class PodRemapper<T> extends StatefulWidget {
   //
   //
 
-  factory PodRemapper.first({
+  factory PodRebuilder.first({
     Key? key,
     Iterable<Pod> pods = const [],
     Iterable<PodRemapperFunctions> remappers = const [],
@@ -78,7 +78,7 @@ class PodRemapper<T> extends StatefulWidget {
     Widget? Function(BuildContext, Widget?)? nullBuilder,
     Widget? child,
   }) {
-    return PodRemapper<T>(
+    return PodRebuilder<T>(
       key: key,
       pods: pods,
       remappers: remappers,
@@ -95,12 +95,12 @@ class PodRemapper<T> extends StatefulWidget {
   //
 
   @override
-  State<PodRemapper> createState() => _PodRemapperState();
+  State<PodRebuilder> createState() => _PodRebuilderState();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _PodRemapperState extends State<PodRemapper> {
+class _PodRebuilderState extends State<PodRebuilder> {
   //
   //
   //
@@ -152,7 +152,7 @@ class _PodRemapperState extends State<PodRemapper> {
       final temp = remappersCopy.firstOrNull?.call(nonNullValues).nonNulls ?? [];
       pods.addAll(temp);
       remappersCopy.removeAt(0);
-      return PodRemapper._(
+      return PodRebuilder._(
         pods: pods,
         remappers: remappersCopy,
         builder: widget.builder,
