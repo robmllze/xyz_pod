@@ -116,3 +116,19 @@
 ### Removed
 
 - `remap` functions.
+
+## [0.11.0]
+
+### Added
+
+- `PodListHelper` class for managing a list of `Pod` objects.
+- `PodWatchListBuilder` widget for building UIs in response to changing pod lists.
+- Better examples.
+
+### Removed
+
+- `PodRemapper` was replaced with `PodWatchListBuilder`.
+
+### Updated
+
+- `README.md`.

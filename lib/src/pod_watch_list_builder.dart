@@ -15,7 +15,6 @@ import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-
 /// `PodWatchListBuilder` is a Flutter widget designed to build and update a UI
 /// based on a dynamic list of `Pod` objects. Unlike `PodListBuilder`, this
 /// widget uses a function to obtain its list of `Pod` objects, allowing for
@@ -82,7 +81,6 @@ class PodWatchListBuilder extends StatefulWidget {
   @override
   State<PodWatchListBuilder> createState() => _PodWatchListBuilderState();
 }
-
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

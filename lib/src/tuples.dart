@@ -119,7 +119,8 @@ class Tuple5<T1, T2, T3, T4, T5> {
   );
 }
 
-Tuple5<T1, T2, T3, T4, T5> getAs5<T1, T2, T3, T4, T5>(Iterable<dynamic> source) {
+Tuple5<T1, T2, T3, T4, T5> getAs5<T1, T2, T3, T4, T5>(
+    Iterable<dynamic> source) {
   if (source.length < 5) {
     throw ArgumentError("Source does not have enough elements");
   }
@@ -275,7 +276,8 @@ class Tuple9<T1, T2, T3, T4, T5, T6, T7, T8, T9> {
   );
 }
 
-Tuple9<T1, T2, T3, T4, T5, T6, T7, T8, T9> getAs9<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
+Tuple9<T1, T2, T3, T4, T5, T6, T7, T8, T9>
+    getAs9<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
   Iterable<dynamic> source,
 ) {
   if (source.length < 9) {
