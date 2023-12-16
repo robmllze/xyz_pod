@@ -9,67 +9,79 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 import 'package:flutter/widgets.dart';
-import 'package:xyz_pod/src/pod_builder.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// `Pod<T>` is a state management class that extends `ValueNotifier<T>`.
-/// It offers advanced features for handling state changes in Flutter apps.
+/// The `Pod<T>` class helps you manage state in Flutter apps. It works like
+/// `ValueNotifier<T>` but has extra features for better state handling.
 ///
-/// The class allows for asynchronous state updates and includes a flag to mark
-/// the instance as temporary. However, automatic disposal of temporary `Pod`
-/// instances requires implementation within a widget's lifecycle.
+/// This class lets you update state asynchronously and mark some instances as
+/// temporary, which can be automatically cleaned up in certain situations.
 ///
 /// Generic Type:
 /// - `T`: The type of value the `Pod` holds.
-class Pod<V> extends ValueNotifier<V> {
+class Pod<T> extends ValueNotifier<T> {
   //
   //
   //
 
-  /// Marks the `Pod` as temporary. Temporary `Pod` instances can be flagged
-  /// for automatic disposal when used within a widget that supports this
-  /// feature.
+  // Indicates if the `Pod` is temporary. Temporary ones can be cleaned up
+  // automatically in certain cases.
   bool markedAsTemp;
 
   //
   //
   //
 
-  /// Creates a new `Pod` instance with the given initial value.
+  // Holds the latest value temporarily during asynchronous updates, ensuring
+  // the Pod's state is always current.
+  T? _cachedValue;
+
+  //
+  //
+  //
+
+  /// Create a new `Pod` with an initial value.
   ///
-  /// Parameters:
-  /// - `value`: The initial value of the `Pod`.
-  /// - `temp` (optional): Marks the `Pod` as temporary if set to `true`.
-  /// Defaults to `false`.
+  /// - `value`: The starting value.
+  /// - `temp` (optional): If true, the `Pod` is temporary. Defaults to false.
   Pod(super.value, {bool temp = false}) : markedAsTemp = temp;
 
   //
   //
   //
 
-  /// Creates a temporary `Pod` instance with the given initial value.
-  /// Temporary `Pod` instances are flagged for automatic disposal but this
-  /// requires implementation within a widget's lifecycle.
+  /// Creates a temporary `Pod` with an initial value. These get cleaned up automatically,
+  /// but you need to set this up in your widget's lifecycle.
   ///
-  /// Parameters:
-  /// - `initialValue`: The initial value of the temporary `Pod`.
-  Pod.temp(V initialValue) : this(initialValue, temp: true);
+  /// - `initialValue`: The starting value for the temporary `Pod`.
+  Pod.temp(T initialValue) : this(initialValue, temp: true);
 
   //
   //
   //
 
-  /// Asynchronously sets the value of the `Pod` and notifies listeners.
+  set value(T newValue) => this.set(newValue);
+
+  //
+  //
+  //
+
+  @override
+  T get value => _cachedValue ?? super.value;
+
+  //
+  //
+  //
+
+  /// Set the `Pod` value asynchronously and notify any listeners.
+  /// This is done after the current build phase to avoid UI issues.
   ///
-  /// The update is scheduled to be executed after the current build phase,
-  /// ensuring it does not interfere with the UI rendering process.
-  ///
-  /// Parameters:
-  /// - `value`: The new value to set for the `Pod`.
-  Future<void> set(V newValue) async {
+  /// - `value`: The new value to set.
+  Future<void> set(T newValue) async {
+    _cachedValue = newValue;
     await Future.delayed(Duration.zero, () {
-      value = newValue;
+      super.value = _cachedValue!;
       notifyListeners();
     });
   }
@@ -78,17 +90,14 @@ class Pod<V> extends ValueNotifier<V> {
   //
   //
 
-  /// Asynchronously updates the value of the `Pod` using the provided updater
-  /// function.
+  /// Update the `Pod` value asynchronously with a function.
+  /// Like `set`, but uses a function to determine the new value.
   ///
-  /// The update is applied after the current build phase, similar to `set`.
-  ///
-  /// Parameters:
-  /// - `updater`: A function that takes the current value and returns the
-  /// updated value.
-  Future<void> update(V Function(V) updater) async {
+  /// - `updater`: Function to create the new value from the old one.
+  Future<void> update(T Function(T) updater) async {
+    _cachedValue = updater(value);
     await Future.delayed(Duration.zero, () {
-      value = updater(value);
+      super.value = _cachedValue!;
       notifyListeners();
     });
   }
@@ -97,10 +106,8 @@ class Pod<V> extends ValueNotifier<V> {
   //
   //
 
-  /// Asynchronously refreshes the `Pod`, triggering a notification to listeners.
-  ///
-  /// This method is useful when the internal state has changed in a way
-  /// that is not captured by a simple value assignment.
+  /// Refresh the `Pod`, notifying listeners. Useful when the state changes
+  /// in ways not shown by a simple value change.
   Future<void> refresh() async {
     await Future.delayed(Duration.zero, notifyListeners);
   }
@@ -109,15 +116,7 @@ class Pod<V> extends ValueNotifier<V> {
   //
   //
 
-  Widget build(Widget Function(V? v) builder) {
-    return PodBuilder(pod: this, builder: (_, __, v) => builder(v));
-  }
-
-  //
-  //
-  //
-
-  /// Adds a listener that is automatically removed after the first execution.
+  /// Add a listener that only runs once and then removes itself.
   void addSingleExecutionListener(VoidCallback listener) {
     late final VoidCallback tempLlistener;
     tempLlistener = () {
@@ -131,10 +130,8 @@ class Pod<V> extends ValueNotifier<V> {
   //
   //
 
-  /// Disposes of the `Pod` if it is marked as temporary.
-  ///
-  /// This is useful for resource management, ensuring that temporary instances
-  /// are properly disposed of when no longer needed.
+  /// Clean up the `Pod` if it's marked as temporary. This is for managing
+  /// resources efficiently.
   void disposeIfMarkedAsTemp() {
     if (this.markedAsTemp) {
       dispose();

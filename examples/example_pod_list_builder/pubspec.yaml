@@ -25,3 +25,6 @@ dependencies:
 
   flutter:
     sdk: flutter
+
+  xyz_pod:
+    path: ../../
