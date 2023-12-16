@@ -20,8 +20,8 @@ class PodRebuilder<T> extends StatefulWidget {
   //
 
   final Widget? child;
-  final Iterable<Pod> pods;
-  final Iterable<PodRemapperFunctions> remappers;
+  final Iterable<Pod?> pods;
+  final Iterable<PodRemappers> remappers;
   final Widget? Function(BuildContext, Widget?, Iterable)? builder;
 
   //
@@ -42,8 +42,8 @@ class PodRebuilder<T> extends StatefulWidget {
 
   factory PodRebuilder({
     Key? key,
-    Iterable<Pod> pods = const [],
-    Iterable<PodRemapperFunctions> remappers = const [],
+    Iterable<Pod?> pods = const [],
+    Iterable<PodRemappers> remappers = const [],
     Widget? Function(BuildContext, Widget?, Iterable<T> values)? builder,
     Widget? Function(BuildContext, Widget?)? emptyBuilder,
     Widget? child,
@@ -72,8 +72,8 @@ class PodRebuilder<T> extends StatefulWidget {
 
   factory PodRebuilder.first({
     Key? key,
-    Iterable<Pod> pods = const [],
-    Iterable<PodRemapperFunctions> remappers = const [],
+    Iterable<Pod?> pods = const [],
+    Iterable<PodRemappers> remappers = const [],
     Widget? Function(BuildContext, Widget?, T? value)? builder,
     Widget? Function(BuildContext, Widget?)? nullBuilder,
     Widget? child,
@@ -123,10 +123,9 @@ class _PodRebuilderState extends State<PodRebuilder> {
 
   @override
   Widget build(BuildContext context) {
-    final pods = widget.pods;
-    if (pods.isNotEmpty) {
+    if (widget.pods.nonNulls.isNotEmpty) {
       return PodListBuilder(
-        pods: pods,
+        pods: widget.pods,
         builder: _buildChain,
         child: staticChild,
       );
@@ -145,16 +144,12 @@ class _PodRebuilderState extends State<PodRebuilder> {
     Widget? child,
     Iterable values,
   ) {
-    final nonNullValues = values.nonNulls;
-    if (widget.remappers.isNotEmpty && nonNullValues.isNotEmpty) {
-      final remappersCopy = List.of(widget.remappers);
-      final pods = <Pod>[];
-      final temp = remappersCopy.firstOrNull?.call(nonNullValues).nonNulls ?? [];
-      pods.addAll(temp);
-      remappersCopy.removeAt(0);
+    if (widget.remappers.isNotEmpty && values.isNotEmpty) {
+      final newPods = widget.remappers.firstOrNull?.call(values) ?? [];
+      final newRemappers = widget.remappers.toList().sublist(1);
       return PodRebuilder._(
-        pods: pods,
-        remappers: remappersCopy,
+        pods: newPods,
+        remappers: newRemappers,
         builder: widget.builder,
         child: staticChild,
       );
@@ -165,13 +160,4 @@ class _PodRebuilderState extends State<PodRebuilder> {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef PodRemapperFunctions = Iterable<Pod?> Function(Iterable<dynamic>);
-
-extension SecondToFourth<T> on Iterable<T> {
-  T get second => elementAt(1);
-  T? get secondOrNull => elementAtOrNull(1);
-  T get third => elementAt(2);
-  T? get thirdOrNull => elementAtOrNull(2);
-  T get fourth => elementAt(3);
-  T? get fourthOrNull => elementAtOrNull(3);
-}
+typedef PodRemappers = Iterable<Pod?> Function(Iterable<dynamic>);

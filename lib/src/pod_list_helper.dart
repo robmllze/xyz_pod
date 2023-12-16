@@ -9,14 +9,44 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-library xyz_pod;
+import 'pod_list_builder.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-export 'src/pod_builder.dart';
-export 'src/pod_list_builder.dart';
-export 'src/pod_list_helper.dart';
-export 'src/pod_rebuilder.dart';
-export 'src/pod.dart';
-export 'src/second_to_ninth_element.dart';
-export 'src/tuples.dart';
+abstract class PodListHelper<T extends Object?> {
+  //
+  //
+  //
+
+  const PodListHelper();
+  //
+  //
+  //
+
+  PodList<T> get pods;
+
+  //
+  //
+  //
+
+  /// Disposes all `Pod` objects in the list. This method should be called when
+  /// the `Pod` objects are no longer needed, to release resources.
+  void dispose() {
+    for (final pod in pods) {
+      pod?.dispose();
+    }
+  }
+
+  //
+  //
+  //
+
+  /// Disposes only those `Pod` objects in the list that are marked as
+  /// temporary. This method is useful for selectively releasing resources used
+  /// by temporary `Pod` objects.
+  void disposeIfMarkedAsTemp() {
+    for (final pod in pods) {
+      pod?.disposeIfMarkedAsTemp();
+    }
+  }
+}

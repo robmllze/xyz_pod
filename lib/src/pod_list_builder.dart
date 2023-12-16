@@ -175,36 +175,3 @@ class _PodListBuilderState extends State<PodListBuilder> {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 typedef PodList<T extends Object?> = Iterable<Pod<T>?>;
-
-abstract class PodListHelper<T extends Object?> {
-  //
-  //
-  //
-
-  const PodListHelper();
-  //
-  //
-  //
-
-  PodList<T> get pods;
-
-  //
-  //
-  //
-
-  void dispose() {
-    for (final pod in pods) {
-      pod?.dispose();
-    }
-  }
-
-  //
-  //
-  //
-
-  void disposeIfMarkedAsTemp() {
-    for (final pod in pods) {
-      pod?.disposeIfMarkedAsTemp();
-    }
-  }
-}

@@ -13,7 +13,8 @@ import 'package:flutter/material.dart';
 // Step 1: Import the package.
 import 'package:xyz_pod/xyz_pod.dart';
 
-// Step 2: Create a list of Pods with different types.
+// Step 2: Create a list of Pods with different types. You may wish to keep
+// these Pods in a separate file that holds the global state of your app.
 final pTemperature = Pod<double>(68.0);
 final pWeatherCondition = Pod<String>("Sunny");
 
@@ -50,7 +51,7 @@ void main() {
                 },
               ),
               const SizedBox(height: 16.0),
-              // Step 3: Buttons to update values.
+              // Step 3: Update the Pods and watch the UI update.
               ElevatedButton(
                 onPressed: () {
                   // Incrementing temperature.
