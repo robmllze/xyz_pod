@@ -41,7 +41,11 @@ class PodListBuilder extends StatefulWidget {
   /// A function that rebuilds the widget every time the data of any of the
   /// [pods] change. It uses the current context, the child widget, and the
   /// current data of the [pods] to create a new widget.
-  final Widget? Function(BuildContext, Widget?, Iterable) builder;
+  final Widget? Function(
+    BuildContext context,
+    Widget? child,
+    Iterable data,
+  ) builder;
 
   //
   //
@@ -80,7 +84,7 @@ class _PodListBuilderState extends State<PodListBuilder> {
   //
   //
 
-  late final Widget? staticChild;
+  late final Widget? _staticChild;
 
   //
   //
@@ -90,7 +94,7 @@ class _PodListBuilderState extends State<PodListBuilder> {
   void initState() {
     super.initState();
     // Initialize the static child widget.
-    staticChild = widget.child;
+    _staticChild = widget.child;
 
     // Add listeners to each Pod in the list.
     for (final pod in widget.pods) {
@@ -141,7 +145,7 @@ class _PodListBuilderState extends State<PodListBuilder> {
   Widget build(BuildContext context) {
     return widget.builder(
           context,
-          staticChild,
+          _staticChild,
           // Get the values of the Pods in the list.
           widget.pods.map((e) => e?.value),
         ) ??
@@ -154,7 +158,7 @@ class _PodListBuilderState extends State<PodListBuilder> {
 
   /// Internal method to build a fallback widget when the Pod's value is null.
   Widget _fallbackBuilder(BuildContext context) {
-    return staticChild ?? const SizedBox.shrink();
+    return _staticChild ?? const SizedBox.shrink();
   }
 
   //

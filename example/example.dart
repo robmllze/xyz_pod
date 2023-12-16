@@ -1,9 +1,13 @@
 // -----------------------------------------------------------------------------
-// Example of using a Pod to manage a counter.
+// Example of using temporarty Pods.
 // -----------------------------------------------------------------------------
 
 import 'package:flutter/material.dart';
 import 'package:xyz_pod/xyz_pod.dart';
+
+// -----------------------------------------------------------------------------
+
+final pGlobalText = Pod<String>("Hello World");
 
 // -----------------------------------------------------------------------------
 
@@ -18,59 +22,82 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'XYZ Pod Example',
-      home: CounterPage(),
+      home: Material(
+        child: Column(
+          children: [
+            MyText(
+              // Create a temporary String Pod that will be disposed when the
+              // MyText widget is disposed.
+              pText: Pod.temp("Hello World"),
+            ),
+            // The Pod here is not temporary, so it will not be disposed by
+            //  MyText.
+            MyText(
+              pText: pGlobalText,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
 // -----------------------------------------------------------------------------
 
-class CounterPage extends StatefulWidget {
-  const CounterPage({super.key});
+class MyText extends StatefulWidget {
+  //
+  //
+  //
+
+  final Pod<String> pText;
+
+  //
+  //
+  //
+
+  const MyText({
+    super.key,
+    required this.pText,
+  });
+
+  //
+  //
+  //
 
   @override
-  CounterPageState createState() => CounterPageState();
+  MyTextState createState() => MyTextState();
 }
 
 // -----------------------------------------------------------------------------
 
-class CounterPageState extends State<CounterPage> {
-  // Create a Pod of any type, including Lists, Maps, and custom objects.
-  final Pod<int> pCounter = Pod<int>(0);
+class MyTextState extends State<MyText> {
+  //
+  //
+  //
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('XYZ Pod Counter Example'),
-      ),
-      body: Center(
-        // Consume the value of the Pod in your UI.
-        child: PodBuilder<int>(
-          pod: pCounter,
-          builder: (context, child, counter) => Text(
-            'Counter Value: ${counter.toString()}',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Update the value of the Pod anywhere in your code.
-          pCounter.update((value) => value + 1);
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+    return PodBuilder(
+      pod: widget.pText,
+      builder: (context, child, text) {
+        return Text(
+          text,
+          style: Theme.of(context).textTheme.bodyLarge,
+        );
+      },
     );
   }
 
+  //
+  //
+  //
+
   @override
   void dispose() {
-    // Dispose the Pod when it is no longer needed.
-    pCounter.dispose();
+    // Dispose pText if it is temporary.
+    widget.pText.disposeIfMarkedAsTemp();
     super.dispose();
   }
 }

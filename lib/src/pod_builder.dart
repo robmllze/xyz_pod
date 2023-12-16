@@ -93,7 +93,7 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
 
   // This widget is a constant part of the UI and doesn't change with the Pod's
   // data.
-  late final Widget? staticChild;
+  late final Widget? _staticChild;
 
   //
   //
@@ -104,7 +104,7 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
     super.initState();
     // Sets the static child widget. If 'child' is not provided, a default
     // empty space is used.
-    staticChild = widget.child;
+    _staticChild = widget.child;
     // Registers a listener to the Pod. When the Pod's data changes, '_update'
     // is called to rebuild this widget.
     widget.pod?.addListener(_update);
@@ -137,7 +137,7 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
       // '_fallbackBuilder'.
       return widget.builder?.call(
             context,
-            staticChild,
+            _staticChild,
             value,
           ) ??
           _fallbackBuilder(context);
@@ -154,9 +154,9 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
   Widget _fallbackBuilder(BuildContext context) {
     return widget.placeholderBuilder?.call(
           context,
-          staticChild,
+          _staticChild,
         ) ??
-        staticChild ??
+        _staticChild ??
         const SizedBox.shrink();
   }
 
