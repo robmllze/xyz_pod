@@ -4,10 +4,10 @@
 
 ## Examples
 
-- [Example 1: A basic example on how to use a Pod and PodBuilder](https://github.com/robmllze/xyz_pod/blob/main/examples/example_pod_builder/lib/main.dart)
-- [Example 2: A basic example on how to use PodList, PodListHelper and PodListBuilder](https://github.com/robmllze/xyz_pod/blob/main/examples/example_pod_list_builder/lib/main.dart)
-- [Example 3: Modular Service Based State Management with PodWatchListBuilder.](https://github.com/robmllze/xyz_pod/blob/main/examples/example_pod_watch_list_builder/lib/main.dart)
-- [Example 4: Temp Pods.](https://github.com/robmllze/xyz_pod/blob/main/examples/example_temp_pods/lib/main.dart)
+- [Example 1: A basic example on how to use a Pod and PodBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_pod_builder/lib/main.dart)
+- [Example 2: A basic example on how to use PodList, PodListHelper and PodListBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_pod_list_builder/lib/main.dart)
+- [Example 3: Modular Service Based State Management with PodWatchListBuilder.](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_pod_watch_list_builder/lib/main.dart)
+- [Example 4: Temp Pods.](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_temp_pods/lib/main.dart)
 
 ## Overview
 `xyz_pod` is a Flutter package designed to enhance and simplify state management in Flutter applications. Building upon the capabilities of `ValueNotifier`, this package introduces several additional functionalities that streamline the state management process, making it more efficient and scalable.
