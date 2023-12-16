@@ -47,7 +47,7 @@ void main() {
               ),
               const SizedBox(height: 16.0),
               // Step 4: Use the Pod's update method to update the value.
-              FilledButton(
+              ElevatedButton(
                 onPressed: () {
                   pCounter.update((e) => ++e);
 
@@ -66,7 +66,7 @@ void main() {
                 child: Text("Increment pCounter's value"),
               ),
               const SizedBox(height: 16.0),
-              FilledButton(
+              ElevatedButton(
                 onPressed: () {
                   pCounterList.update((e) => e..first = e.first + 1);
 

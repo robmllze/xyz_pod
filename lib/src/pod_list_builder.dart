@@ -25,7 +25,7 @@ class PodListBuilder extends StatefulWidget {
   //
 
   /// The collection of `Pod` objects that this builder listens to.
-  final Iterable<Pod?> pods;
+  final PodList pods;
 
   //
   //
@@ -169,5 +169,42 @@ class _PodListBuilderState extends State<PodListBuilder> {
       pod?.disposeIfMarkedAsTemp();
     }
     super.dispose();
+  }
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+typedef PodList<T extends Object?> = Iterable<Pod<T>?>;
+
+abstract class PodListHelper<T extends Object?> {
+  //
+  //
+  //
+
+  const PodListHelper();
+  //
+  //
+  //
+
+  PodList<T> get pods;
+
+  //
+  //
+  //
+
+  void dispose() {
+    for (final pod in pods) {
+      pod?.dispose();
+    }
+  }
+
+  //
+  //
+  //
+
+  void disposeIfMarkedAsTemp() {
+    for (final pod in pods) {
+      pod?.disposeIfMarkedAsTemp();
+    }
   }
 }
