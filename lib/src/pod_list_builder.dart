@@ -16,15 +16,15 @@ import '/xyz_pod.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// `PodListBuilder` is a Flutter widget designed to build and update a UI based
-/// on a collection of `Pod` objects. It automatically refreshes the UI when
-/// any of the `Pod` objects change, making it great for managing the state of
-/// several `Pod` objects together.
+/// on a list of `Pod` objects. It automatically refreshes the UI when any of
+/// the `Pod` objects change, making it great for managing the state of several
+/// `Pod` objects together.
 class PodListBuilder extends StatefulWidget {
   //
   //
   //
 
-  /// The collection of `Pod` objects that this builder listens to.
+  /// The list of `Pod` objects that this builder listens to.
   final PodList pods;
 
   //
@@ -44,27 +44,26 @@ class PodListBuilder extends StatefulWidget {
   final Widget? Function(
     BuildContext context,
     Widget? child,
-    Iterable data,
+    PodDataList data,
   ) builder;
 
   //
   //
   //
 
-  /// Constructs a `PodListBuilder` widget. This widget listenes to a collection
+  /// Constructs a `PodListBuilder` widget. This widget listenes to a list
   /// of Pods and rebuilds whenever any of their data changes.
   ///
   /// Parameters:
   /// - `key`: A unique identifier for this widget, used in the widget tree.
-  /// - `pods`: A collection of `Pod` objects that this widget will track and
+  /// - `pods`: A list of `Pod` objects that this widget will track and
   ///   react to.
   /// - `builder`: A function used to build the widget's UI based on the current
   ///   data from the provided [pods].
-  /// - `child`: An optional widget that can be used within the builder
-  ///   function.
+  /// - `child`: An optional widget that can be used within the [builder].
   const PodListBuilder({
     super.key,
-    this.pods = const [],
+    required this.pods,
     required this.builder,
     this.child,
   });
@@ -93,13 +92,8 @@ class _PodListBuilderState extends State<PodListBuilder> {
   @override
   void initState() {
     super.initState();
-    // Initialize the static child widget.
     _staticChild = widget.child;
-
-    // Add listeners to each Pod in the list.
-    for (final pod in widget.pods) {
-      pod?.addListener(_update);
-    }
+    _addListenerToPods(widget.pods);
   }
 
   //
@@ -109,18 +103,17 @@ class _PodListBuilderState extends State<PodListBuilder> {
   @override
   void didUpdateWidget(PodListBuilder oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Remove the update listeners from all the Pods in the old widget. This is
-    // necessary because we don't want to listen to changes from Pods that are
-    // no longer part of this widget.
-    for (final oldPod in oldWidget.pods) {
-      oldPod?.removeListener(_update);
-    }
+    _removeListenerFromPods(oldWidget.pods);
+    _addListenerToPods(widget.pods);
+  }
 
-    // Add the update listener to all the Pods in the new widget. This ensures
-    // that our widget listens to changes in the current set of Pods and updates
-    // accordingly.
-    for (final newPod in widget.pods) {
-      newPod?.addListener(_update);
+  //
+  //
+  //
+
+  void _addListenerToPods(PodList pods) {
+    for (final pod in pods) {
+      pod?.addListener(_update);
     }
   }
 
@@ -128,10 +121,17 @@ class _PodListBuilderState extends State<PodListBuilder> {
   //
   //
 
-  /// Internal method to trigger a rebuild of the widget.
+  void _removeListenerFromPods(PodList pods) {
+    for (final pod in pods) {
+      pod?.removeListener(_update);
+    }
+  }
+
+  //
+  //
+  //
+
   void _update() {
-    // Checks if the widget is still in the widget tree before setting state to
-    // prevent runtime errors.
     if (mounted) {
       setState(() {});
     }
@@ -146,7 +146,6 @@ class _PodListBuilderState extends State<PodListBuilder> {
     return widget.builder(
           context,
           _staticChild,
-          // Get the values of the Pods in the list.
           widget.pods.map((e) => e?.value),
         ) ??
         _fallbackBuilder(context);
@@ -156,7 +155,6 @@ class _PodListBuilderState extends State<PodListBuilder> {
   //
   //
 
-  /// Internal method to build a fallback widget when the Pod's value is null.
   Widget _fallbackBuilder(BuildContext context) {
     return _staticChild ?? const SizedBox.shrink();
   }
@@ -167,7 +165,6 @@ class _PodListBuilderState extends State<PodListBuilder> {
 
   @override
   void dispose() {
-    // Remove listeners from all Pods when the widget is disposed.
     for (final pod in widget.pods) {
       pod?.removeListener(_update);
       pod?.disposeIfMarkedAsTemp();
@@ -175,7 +172,3 @@ class _PodListBuilderState extends State<PodListBuilder> {
     super.dispose();
   }
 }
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-typedef PodList<T extends Object?> = Iterable<Pod<T>?>;

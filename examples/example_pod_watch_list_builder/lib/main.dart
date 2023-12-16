@@ -85,11 +85,6 @@ class UserProfileApp extends StatelessWidget {
 //
 // -----------------------------------------------------------------------------
 
-mixin PodServiceMixin {
-  Future<void> startService();
-  Future<void> stopService();
-}
-
 class AuthenticationService with PodServiceMixin {
   final pIsAuthenticated = Pod<bool>(false);
   final pIdToken = Pod<String?>(null);
@@ -172,22 +167,22 @@ class AppService with PodServiceMixin {
   }
 
   // Watch list builder to track and respond to changes in Pods.
-  PodWatchList appServiceWatchListBuilder() {
-    return {
-      1: pUserDataService,
-      2: pUserDataService.value?.pUserModel,
-      3: pAuthenticationService,
-      4: pAuthenticationService.value?.pIdToken,
-      5: pAuthenticationService.value?.pIsAuthenticated,
-    };
+  PodList appServiceWatchListBuilder() {
+    return [
+      pUserDataService,
+      pUserDataService.value?.pUserModel,
+      pAuthenticationService,
+      pAuthenticationService.value?.pIdToken,
+      pAuthenticationService.value?.pIsAuthenticated,
+    ];
   }
 
   // Targeted watch list for user model updates.
-  PodWatchList userModelWatchListBuilder() {
-    return {
-      1: pUserDataService,
-      2: pUserDataService.value?.pUserModel,
-    };
+  PodList userModelWatchListBuilder() {
+    return [
+      pUserDataService,
+      pUserDataService.value?.pUserModel,
+    ];
   }
 
   // Snapshot methods for instant access to Pod values.

@@ -91,8 +91,6 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
   //
   //
 
-  // This widget is a constant part of the UI and doesn't change with the Pod's
-  // data.
   late final Widget? _staticChild;
 
   //
@@ -102,11 +100,7 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
   @override
   void initState() {
     super.initState();
-    // Sets the static child widget. If 'child' is not provided, a default
-    // empty space is used.
     _staticChild = widget.child;
-    // Registers a listener to the Pod. When the Pod's data changes, '_update'
-    // is called to rebuild this widget.
     widget.pod?.addListener(_update);
   }
 
@@ -114,10 +108,7 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
   //
   //
 
-  /// Internal method to trigger a rebuild of the widget.
   void _update() {
-    // Checks if the widget is still in the widget tree before setting state to
-    // prevent runtime errors.
     if (mounted) {
       setState(() {});
     }
@@ -129,12 +120,8 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
 
   @override
   Widget build(BuildContext context) {
-    // Retrieves the current value from the Pod.
     final value = widget.pod?.value;
     if (value is T) {
-      // Builds the widget based on the Pod's value. If the value is present,
-      // it uses the 'builder' function; otherwise, it falls back to the
-      // '_fallbackBuilder'.
       return widget.builder?.call(
             context,
             _staticChild,
@@ -150,7 +137,6 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
   //
   //
 
-  /// Internal method to build a fallback widget when the Pod's value is null.
   Widget _fallbackBuilder(BuildContext context) {
     return widget.placeholderBuilder?.call(
           context,
@@ -166,7 +152,6 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
 
   @override
   void dispose() {
-    // Remove the listener from the Pod when the widget is disposed.
     widget.pod?.removeListener(_update);
     widget.pod?.disposeIfMarkedAsTemp();
     super.dispose();

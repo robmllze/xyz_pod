@@ -9,15 +9,14 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-library xyz_pod;
+import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-export 'src/pod_builder.dart';
-export 'src/pod_list_builder.dart';
-export 'src/pod_list_helper.dart';
-export 'src/pod.dart';
-export 'src/second_to_ninth_element.dart';
-export 'src/tuples.dart';
-export 'src/pod_watch_list_builder.dart';
-export 'src/types.dart';
+typedef PodList<T extends Object?> = Iterable<Pod<T>?>;
+typedef PodDataList<T extends Object?> = Iterable<T>;
+
+mixin PodServiceMixin {
+  Future<void> startService();
+  Future<void> stopService();
+}
