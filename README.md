@@ -1,88 +1,99 @@
 # XYZ Pod
 
-XYZ Pod (xyz_pod) is a Flutter package designed to streamline and enhance state management in Flutter applications. It offers a suite of tools including `Pod`, `PodBuilder`, `PodListBuilder`, `PodRemapper`, classes, each tailored to handle different aspects of state management with ease and flexibility.
+[![pub package](https://img.shields.io/pub/v/xyz_pod.svg)](https://pub.dev/packages/xyz_pod)
+
+## Examples
+
+- [Example 1: A basic example on how to use a Pod and PodBuilder](https://github.com/robmllze/xyz_pod/blob/main/examples/example_pod_builder/lib/main.dart)
+- [Example 2: A basic example on how to use PodList, PodListHelper and PodListBuilder](https://github.com/robmllze/xyz_pod/blob/main/examples/example_pod_list_builder/lib/main.dart)
+- [Example 3: Modular Service Based State Management with PodWatchListBuilder.](https://github.com/robmllze/xyz_pod/blob/main/examples/example_pod_watch_list_builder/lib/main.dart)
+- [Example 4: Temp Pods.](https://github.com/robmllze/xyz_pod/blob/main/examples/example_temp_pods/lib/main.dart)
+
+## Overview
+`xyz_pod` is a Flutter package designed to enhance and simplify state management in Flutter applications. Building upon the capabilities of `ValueNotifier`, this package introduces several additional functionalities that streamline the state management process, making it more efficient and scalable.
+
+## Why Use Pod Over ValueNotifier?
+`Pod<T>` extends `ValueNotifier<T>`, inheriting its fundamental capabilities while providing advanced features. It addresses some of the limitations of `ValueNotifier` by offering:
+- Asynchronous state updates, ensuring the UI reflects the most recent state.
+- Improved handling of complex data types like lists and maps, where `ValueNotifier` requires manual notification.
+- Simplified management of multiple state objects within a single widget, enhancing reactivity and maintainability.
 
 ## Features
 
-- **Pod**: A flexible state management object that notifies listeners of changes.
-- **PodBuilder**: A widget for building UIs in response to changes in a `Pod` object.
-- **PodListBuilder**: Manages a list of `Pod` objects and rebuilds child widgets in response to changes in any of these `Pod` objects.
-- **PodRemapper**: Manages a chain of `Pod` objects and rebuilds child widgets in response to changes in any of these `Pod` objects.
+### Pod<T>
+- **Extension of ValueNotifier**: Inherits and enhances `ValueNotifier<T>`.
+- **Asynchronous State Updates**: Allows for asynchronous state updates, keeping the Pod's state current.
+- **Temporary Instances**: Includes functionality for marking instances as temporary for efficient resource management.
+- **Generic Type Parameter**: Generic class with the type parameter `T` for flexible data handling.
+- **Constructors**: Offers standard and specialized constructors for Pod creation.
+- **Value Setting and Updating**: Provides set, update, and refresh methods for state management.
+- **Single Execution Listener**: Adds a listener that executes once and then removes itself.
 
-## Preferred Over ValueNotifier
+### PodBuilder
+- **Generic Type Support**: Works with different data types.
+- **Pod Listening**: Triggers UI rebuild on Pod data changes.
+- **Builder Function**: Reconstructs the UI with every data change in the Pod.
+- **Placeholder Builder Function**: For scenarios where no data is available.
+- **State Management**: Manages widget's state effectively.
 
-### Simplified State Management with Complex Types
+### PodListBuilder
+- **Pod List Management**: Manages a list of Pod objects and updates the UI in response.
+- **Stateful Widget**: Maintains state changes throughout the widget's lifecycle.
+- **Builder Function**: Rebuilds the widget with changes in any Pod objects in the list.
 
-The Pod class simplifies state management, especially when dealing with complex data types like lists, maps, and custom objects. Unlike ValueNotifier, which may require explicit calls to notifyListeners for complex data types, Pod handles these updates automatically. This reduces the boilerplate code and potential for errors, making your state management more efficient and reliable.
+### PodWatchListBuilder
+- **Dynamic Pod List Generation**: Generates Pod lists dynamically for flexible list management.
+- **Advanced Builder Function**: Rebuilds the widget as the list of Pod objects changes.
+- **State Management**: Focuses on managing dynamic data states.
 
-### Multi-State Management with PodListBuilder
+## Advantages Over ValueNotifier
+- **Simplified State Management**: Eases managing complex data types, automating updates.
+- **Multi-State Management**: Allows handling multiple state objects within a single widget.
+- **Safe and Consistent State Updates**: Ensures asynchronous and safe state changes.
 
-With the PodListBuilder, you can effortlessly manage and respond to changes in multiple state objects within a single widget. This capability is a significant enhancement over the traditional ValueNotifier, which requires manual management of multiple listeners and can quickly become cumbersome in complex applications.
-
-### Chain State Management with PodRemapper
-
-The PodRemapper represents an evolution in state management for Flutter applications. It goes beyond the linear chaining of Pod objects, providing a more flexible and dynamic way to listen to and remap state from multiple sources. With PodRemapper, developers can easily orchestrate state dependencies and transformations across different parts of their application, enhancing both modularity and responsiveness in handling complex state scenarios.
-
-### Safe and Consistent State Updates
-
-A standout feature of Pod is its use of Future.delayed(Duration.zero) for state updates, ensuring that changes are applied asynchronously and safely. This approach prevents common issues associated with modifying state during the build phase of the widget tree, a challenge often encountered with ValueNotifier. By automatically scheduling updates to the next event loop cycle, Pod ensures consistent and error-free UI updates.
-
-## Getting Started
-
-To use XYZ Pod in your Flutter project, add the following dependency to your `pubspec.yaml` file:
-
-```yaml
-dependencies:
-  xyz_pod: any
-```
-
-## Using the PodBuilder
+## Example: Basic Usage of PodList, PodListHelper, and PodListBuilder
 
 ```dart
-// 1. Import the package.
+import 'package:flutter/material.dart';
 import 'package:xyz_pod/xyz_pod.dart';
 
-// 2. Create a Pod of any type, including Lists, Maps, and custom objects.
-final pCounter = Pod<int>(0);
+final pTemperature = Pod<double>(68.0);
+final pWeatherCondition = Pod<String>("Sunny");
 
-// 3. Consume the value of the Pod in your UI.
-PodBuilder(
-  pod: pCounter,
-  builder: (counter) => Text("${counter}"),
-)
-
-// 4. Set the value of the Pod anywhere in your code.
-void resetCounter() => pCounter.set(0);
-
-// 5. Update the value of the Pod anywere in your code.
-TextButton(
-  onPressed: () => pCounter.update((value) => value + 1),
-  child: Text("Increment"),
-)
-
-// 6. Dispose the Pod when it is no longer needed.
-void dispose() {
-  pCounter.dispose();
-  super.dispose();
+class WeatherPods extends PodListHelper {
+  const WeatherPods();
+  PodList get pods => [pTemperature, pWeatherCondition];
+  double get temperature => pods.elementAt(0)!.value as double;
+  String get weatherCondition => pods.elementAt(1)!.value as String;
 }
-```
 
-## Using the PodListBuilder
+void main() {
+  runApp(
+    MaterialApp(
+      home: Material(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              PodListBuilder(
+                pods: WeatherPods().pods,
+                builder: (context, child, pods) {
+                  final temperature = WeatherPods().temperature;
+                  final weatherCondition = WeatherPods().weatherCondition;
+                  return Text(
+                    "Today is $weatherCondition and the temperature is $temperature°F.",
+                  );
+                },
+              ),
+              // ... Additional UI and Button to update Pods ...
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
 
-```dart
-// 1. Define your Pods.
-
-final pCounter = Pod<int>(0);
-final pUserData = Pod<Map<String, dynamic>>({});
-final pIsSignedIn = Pod<bool>(false);
-
-// 2. Consume the values of the Pods in your UI.
-
-PodListBuilder(
-  pods: [pCounter, pUserData, pIsSignedIn],
-  builder: (values) => Text("${values.firstOrNull}"),
-)
-```
 
 ## Contributing
 

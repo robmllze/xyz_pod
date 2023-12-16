@@ -41,7 +41,7 @@ class PodBuilder<T> extends StatefulWidget {
 
   /// A function that rebuilds the widget every time the data of the [pod]
   /// changes. It uses the current context, the child widget, and the current
-  /// [pod] data to create a new widget.
+  /// [pod] data to create a new widget.å
   final Widget? Function(BuildContext, Widget?, T)? builder;
 
   //
