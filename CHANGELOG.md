@@ -128,7 +128,7 @@
 - `PodRemapper` was replaced with `PodWatchListBuilder`.
 - `README.md`.
 
-## [0.12.0]
+## [0.12.1]
 
 ### Updated
 
