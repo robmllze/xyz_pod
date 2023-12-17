@@ -18,16 +18,14 @@
 
 ## [0.1.3]
 
+### Added
+
+- Added a child parameter to the Pods.
+
 ### Fixed
 
 - Fixed typos in documentation.
 - Addressed package description issues.
-
-## [0.2.0]
-
-### Added
-
-- Added a child parameter to the Pods.
 
 ## [0.3.2]
 
@@ -125,10 +123,16 @@
 - `PodWatchListBuilder` widget for building UIs in response to changing pod lists.
 - Better examples.
 
-### Removed
+### Updated
 
 - `PodRemapper` was replaced with `PodWatchListBuilder`.
+- `README.md`.
+
+## [0.12.0]
 
 ### Updated
 
+- Renamed `PodWatchListBuilder` to `PodListRebuilder`.
+- Renamed `pods` property to `podList` in `PodBuilder`.
+- Renamed `watchListBuilder` property to `podList` in `PodListRebuilder` (previously `PodWatchListBuilder`).
 - `README.md`.

@@ -25,7 +25,7 @@ class PodListBuilder extends StatefulWidget {
   //
 
   /// The list of `Pod` objects that this builder listens to.
-  final PodList pods;
+  final PodList podList;
 
   //
   //
@@ -39,8 +39,8 @@ class PodListBuilder extends StatefulWidget {
   //
 
   /// A function that rebuilds the widget every time the data of any of the
-  /// [pods] change. It uses the current context, the child widget, and the
-  /// current data of the [pods] to create a new widget.
+  /// [podList] change. It uses the current context, the child widget, and the
+  /// current data of the [podList] to create a new widget.
   final Widget? Function(
     BuildContext context,
     Widget? child,
@@ -59,11 +59,11 @@ class PodListBuilder extends StatefulWidget {
   /// - `pods`: A list of `Pod` objects that this widget will track and
   ///   react to.
   /// - `builder`: A function used to build the widget's UI based on the current
-  ///   data from the provided [pods].
+  ///   data from the provided [podList].
   /// - `child`: An optional widget that can be used within the [builder].
   const PodListBuilder({
     super.key,
-    required this.pods,
+    required this.podList,
     required this.builder,
     this.child,
   });
@@ -93,7 +93,7 @@ class _PodListBuilderState extends State<PodListBuilder> {
   void initState() {
     super.initState();
     _staticChild = widget.child;
-    _addListenerToPods(widget.pods);
+    _addListenerToPods(widget.podList);
   }
 
   //
@@ -103,8 +103,8 @@ class _PodListBuilderState extends State<PodListBuilder> {
   @override
   void didUpdateWidget(PodListBuilder oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _removeListenerFromPods(oldWidget.pods);
-    _addListenerToPods(widget.pods);
+    _removeListenerFromPods(oldWidget.podList);
+    _addListenerToPods(widget.podList);
   }
 
   //
@@ -146,7 +146,7 @@ class _PodListBuilderState extends State<PodListBuilder> {
     return widget.builder(
           context,
           _staticChild,
-          widget.pods.map((e) => e?.value),
+          widget.podList.map((e) => e?.value),
         ) ??
         _fallbackBuilder(context);
   }
@@ -165,7 +165,7 @@ class _PodListBuilderState extends State<PodListBuilder> {
 
   @override
   void dispose() {
-    for (final pod in widget.pods) {
+    for (final pod in widget.podList) {
       pod?.removeListener(_update);
       pod?.disposeIfMarkedAsTemp();
     }

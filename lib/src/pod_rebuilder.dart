@@ -15,13 +15,13 @@ import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// `PodWatchListBuilder` is a Flutter widget designed to build and update a UI
+/// `PodListRebuilder` is a Flutter widget designed to build and update a UI
 /// based on a dynamic list of `Pod` objects. Unlike `PodListBuilder`, this
 /// widget uses a function to obtain its list of `Pod` objects, allowing for
 /// more dynamic and flexible list generation. The UI is automatically refreshed
 /// whenever the returned list of `Pod` objects changes, making it highly
 /// effective for scenarios where the list of pods is not static.
-class PodWatchListBuilder extends StatefulWidget {
+class PodListRebuilder extends StatefulWidget {
   //
   //
   //
@@ -29,7 +29,7 @@ class PodWatchListBuilder extends StatefulWidget {
   /// A function that returns a `PodList`. This function is called to obtain
   /// the current list of `Pod` objects to be watched. Changes in the returned
   /// list will trigger a UI update.
-  final PodList Function() watchListBuilder;
+  final PodList Function() podList;
 
   //
   //
@@ -43,7 +43,7 @@ class PodWatchListBuilder extends StatefulWidget {
   //
 
   /// A function that rebuilds the widget every time the list returned by the
-  /// [watchListBuilder] changes. It uses the current context, the optional
+  /// [podList] changes. It uses the current context, the optional
   /// child widget, and the current data of the `Pod` objects to create a new
   /// widget.
   final Widget? Function(
@@ -56,8 +56,8 @@ class PodWatchListBuilder extends StatefulWidget {
   //
   //
 
-  /// Constructs a `PodWatchListBuilder` widget. This widget dynamically
-  /// generates its list of Pods using the [watchListBuilder] and rebuild
+  /// Constructs a `PodListRebuilder` widget. This widget dynamically
+  /// generates its list of Pods using the [podList] and rebuild
   ///  whenever the returned list changes.
   ///
   /// Parameters:
@@ -67,9 +67,9 @@ class PodWatchListBuilder extends StatefulWidget {
   /// - `builder`: A function used to build the widget's UI based on the current
   ///   data from the `Pod` objects.
   /// - `child`: An optional widget to be used within the [builder].
-  const PodWatchListBuilder({
+  const PodListRebuilder({
     super.key,
-    required this.watchListBuilder,
+    required this.podList,
     required this.builder,
     this.child,
   });
@@ -79,12 +79,12 @@ class PodWatchListBuilder extends StatefulWidget {
   //
 
   @override
-  State<PodWatchListBuilder> createState() => _PodWatchListBuilderState();
+  State<PodListRebuilder> createState() => _PodListRebuilderState();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _PodWatchListBuilderState extends State<PodWatchListBuilder> {
+class _PodListRebuilderState extends State<PodListRebuilder> {
   //
   //
   //
@@ -105,7 +105,7 @@ class _PodWatchListBuilderState extends State<PodWatchListBuilder> {
   void initState() {
     super.initState();
     _staticChild = widget.child;
-    _currentWatchList = widget.watchListBuilder();
+    _currentWatchList = widget.podList();
     _addListenerToPods(_currentWatchList);
   }
 
@@ -114,11 +114,11 @@ class _PodWatchListBuilderState extends State<PodWatchListBuilder> {
   //
 
   @override
-  void didUpdateWidget(PodWatchListBuilder oldWidget) {
+  void didUpdateWidget(PodListRebuilder oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.watchListBuilder != widget.watchListBuilder) {
+    if (oldWidget.podList != widget.podList) {
       _removeListenerFromPods(_currentWatchList);
-      _currentWatchList = widget.watchListBuilder();
+      _currentWatchList = widget.podList();
       _addListenerToPods(_currentWatchList);
     }
   }
@@ -148,7 +148,7 @@ class _PodWatchListBuilderState extends State<PodWatchListBuilder> {
   //
 
   void _update() {
-    final newPods = widget.watchListBuilder();
+    final newPods = widget.podList();
     _removeListenerFromPods(_currentWatchList);
     _currentWatchList = newPods;
     _addListenerToPods(_currentWatchList);

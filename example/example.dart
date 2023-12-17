@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 //
-// Example 3: Modular Service Based State Management with PodWatchListBuilder.
+// Example 3: Modular Service Based State Management with PodListRebuilder.
 //
 // Copyright (c) 2023 Robert Mollentze
 // See LICENSE for details.
@@ -53,10 +53,10 @@ class UserProfileApp extends StatelessWidget {
                   },
                   child: Text("Log Out")),
               SizedBox(height: 20),
-              // PodWatchListBuilder listens to changes in Pod sappService
+              // PodListRebuilder listens to changes in Pod sappService
               // and updates UI.
-              PodWatchListBuilder(
-                watchListBuilder: appService.appServiceWatchListBuilder,
+              PodListRebuilder(
+                podList: appService.appServiceWatchListBuilder,
                 builder: (context, child, data) {
                   final idToken = appService.idTokenSnapshot();
                   return Text("$idToken");
@@ -197,17 +197,17 @@ final appService = AppService();
 /*
   Summary:
 
-  - This example demonstrates an advanced use of PodWatchListBuilder in the
+  - This example demonstrates an advanced use of PodListRebuilder in the
     context of app service management.
   - The AppService class is used to manage and coordinate various services such
     as authentication and user data.
-  - PodWatchListBuilder is used to listen to changes in multiple Pods and
+  - PodListRebuilder is used to listen to changes in multiple Pods and
     update the UI accordingly.
   - Snapshots provide instant access to the current values of specific Pods.
 
   Additional Notes:
 
-  - The PodWatchListBuilder is flexible and efficient, allowing for focused
+  - The PodListRebuilder is flexible and efficient, allowing for focused
     updates based on the specific Pods it is watching.
   - The use of mixins (PodServiceMixin) promotes code reuse and clear structure
     in service implementation.

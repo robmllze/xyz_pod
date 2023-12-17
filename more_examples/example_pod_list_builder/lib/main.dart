@@ -37,7 +37,7 @@ void main() {
             children: [
               // Step 2: Use PodListBuilder to listen to changes in any of the Pods.
               PodListBuilder(
-                pods: WeatherPods().pods,
+                podList: WeatherPods().pods,
                 //pods: [pTemperature, pWeatherCondition], // This works too!
                 builder: (context, child, pods) {
                   // Extracting values from the list of Pod values.
