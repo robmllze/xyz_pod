@@ -128,8 +128,9 @@
 - `PodRemapper` was replaced with `PodWatchListBuilder`.
 - `README.md`.
 
-## [0.12.2]
+## [0.12.3]
 
 ### Updated
 
 - Renamed `PodWatchListBuilder` to `ResponsivePodListBuilder`.
+- Changed all `Iterables` to Sets to avoid duplicate pods.
