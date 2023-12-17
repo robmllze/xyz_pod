@@ -146,7 +146,7 @@ class _PodListBuilderState extends State<PodListBuilder> {
     return widget.builder(
           context,
           _staticChild,
-          widget.podList.map((e) => e?.value),
+          widget.podList.map((e) => e?.value).toSet(),
         ) ??
         _fallbackBuilder(context);
   }

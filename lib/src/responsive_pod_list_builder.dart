@@ -79,8 +79,7 @@ class ResponsivePodListBuilder extends StatefulWidget {
   //
 
   @override
-  State<ResponsivePodListBuilder> createState() =>
-      _ResponsivePodListBuilderState();
+  State<ResponsivePodListBuilder> createState() => _ResponsivePodListBuilderState();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -96,7 +95,7 @@ class _ResponsivePodListBuilderState extends State<ResponsivePodListBuilder> {
   //
   //
 
-  TPodList _currentWatchList = [];
+  TPodList _currentWatchList = {};
 
   //
   //
@@ -167,7 +166,7 @@ class _ResponsivePodListBuilderState extends State<ResponsivePodListBuilder> {
     return widget.builder(
           context,
           _staticChild,
-          _currentWatchList.map((pod) => pod?.value).toList(),
+          _currentWatchList.map((pod) => pod?.value).toSet(),
         ) ??
         _fallbackBuilder(context);
   }

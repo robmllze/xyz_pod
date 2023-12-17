@@ -13,8 +13,8 @@ import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef TPodList<T extends Object?> = Iterable<Pod<T>?>;
-typedef TPodDataList<T extends Object?> = Iterable<T>;
+typedef TPodList<T extends Object?> = Set<Pod<T>?>;
+typedef TPodDataList<T extends Object?> = Set<T>;
 typedef TPodListResponder<T> = TPodList<T> Function();
 
 mixin PodServiceMixin {

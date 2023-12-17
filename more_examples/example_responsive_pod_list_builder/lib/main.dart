@@ -168,21 +168,21 @@ class AppService with PodServiceMixin {
 
   // TPodListResponder to track and respond to changes in Pods.
   TPodList appServicePlr() {
-    return [
+    return {
       pUserDataService,
       pUserDataService.value?.pUserModel,
       pAuthenticationService,
       pAuthenticationService.value?.pIdToken,
       pAuthenticationService.value?.pIsAuthenticated,
-    ];
+    };
   }
 
   // Targeted PodListResponder for user model updates.
   late final TPodListResponder userModelPlr = () {
-    return [
+    return {
       pUserDataService,
       pUserDataService.value?.pUserModel,
-    ];
+    };
   };
 
   // Snapshot methods for instant access to Pod values.
