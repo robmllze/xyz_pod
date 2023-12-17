@@ -79,7 +79,8 @@ class ResponsivePodListBuilder extends StatefulWidget {
   //
 
   @override
-  State<ResponsivePodListBuilder> createState() => _ResponsivePodListBuilderState();
+  State<ResponsivePodListBuilder> createState() =>
+      _ResponsivePodListBuilderState();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
