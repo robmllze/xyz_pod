@@ -6,7 +6,7 @@
 
 - [Example 1: A basic example on how to use a Pod and PodBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_pod_builder/lib/main.dart)
 - [Example 2: A basic example on how to use PodList, PodListHelper and PodListBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_pod_list_builder/lib/main.dart)
-- [Example 3: Modular Service Based State Management with PodListRebuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_pod_list_rebuilder/lib/main.dart)
+- [Example 3: Modular Service-Based State Management with PodListRebuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_pod_list_rebuilder/lib/main.dart)
 - [Example 4: Temp Pods](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_temp_pods/lib/main.dart)
 
 ## Overview

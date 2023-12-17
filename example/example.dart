@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 //
-// Example 3: Modular Service Based State Management with PodListRebuilder.
+// Example 3: Modular Service-Based State Management with PodListRebuilder.
 //
 // Copyright (c) 2023 Robert Mollentze
 // See LICENSE for details.
@@ -74,7 +74,7 @@ class UserProfileApp extends StatelessWidget {
 //
 // Mock Services: Authentication and User Data
 //
-// In Modular Service Based State Management (MSM), each part of the app is
+// In Modular Service-Based State Management (MSM), each part of the app is
 // managed by its own service. This setup aims for each service to work
 // independently. But sometimes, certain services depend on each other. For
 // instance, a database service should start only after a user logs in, and
