@@ -128,11 +128,8 @@
 - `PodRemapper` was replaced with `PodWatchListBuilder`.
 - `README.md`.
 
-## [0.12.1]
+## [0.12.2]
 
 ### Updated
 
-- Renamed `PodWatchListBuilder` to `PodListRebuilder`.
-- Renamed `pods` property to `podList` in `PodBuilder`.
-- Renamed `watchListBuilder` property to `podList` in `PodListRebuilder` (previously `PodWatchListBuilder`).
-- `README.md`.
+- Renamed `PodWatchListBuilder` to `ResponsivePodListBuilder`.

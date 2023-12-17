@@ -13,8 +13,9 @@ import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef PodList<T extends Object?> = Iterable<Pod<T>?>;
-typedef PodDataList<T extends Object?> = Iterable<T>;
+typedef TPodList<T extends Object?> = Iterable<Pod<T>?>;
+typedef TPodDataList<T extends Object?> = Iterable<T>;
+typedef TPodListResponder<T> = TPodList<T> Function();
 
 mixin PodServiceMixin {
   Future<void> startService();

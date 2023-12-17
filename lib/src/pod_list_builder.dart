@@ -25,7 +25,7 @@ class PodListBuilder extends StatefulWidget {
   //
 
   /// The list of `Pod` objects that this builder listens to.
-  final PodList podList;
+  final TPodList podList;
 
   //
   //
@@ -44,7 +44,7 @@ class PodListBuilder extends StatefulWidget {
   final Widget? Function(
     BuildContext context,
     Widget? child,
-    PodDataList data,
+    TPodDataList data,
   ) builder;
 
   //
@@ -111,7 +111,7 @@ class _PodListBuilderState extends State<PodListBuilder> {
   //
   //
 
-  void _addListenerToPods(PodList pods) {
+  void _addListenerToPods(TPodList pods) {
     for (final pod in pods) {
       pod?.addListener(_update);
     }
@@ -121,7 +121,7 @@ class _PodListBuilderState extends State<PodListBuilder> {
   //
   //
 
-  void _removeListenerFromPods(PodList pods) {
+  void _removeListenerFromPods(TPodList pods) {
     for (final pod in pods) {
       pod?.removeListener(_update);
     }

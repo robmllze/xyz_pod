@@ -22,7 +22,7 @@ final pWeatherCondition = Pod<String>("Sunny");
 // entirely optional, but it makes the code cleaner.
 class WeatherPods extends PodListHelper {
   const WeatherPods();
-  PodList get pods => [pTemperature, pWeatherCondition];
+  TPodList get pods => [pTemperature, pWeatherCondition];
   double get temperature => pods.elementAt(0)!.value as double;
   String get weatherCondition => pods.elementAt(1)!.value as String;
 }

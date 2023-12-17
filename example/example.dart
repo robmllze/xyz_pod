@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 //
-// Example 3: Modular Service-Based State Management with PodListRebuilder.
+// Example 3: Modular Service-Based State Management with ResponsivePodListBuilder.
 //
 // Copyright (c) 2023 Robert Mollentze
 // See LICENSE for details.
@@ -53,10 +53,10 @@ class UserProfileApp extends StatelessWidget {
                   },
                   child: Text("Log Out")),
               SizedBox(height: 20),
-              // PodListRebuilder listens to changes in Pod sappService
+              // ResponsivePodListBuilder listens to changes in Pod sappService
               // and updates UI.
-              PodListRebuilder(
-                podList: appService.appServiceWatchListBuilder,
+              ResponsivePodListBuilder(
+                podListResponder: appService.appServicePlr,
                 builder: (context, child, data) {
                   final idToken = appService.idTokenSnapshot();
                   return Text("$idToken");
@@ -166,8 +166,8 @@ class AppService with PodServiceMixin {
     pUserDataService.set(null);
   }
 
-  // Watch list builder to track and respond to changes in Pods.
-  PodList appServiceWatchListBuilder() {
+  // TPodListResponder to track and respond to changes in Pods.
+  TPodList appServicePlr() {
     return [
       pUserDataService,
       pUserDataService.value?.pUserModel,
@@ -177,13 +177,13 @@ class AppService with PodServiceMixin {
     ];
   }
 
-  // Targeted watch list for user model updates.
-  PodList userModelWatchListBuilder() {
+  // Targeted PodListResponder for user model updates.
+  late final TPodListResponder userModelPlr = () {
     return [
       pUserDataService,
       pUserDataService.value?.pUserModel,
     ];
-  }
+  };
 
   // Snapshot methods for instant access to Pod values.
   UserModel? userModelSnapshot() => pUserDataService.value?.pUserModel.value;
@@ -197,17 +197,19 @@ final appService = AppService();
 /*
   Summary:
 
-  - This example demonstrates an advanced use of PodListRebuilder in the
+  - This example demonstrates an advanced use of ResponsivePodListBuilder in the
     context of app service management.
   - The AppService class is used to manage and coordinate various services such
     as authentication and user data.
-  - PodListRebuilder is used to listen to changes in multiple Pods and
+  - ResponsivePodListBuilder is used to listen to changes in multiple Pods and
     update the UI accordingly.
+  - PodListResponders are used to track and respond to changes in Pods. They
+    are abbreviated as "plr" in the code.
   - Snapshots provide instant access to the current values of specific Pods.
 
   Additional Notes:
 
-  - The PodListRebuilder is flexible and efficient, allowing for focused
+  - The ResponsivePodListBuilder is flexible and efficient, allowing for focused
     updates based on the specific Pods it is watching.
   - The use of mixins (PodServiceMixin) promotes code reuse and clear structure
     in service implementation.

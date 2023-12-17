@@ -15,13 +15,13 @@ import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// `PodListRebuilder` is a Flutter widget designed to build and update a UI
+/// `ResponsivePodListBuilder` is a Flutter widget designed to build and update a UI
 /// based on a dynamic list of `Pod` objects. Unlike `PodListBuilder`, this
 /// widget uses a function to obtain its list of `Pod` objects, allowing for
 /// more dynamic and flexible list generation. The UI is automatically refreshed
 /// whenever the returned list of `Pod` objects changes, making it highly
 /// effective for scenarios where the list of pods is not static.
-class PodListRebuilder extends StatefulWidget {
+class ResponsivePodListBuilder extends StatefulWidget {
   //
   //
   //
@@ -29,7 +29,7 @@ class PodListRebuilder extends StatefulWidget {
   /// A function that returns a `PodList`. This function is called to obtain
   /// the current list of `Pod` objects to be watched. Changes in the returned
   /// list will trigger a UI update.
-  final PodList Function() podList;
+  final TPodListResponder podListResponder;
 
   //
   //
@@ -43,21 +43,21 @@ class PodListRebuilder extends StatefulWidget {
   //
 
   /// A function that rebuilds the widget every time the list returned by the
-  /// [podList] changes. It uses the current context, the optional
+  /// [podListResponder] changes. It uses the current context, the optional
   /// child widget, and the current data of the `Pod` objects to create a new
   /// widget.
   final Widget? Function(
     BuildContext context,
     Widget? child,
-    PodDataList data,
+    TPodDataList data,
   ) builder;
 
   //
   //
   //
 
-  /// Constructs a `PodListRebuilder` widget. This widget dynamically
-  /// generates its list of Pods using the [podList] and rebuild
+  /// Constructs a `ResponsivePodListBuilder` widget. This widget dynamically
+  /// generates its list of Pods using the [podListResponder] and rebuild
   ///  whenever the returned list changes.
   ///
   /// Parameters:
@@ -67,9 +67,9 @@ class PodListRebuilder extends StatefulWidget {
   /// - `builder`: A function used to build the widget's UI based on the current
   ///   data from the `Pod` objects.
   /// - `child`: An optional widget to be used within the [builder].
-  const PodListRebuilder({
+  const ResponsivePodListBuilder({
     super.key,
-    required this.podList,
+    required this.podListResponder,
     required this.builder,
     this.child,
   });
@@ -79,12 +79,13 @@ class PodListRebuilder extends StatefulWidget {
   //
 
   @override
-  State<PodListRebuilder> createState() => _PodListRebuilderState();
+  State<ResponsivePodListBuilder> createState() =>
+      _ResponsivePodListBuilderState();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _PodListRebuilderState extends State<PodListRebuilder> {
+class _ResponsivePodListBuilderState extends State<ResponsivePodListBuilder> {
   //
   //
   //
@@ -95,7 +96,7 @@ class _PodListRebuilderState extends State<PodListRebuilder> {
   //
   //
 
-  PodList _currentWatchList = [];
+  TPodList _currentWatchList = [];
 
   //
   //
@@ -105,7 +106,7 @@ class _PodListRebuilderState extends State<PodListRebuilder> {
   void initState() {
     super.initState();
     _staticChild = widget.child;
-    _currentWatchList = widget.podList();
+    _currentWatchList = widget.podListResponder();
     _addListenerToPods(_currentWatchList);
   }
 
@@ -114,11 +115,11 @@ class _PodListRebuilderState extends State<PodListRebuilder> {
   //
 
   @override
-  void didUpdateWidget(PodListRebuilder oldWidget) {
+  void didUpdateWidget(ResponsivePodListBuilder oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.podList != widget.podList) {
+    if (oldWidget.podListResponder != widget.podListResponder) {
       _removeListenerFromPods(_currentWatchList);
-      _currentWatchList = widget.podList();
+      _currentWatchList = widget.podListResponder();
       _addListenerToPods(_currentWatchList);
     }
   }
@@ -127,7 +128,7 @@ class _PodListRebuilderState extends State<PodListRebuilder> {
   //
   //
 
-  void _addListenerToPods(PodList pods) {
+  void _addListenerToPods(TPodList pods) {
     for (final pod in pods) {
       pod?.addListener(_update);
     }
@@ -137,7 +138,7 @@ class _PodListRebuilderState extends State<PodListRebuilder> {
   //
   //
 
-  void _removeListenerFromPods(PodList pods) {
+  void _removeListenerFromPods(TPodList pods) {
     for (final pod in pods) {
       pod?.removeListener(_update);
     }
@@ -148,7 +149,7 @@ class _PodListRebuilderState extends State<PodListRebuilder> {
   //
 
   void _update() {
-    final newPods = widget.podList();
+    final newPods = widget.podListResponder();
     _removeListenerFromPods(_currentWatchList);
     _currentWatchList = newPods;
     _addListenerToPods(_currentWatchList);
