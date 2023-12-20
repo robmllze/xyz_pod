@@ -42,7 +42,11 @@ class PodBuilder<T> extends StatefulWidget {
   /// A function that rebuilds the widget every time the data of the [pod]
   /// changes. It uses the current context, the child widget, and the current
   /// [pod] data to create a new widget.å
-  final Widget? Function(BuildContext, Widget?, T)? builder;
+  final Widget? Function(
+    BuildContext context,
+    Widget? child,
+    T data,
+  )? builder;
 
   //
   //
@@ -50,7 +54,10 @@ class PodBuilder<T> extends StatefulWidget {
 
   /// A function to build a placeholder widget. It's used when there's no data
   /// to show.
-  final Widget? Function(BuildContext, Widget?)? placeholderBuilder;
+  final Widget? Function(
+    BuildContext context,
+    Widget? child,
+  )? placeholderBuilder;
 
   //
   //
