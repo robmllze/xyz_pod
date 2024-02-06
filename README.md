@@ -2,15 +2,19 @@
 
 [![pub package](https://img.shields.io/pub/v/xyz_pod.svg)](https://pub.dev/packages/xyz_pod)
 
+## Slides
+
+- [Modular Services State Management and Leveraging Pods for Flutter](https://github.com/robmllze/xyz_pod/blob/main/mssm_and_pods.pdf)
+
 ## Examples
 
 - [Example 1: A basic example on how to use a Pod and PodBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_pod_builder/lib/main.dart)
 - [Example 2: A basic example on how to use PodList, PodListHelper and PodListBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_pod_list_builder/lib/main.dart)
-- [Example 3: Modular Service-Based State Management with ResponsivePodListBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_responsive_pod_list_builder/lib/main.dart)
+- [Example 3: Modular Services State Management with ResponsivePodListBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_responsive_pod_list_builder/lib/main.dart)
 - [Example 4: Temp Pods](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_temp_pods/lib/main.dart)
 
 ## Overview
-`xyz_pod` is a Flutter package designed to enhance and simplify state management in Flutter applications. Building upon the capabilities of `ValueNotifier`, this package introduces several additional functionalities that streamline the state management process, making it more efficient and scalable. The recommended state management approach to pair with `xyz_pod` is the MSM (Modular Service-Based State Management) pattern. Further details on MSM can be found in [Example 3](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_responsive_pod_list_builder/lib/main.dart).
+`xyz_pod` is a Flutter package designed to enhance and simplify state management in Flutter applications. Building upon the capabilities of `ValueNotifier`, this package introduces several additional functionalities that streamline the state management process, making it more efficient and scalable. The recommended state management approach to pair with `xyz_pod` is the MSSM (Modular Services State Management) pattern. Further details on MSSM can be found in [Example 3](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_responsive_pod_list_builder/lib/main.dart).
 
 ## Why Use Pod Over ValueNotifier?
 `Pod<T>` extends `ValueNotifier<T>`, inheriting its fundamental capabilities while providing advanced features. It addresses some of the limitations of `ValueNotifier` by offering:

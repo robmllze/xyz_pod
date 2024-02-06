@@ -167,7 +167,7 @@ class _ResponsivePodListBuilderState extends State<ResponsivePodListBuilder> {
     return widget.builder(
           context,
           _staticChild,
-          _currentWatchList.map((pod) => pod?.value).toSet(),
+          _currentWatchList.map((pod) => pod?.value),
         ) ??
         _fallbackBuilder(context);
   }

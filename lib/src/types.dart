@@ -19,8 +19,8 @@ typedef XyzPodListBuilder = PodListBuilder;
 typedef XyzPodListHelper = PodListHelper;
 typedef XyzResponsivePodListBuilder = ResponsivePodListBuilder;
 
-typedef TPodList<T extends Object?> = Set<Pod<T>?>;
-typedef TPodDataList<T extends Object?> = Set<T>;
+typedef TPodList<T extends Object?> = Iterable<Pod<T>?>;
+typedef TPodDataList<T extends Object?> = Iterable<T>;
 typedef TPodListResponder<T> = TPodList<T> Function();
 
 typedef XyzPodServiceMixin = PodServiceMixin;

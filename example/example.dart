@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 //
-// Example 3: Modular Service-Based State Management with ResponsivePodListBuilder.
+// Example 3: Modular Services State Management with ResponsivePodListBuilder.
 //
 // Copyright (c) 2023 Robert Mollentze
 // See LICENSE for details.
@@ -74,7 +74,7 @@ class UserProfileApp extends StatelessWidget {
 //
 // Mock Services: Authentication and User Data
 //
-// In Modular Service-Based State Management (MSM), each part of the app is
+// In Modular Services State Management (MSSM), each part of the app is
 // managed by its own service. This setup aims for each service to work
 // independently. But sometimes, certain services depend on each other. For
 // instance, a database service should start only after a user logs in, and
@@ -168,21 +168,21 @@ class AppService with PodServiceMixin {
 
   // TPodListResponder to track and respond to changes in Pods.
   TPodList appServicePlr() {
-    return {
+    return [
       pUserDataService,
       pUserDataService.value?.pUserModel,
       pAuthenticationService,
       pAuthenticationService.value?.pIdToken,
       pAuthenticationService.value?.pIsAuthenticated,
-    };
+    ];
   }
 
   // Targeted PodListResponder for user model updates.
   late final TPodListResponder userModelPlr = () {
-    return {
+    return [
       pUserDataService,
       pUserDataService.value?.pUserModel,
-    };
+    ];
   };
 
   // Snapshot methods for instant access to Pod values.
