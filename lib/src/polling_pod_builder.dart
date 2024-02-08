@@ -28,7 +28,7 @@ class PollingPodBuilder<T> extends StatefulWidget {
   //
 
   /// A function that returns the `Pod` instance to be polled.
-  final Pod<T> Function() poll;
+  final Pod<T>? Function() poll;
 
   //
   //
