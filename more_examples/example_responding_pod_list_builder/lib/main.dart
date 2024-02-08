@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 //
-// Example 3: Modular Services State Management with ResponsivePodListBuilder.
+// Example 3: Modular Services State Management with RespondingPodListBuilder.
 //
 // Copyright (c) 2023 Robert Mollentze
 // See LICENSE for details.
@@ -53,9 +53,9 @@ class UserProfileApp extends StatelessWidget {
                   },
                   child: Text("Log Out")),
               SizedBox(height: 20),
-              // ResponsivePodListBuilder listens to changes in appService and updates
+              // RespondingPodListBuilder listens to changes in appService and updates
               // UI.
-              ResponsivePodListBuilder(
+              RespondingPodListBuilder(
                 podListResponder: appService.appServicePlr,
                 builder: (context, child, data) {
                   final idToken = appService.idTokenSnapshot();
@@ -197,11 +197,11 @@ final appService = AppService();
 /*
   Summary:
 
-  - This example demonstrates an advanced use of ResponsivePodListBuilder in the
+  - This example demonstrates an advanced use of RespondingPodListBuilder in the
     context of app service management.
   - The AppService class is used to manage and coordinate various services such
     as authentication and user data.
-  - ResponsivePodListBuilder is used to listen to changes in multiple Pods and
+  - RespondingPodListBuilder is used to listen to changes in multiple Pods and
     update the UI accordingly.
   - PodListResponders are used to track and respond to changes in Pods. They
     are abbreviated as "plr" in the code.
@@ -209,7 +209,7 @@ final appService = AppService();
 
   Additional Notes:
 
-  - The ResponsivePodListBuilder is flexible and efficient, allowing for focused
+  - The RespondingPodListBuilder is flexible and efficient, allowing for focused
     updates based on the specific Pods it is watching.
   - The use of mixins (PodServiceMixin) promotes code reuse and clear structure
     in service implementation.

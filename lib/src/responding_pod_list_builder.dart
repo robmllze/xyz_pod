@@ -15,13 +15,13 @@ import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// `ResponsivePodListBuilder` is a Flutter widget designed to build and update a UI
+/// `RespondingPodListBuilder` is a Flutter widget designed to build and update a UI
 /// based on a dynamic list of `Pod` objects. Unlike `PodListBuilder`, this
 /// widget uses a function to obtain its list of `Pod` objects, allowing for
 /// more dynamic and flexible list generation. The UI is automatically refreshed
 /// whenever the returned list of `Pod` objects changes, making it highly
 /// effective for scenarios where the list of pods is not static.
-class ResponsivePodListBuilder extends StatefulWidget {
+class RespondingPodListBuilder extends StatefulWidget {
   //
   //
   //
@@ -56,7 +56,7 @@ class ResponsivePodListBuilder extends StatefulWidget {
   //
   //
 
-  /// Constructs a `ResponsivePodListBuilder` widget. This widget dynamically
+  /// Constructs a `RespondingPodListBuilder` widget. This widget dynamically
   /// generates its list of Pods using the [podListResponder] and rebuild
   ///  whenever the returned list changes.
   ///
@@ -67,7 +67,7 @@ class ResponsivePodListBuilder extends StatefulWidget {
   /// - `builder`: A function used to build the widget's UI based on the current
   ///   data from the `Pod` objects.
   /// - `child`: An optional widget to be used within the [builder].
-  const ResponsivePodListBuilder({
+  const RespondingPodListBuilder({
     super.key,
     required this.podListResponder,
     required this.builder,
@@ -79,13 +79,13 @@ class ResponsivePodListBuilder extends StatefulWidget {
   //
 
   @override
-  State<ResponsivePodListBuilder> createState() =>
-      _ResponsivePodListBuilderState();
+  State<RespondingPodListBuilder> createState() =>
+      _RespondingPodListBuilderState();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _ResponsivePodListBuilderState extends State<ResponsivePodListBuilder> {
+class _RespondingPodListBuilderState extends State<RespondingPodListBuilder> {
   //
   //
   //
@@ -115,7 +115,7 @@ class _ResponsivePodListBuilderState extends State<ResponsivePodListBuilder> {
   //
 
   @override
-  void didUpdateWidget(ResponsivePodListBuilder oldWidget) {
+  void didUpdateWidget(RespondingPodListBuilder oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.podListResponder != widget.podListResponder) {
       _removeListenerFromPods(_currentWatchList);

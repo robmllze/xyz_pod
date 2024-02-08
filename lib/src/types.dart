@@ -13,11 +13,15 @@ import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef XyzPod = Pod;
-typedef XyzPodBuilder = PodBuilder;
-typedef XyzPodListBuilder = PodListBuilder;
-typedef XyzPodListHelper = PodListHelper;
-typedef XyzResponsivePodListBuilder = ResponsivePodListBuilder;
+typedef XyzPod<T> = Pod<T>;
+typedef XyzPodBuilder<T> = PodBuilder<T>;
+typedef XyzPodListBuilder<T> = PodListBuilder;
+typedef XyzPodListHelper<T> = PodListHelper<T>;
+typedef XyzRespondingPodListBuilder = RespondingPodListBuilder;
+typedef XyzPollingPodBuilder<T extends Pod<T>> = PollingPodBuilder<T>;
+
+@Deprecated("This was renamed to `RespondingPodListBuilder`.")
+typedef ResponsivePodListBuilder = RespondingPodListBuilder;
 
 typedef TPodList<T extends Object?> = Iterable<Pod<T>?>;
 typedef TPodDataList<T extends Object?> = Iterable<T>;
