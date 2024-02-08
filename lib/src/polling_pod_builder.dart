@@ -107,7 +107,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
   //
 
   Timer? _pollTimer;
-  Pod<T>? _currentPod;
+  late Pod<T>? _currentPod = widget.poll();
 
   //
   //
@@ -116,7 +116,9 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
   @override
   void initState() {
     super.initState();
-    _startPolling();
+    if (this._currentPod == null) {
+      _startPolling();
+    }
   }
 
   //
@@ -158,7 +160,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
   @override
   Widget build(BuildContext context) {
     return PodBuilder(
-      key: UniqueKey(),
+      key: ValueKey(_currentPod == null),
       pod: _currentPod,
       builder: widget.builder,
       child: _staticChild,
