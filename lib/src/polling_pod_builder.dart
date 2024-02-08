@@ -158,6 +158,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
   @override
   Widget build(BuildContext context) {
     return PodBuilder(
+      key: UniqueKey(),
       pod: _currentPod,
       builder: widget.builder,
       child: _staticChild,
