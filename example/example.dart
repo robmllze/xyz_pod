@@ -47,11 +47,12 @@ class UserProfileApp extends StatelessWidget {
                   },
                   child: Text("Log In")),
               ElevatedButton(
-                  onPressed: () async {
-                    await appService.pAuthenticationService.value?.logOut();
-                    debugPrint("Logged out!");
-                  },
-                  child: Text("Log Out")),
+                onPressed: () async {
+                  await appService.pAuthenticationService.value?.logOut();
+                  debugPrint("Logged out!");
+                },
+                child: Text("Log Out"),
+              ),
               SizedBox(height: 20),
               // RespondingPodListBuilder listens to changes in Pod sappService
               // and updates UI.
