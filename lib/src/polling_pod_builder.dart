@@ -116,7 +116,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
   @override
   void initState() {
     super.initState();
-    if (this._currentPod == null) {
+    if (_currentPod == null) {
       _startPolling();
     }
   }
@@ -136,7 +136,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
   //
 
   void _startPolling() {
-    _pollTimer = Timer.periodic(this.widget.pollingInterval, (timer) {
+    _pollTimer = Timer.periodic(widget.pollingInterval, (timer) {
       _currentPod = widget.podPoller();
       if (_currentPod != null) {
         timer.cancel();
@@ -163,6 +163,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
       key: ValueKey(_currentPod == null),
       pod: _currentPod,
       builder: widget.builder,
+      placeholderBuilder: widget.placeholderBuilder,
       child: _staticChild,
     );
   }

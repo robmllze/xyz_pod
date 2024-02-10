@@ -134,7 +134,7 @@ class Pod<T> extends ValueNotifier<T> {
   /// Clean up the `Pod` if it's marked as temporary. This is for managing
   /// resources efficiently.
   void disposeIfMarkedAsTemp() {
-    if (this.markedAsTemp) {
+    if (markedAsTemp) {
       dispose();
     }
   }

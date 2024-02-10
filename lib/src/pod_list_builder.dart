@@ -51,6 +51,17 @@ class PodListBuilder extends StatefulWidget {
   //
   //
 
+  /// A function to build a placeholder widget. It's used when there's no data
+  /// to show.
+  final Widget? Function(
+    BuildContext context,
+    Widget? child,
+  )? placeholderBuilder;
+
+  //
+  //
+  //
+
   /// Constructs a `PodListBuilder` widget. This widget listenes to a list
   /// of Pods and rebuilds whenever any of their data changes.
   ///
@@ -60,11 +71,14 @@ class PodListBuilder extends StatefulWidget {
   ///   react to.
   /// - `builder`: A function used to build the widget's UI based on the current
   ///   data from the provided [podList].
+  /// - `placeholderBuilder`: A function to create a placeholder widget when
+  ///   there's no data.
   /// - `child`: An optional widget that can be used within the [builder].
   const PodListBuilder({
     super.key,
     required this.podList,
     required this.builder,
+    this.placeholderBuilder,
     this.child,
   });
 
@@ -143,12 +157,17 @@ class _PodListBuilderState extends State<PodListBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(
-          context,
-          _staticChild,
-          widget.podList.map((e) => e?.value),
-        ) ??
-        _fallbackBuilder(context);
+    final values = widget.podList.map((e) => e?.value);
+    if (values.nonNulls.isEmpty && widget.placeholderBuilder != null) {
+      return _fallbackBuilder(context);
+    } else {
+      return widget.builder(
+            context,
+            _staticChild,
+            values,
+          ) ??
+          _fallbackBuilder(context);
+    }
   }
 
   //
@@ -156,7 +175,12 @@ class _PodListBuilderState extends State<PodListBuilder> {
   //
 
   Widget _fallbackBuilder(BuildContext context) {
-    return _staticChild ?? const SizedBox.shrink();
+    return widget.placeholderBuilder?.call(
+          context,
+          _staticChild,
+        ) ??
+        _staticChild ??
+        const SizedBox.shrink();
   }
 
   //

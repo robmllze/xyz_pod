@@ -56,6 +56,17 @@ class RespondingPodListBuilder extends StatefulWidget {
   //
   //
 
+  /// A function to build a placeholder widget. It's used when there's no data
+  /// to show.
+  final Widget? Function(
+    BuildContext context,
+    Widget? child,
+  )? placeholderBuilder;
+
+  //
+  //
+  //
+
   /// Constructs a `RespondingPodListBuilder` widget. This widget dynamically
   /// generates its list of Pods using the [podListResponder] and rebuild
   ///  whenever the returned list changes.
@@ -66,11 +77,14 @@ class RespondingPodListBuilder extends StatefulWidget {
   ///   widget to track and react to.
   /// - `builder`: A function used to build the widget's UI based on the current
   ///   data from the `Pod` objects.
+  /// - `placeholderBuilder`: A function to create a placeholder widget when
+  ///   there's no data.
   /// - `child`: An optional widget to be used within the [builder].
   const RespondingPodListBuilder({
     super.key,
     required this.podListResponder,
     required this.builder,
+    this.placeholderBuilder,
     this.child,
   });
 
@@ -79,8 +93,7 @@ class RespondingPodListBuilder extends StatefulWidget {
   //
 
   @override
-  State<RespondingPodListBuilder> createState() =>
-      _RespondingPodListBuilderState();
+  State<RespondingPodListBuilder> createState() => _RespondingPodListBuilderState();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -164,12 +177,17 @@ class _RespondingPodListBuilderState extends State<RespondingPodListBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(
-          context,
-          _staticChild,
-          _currentWatchList.map((pod) => pod?.value),
-        ) ??
-        _fallbackBuilder(context);
+    final values = _currentWatchList.map((pod) => pod?.value);
+    if (values.nonNulls.isEmpty && widget.placeholderBuilder != null) {
+      return _fallbackBuilder(context);
+    } else {
+      return widget.builder(
+            context,
+            _staticChild,
+            values,
+          ) ??
+          _fallbackBuilder(context);
+    }
   }
 
   //
@@ -177,7 +195,12 @@ class _RespondingPodListBuilderState extends State<RespondingPodListBuilder> {
   //
 
   Widget _fallbackBuilder(BuildContext context) {
-    return _staticChild ?? const SizedBox.shrink();
+    return widget.placeholderBuilder?.call(
+          context,
+          _staticChild,
+        ) ??
+        _staticChild ??
+        const SizedBox.shrink();
   }
 
   //
