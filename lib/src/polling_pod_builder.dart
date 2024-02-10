@@ -28,7 +28,7 @@ class PollingPodBuilder<T> extends StatefulWidget {
   //
 
   /// A function that returns the `Pod` instance to be polled.
-  final Pod<T>? Function() poll;
+  final Pod<T>? Function() podPoller;
 
   //
   //
@@ -78,7 +78,7 @@ class PollingPodBuilder<T> extends StatefulWidget {
   /// - `child`: An optional widget used within the [builder] function.
   const PollingPodBuilder({
     super.key,
-    required this.poll,
+    required this.podPoller,
     required this.builder,
     this.placeholderBuilder,
     this.pollingInterval = Duration.zero,
@@ -107,7 +107,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
   //
 
   Timer? _pollTimer;
-  late Pod<T>? _currentPod = widget.poll();
+  late Pod<T>? _currentPod = widget.podPoller();
 
   //
   //
@@ -137,7 +137,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
 
   void _startPolling() {
     _pollTimer = Timer.periodic(this.widget.pollingInterval, (timer) {
-      _currentPod = widget.poll();
+      _currentPod = widget.podPoller();
       if (_currentPod != null) {
         timer.cancel();
         setState(() {});
