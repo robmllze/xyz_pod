@@ -94,7 +94,7 @@ class Pod<T> extends ValueNotifier<T> {
   /// Like `set`, but uses a function to determine the new value.
   ///
   /// - `updater`: Function to create the new value from the old one.
-  Future<void> update(T Function(T) updater) async {
+  Future<void> update(T Function(T value) updater) async {
     final newValue = updater(value);
     _cachedValue = newValue;
     await Future.delayed(Duration.zero, () {
