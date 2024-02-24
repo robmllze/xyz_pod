@@ -2,8 +2,12 @@
 
 ## [Unreleased]
 
-- Initial planning and design of the project.
+- Initial planning and design.
 
-## [0.15.1]
+## [0.1.0]
 
-- Current release of the project.
+- Initial release.
+
+## [0.16.0]
+
+- Current release.
