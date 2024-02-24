@@ -11,7 +11,7 @@
 
 name: xyz_pod
 description: This package is designed to simplify state management in Flutter applications and is well-suited for use with the Modular Services State Management (MSSM) pattern.
-version: 0.16.1
+version: 0.16.2
 repository: https://github.com/robmllze/xyz_pod
 
 ## -----------------------------------------------------------------------------

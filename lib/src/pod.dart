@@ -111,9 +111,9 @@ class Pod<T> extends ValueNotifier<T> {
   /// in ways not shown by a simple value change.
   ///
   /// - `fn` (optional): Function to call before refreshing.
-  Future<void> refresh([Future<void> Function(T value)? fn]) async {
+  Future<void> refresh([void Function(T value)? fn]) async {
     if (fn != null) {
-      await fn.call(value);
+      fn.call(value);
       _cachedValue = value;
     }
     await Future.delayed(Duration.zero, notifyListeners);
