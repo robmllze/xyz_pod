@@ -61,14 +61,20 @@ class Pod<T> extends ValueNotifier<T> {
   //
   //
 
+  @override
+  T get value => _cachedValue ?? super.value;
+
   set value(T newValue) => this.set(newValue);
 
   //
   //
   //
 
-  @override
-  T get value => _cachedValue ?? super.value;
+  /// Gets the `Pod` value and notifies any listeners.
+  T call() {
+    Future.delayed(Duration.zero, notifyListeners);
+    return value;
+  }
 
   //
   //
