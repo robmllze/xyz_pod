@@ -9,9 +9,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:flutter/widgets.dart';
-
-import '/xyz_pod.dart';
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -57,7 +55,7 @@ import '/xyz_pod.dart';
 /// )
 /// ```
 ///
-/// Parameters:
+/// ### Parameters:
 /// - `key`: An optional key to use for the widget.
 /// - `podListResponder`: A function returning a list of `Pod<T>` instances to
 ///   observe. It is called each time a pod in the list changes, ensuring
@@ -120,7 +118,7 @@ class RespondingPodListBuilder extends StatefulWidget {
 
   /// Creates a `RespondingPodListBuilder` widget.
   ///
-  /// Parameters:
+  /// ### Parameters:
   /// - `key`: An optional key to use for the widget.
   /// - `podListResponder`: A function returning a list of `Pod<T>` instances to
   ///   observe. It is called each time a pod in the list changes, ensuring

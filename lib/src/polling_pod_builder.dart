@@ -9,9 +9,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:flutter/widgets.dart';
-
-import '/xyz_pod.dart';
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -45,7 +43,7 @@ import '/xyz_pod.dart';
 /// )
 /// ```
 ///
-/// Parameters:
+/// ### Parameters:
 /// - `key`: An optional key to use for the widget.
 /// - `podPoller`: A function that returns the `Pod<T>` instance to be polled.
 ///   This function is called periodically to check for updates.
@@ -100,7 +98,7 @@ class PollingPodBuilder<T> extends StatefulWidget {
 
   /// Creates a `PollingPodBuilder` widget.
   ///
-  /// Parameters:
+  /// ### Parameters:
   /// - `key`: An optional key to use for the widget.
   /// - `podPoller`: A function that returns the `Pod<T>` instance to be polled.
   ///   This function is called periodically to check for updates.

@@ -9,9 +9,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:flutter/widgets.dart';
-
-import '/xyz_pod.dart';
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -66,7 +64,7 @@ class PodBuilder<T> extends StatefulWidget {
   /// Creates a `PodBuilder` widget. This widget listens to a `Pod` and
   /// rebuilds whenever the `Pod`'s data changes.
   ///
-  /// Parameters:
+  /// ### Parameters:
   /// - `key`: A unique identifier for this widget, used in the widget tree.
   /// - `pod`: The `Pod` that this widget will listen to for changes.
   /// - `builder`: A function used to build the widget's UI based on the current
