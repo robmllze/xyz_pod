@@ -14,11 +14,11 @@ import '/_common.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A widget that rebuilds its child in response to changes in a dynamically
-/// determined list of `Pod<T>` instances.
+/// determined list of Pod instances.
 ///
-/// This widget monitors a collection of `Pod<T>` instances, specified by a
+/// This widget monitors a collection of Pod instances, specified by a
 /// responder function, for updates. It intelligently rebuilds its child widget
-/// whenever any observed `Pod<T>` instance changes. This setup ensures the UI
+/// whenever any observed Pod instance changes. This setup ensures the UI
 /// always reflects the most current data state. The dynamic nature of the
 /// `podListResponder` allows for a responsive design that adapts to changes in
 /// pod dependencies, enabling the observation of pods that may initially be
@@ -57,18 +57,18 @@ import '/_common.dart';
 ///
 /// ### Parameters:
 /// - `key`: An optional key to use for the widget.
-/// - `podListResponder`: A function returning a list of `Pod<T>` instances to
+/// - `podListResponder`: A function returning a list of Pod instances to
 ///   observe. It is called each time a pod in the list changes, ensuring
 ///   dynamic adaptation to the evolving application state. This mechanism
 ///   allows for a chain of dependent pods, where updates to one pod can
 ///   activate or deactivate the observation of others, based on their current
 ///   state.
-/// - `builder`: A function that constructs the widget based on the current
-///   states of the observed `Pod<T>` instances. It receives the build context,
-///   an optional child widget, and the values from the observed pods, enabling
-///   dynamic and responsive UI updates.
-/// - `placeholderBuilder`: An optional function for creating a placeholder
-///   widget when the `Pod<T>` has no data.
+/// - `builder`: A function that rebuilds the widget based on the current
+///   states of the observed Pods. It receives the build context, the optional
+///   `child` widget, and the values from the observed pods returned by
+///   `podListResponder`.
+/// - `placeholderBuilder`: An optional function to create a placeholder widget
+///   when there's no data.
 /// - `child`: An optional child widget that is passed to the `builder` and
 ///   `placeholderBuilder` functions, useful for optimization if the child is
 ///   part of a larger widget that does not need to rebuild.
@@ -120,18 +120,18 @@ class RespondingPodListBuilder extends StatefulWidget {
   ///
   /// ### Parameters:
   /// - `key`: An optional key to use for the widget.
-  /// - `podListResponder`: A function returning a list of `Pod<T>` instances to
+  /// - `podListResponder`: A function returning a list of Pod instances to
   ///   observe. It is called each time a pod in the list changes, ensuring
   ///   dynamic adaptation to the evolving application state. This mechanism
   ///   allows for a chain of dependent pods, where updates to one pod can
   ///   activate or deactivate the observation of others, based on their current
   ///   state.
   /// - `builder`: A function that constructs the widget based on the current
-  ///   states of the observed `Pod<T>` instances. It receives the build context,
+  ///   states of the observed Pod instances. It receives the build context,
   ///   an optional child widget, and the values from the observed pods, enabling
   ///   dynamic and responsive UI updates.
   /// - `placeholderBuilder`: An optional function for creating a placeholder
-  ///   widget when the `Pod<T>` has no data.
+  ///   widget when the Pod has no data.
   /// - `child`: An optional child widget that is passed to the `builder` and
   ///   `placeholderBuilder` functions, useful for optimization if the child is
   ///   part of a larger widget that does not need to rebuild.

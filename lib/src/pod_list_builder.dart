@@ -13,10 +13,21 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// `PodListBuilder` is a Flutter widget designed to build and update a UI based
-/// on a list of `Pod` objects. It automatically refreshes the UI when any of
-/// the `Pod` objects change, making it great for managing the state of several
-/// `Pod` objects together.
+/// A widget that listens to a list of [Pod] instances and rebuilds whenever
+/// any of their values/states change.
+///
+/// ### Parameters:
+///
+/// - `key`: An optional key to use for the widget.
+/// - `podList`: The list of `Pod` objects that this builder listens to.
+/// - `builder`: A function that rebuilds the widget based on the current
+///   states of the observed Pods. It receives the build context, the optional
+///   `child` widget, and the valued from the observed `podList`.
+/// - `placeholderBuilder`: An optional function to create a placeholder widget
+///   when there's no data.
+/// - `child`: An optional child widget that is passed to the `builder` and
+///   `placeholderBuilder` functions, useful for optimization if the child is
+///   part of a larger widget that does not need to rebuild.
 class PodListBuilder extends StatefulWidget {
   //
   //
@@ -36,9 +47,8 @@ class PodListBuilder extends StatefulWidget {
   //
   //
 
-  /// A function that rebuilds the widget every time the data of any of the
-  /// [podList] change. It uses the current context, the child widget, and the
-  /// current data of the [podList] to create a new widget.
+  /// A function to rebuild the widget based on the data received from
+  /// [podList].
   final Widget? Function(
     BuildContext context,
     Widget? child,
@@ -49,8 +59,7 @@ class PodListBuilder extends StatefulWidget {
   //
   //
 
-  /// A function to build a placeholder widget. It's used when there's no data
-  /// to show.
+  /// An optional function to create a placeholder widget when there's no data.
   final Widget? Function(
     BuildContext context,
     Widget? child,
@@ -60,18 +69,20 @@ class PodListBuilder extends StatefulWidget {
   //
   //
 
-  /// Constructs a `PodListBuilder` widget. This widget listenes to a list
-  /// of Pods and rebuilds whenever any of their data changes.
+  /// Creates a `PodListBuilder` widget.
   ///
   /// ### Parameters:
-  /// - `key`: A unique identifier for this widget, used in the widget tree.
-  /// - `pods`: A list of `Pod` objects that this widget will track and
-  ///   react to.
-  /// - `builder`: A function used to build the widget's UI based on the current
-  ///   data from the provided [podList].
-  /// - `placeholderBuilder`: A function to create a placeholder widget when
-  ///   there's no data.
-  /// - `child`: An optional widget that can be used within the [builder].
+  ///
+  /// - `key`: An optional key to use for the widget.
+  /// - `podList`: The list of `Pod` objects that this builder listens to.
+  /// - `builder`: A function that rebuilds the widget based on the current
+  ///   states of the observed Pods. It receives the build context, the optional
+  ///   `child` widget, and the valued from the observed `podList`.
+  /// - `placeholderBuilder`: An optional function to create a placeholder widget
+  ///   when there's no data.
+  /// - `child`: An optional child widget that is passed to the `builder` and
+  ///   `placeholderBuilder` functions, useful for optimization if the child is
+  ///   part of a larger widget that does not need to rebuild.
   const PodListBuilder({
     super.key,
     required this.podList,

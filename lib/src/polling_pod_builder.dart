@@ -13,13 +13,13 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// A widget that periodically polls a `Pod<T>` for changes and rebuilds its
+/// A widget that periodically polls a Pod for changes and rebuilds its
 /// child widget based on the latest data.
 ///
 /// This widget uses Flutter's frame rendering callbacks to efficiently check
-/// for updates to a specified `Pod<T>` instance. It rebuilds its child widget
+/// for updates to a specified Pod instance. It rebuilds its child widget
 /// whenever the polled data changes, ensuring the UI remains up-to-date with
-/// the latest state of the `Pod<T>`. This approach aligns the polling mechanism
+/// the latest state of the Pod. This approach aligns the polling mechanism
 /// with the device's screen refresh rate, providing a responsive and
 /// resource-efficient way to reflect changes in the UI.
 ///
@@ -45,12 +45,14 @@ import '/_common.dart';
 ///
 /// ### Parameters:
 /// - `key`: An optional key to use for the widget.
-/// - `podPoller`: A function that returns the `Pod<T>` instance to be polled.
+/// - `podPoller`: A function that returns the Pod instance to be polled.
 ///   This function is called periodically to check for updates.
-/// - `builder`: A required function that describes how to build the widget
-///   based on the current state of the polled `Pod<T>`.
+/// - `builder`: A function that rebuilds the widget based on the current
+///   state of the observed Pod. It receives the build context, the optional
+///   `child` widget, and the value from the observed pod returned by
+///   `podPoller`.
 /// - `placeholderBuilder`: An optional function for creating a placeholder
-///   widget when the `Pod<T>` has no data.
+///   widget when the Pod has no data.
 /// - `child`: An optional child widget that is passed to the `builder` and
 ///   `placeholderBuilder` functions, useful for optimization if the child is
 ///   part of a larger widget that does not need to rebuild.
@@ -100,12 +102,14 @@ class PollingPodBuilder<T> extends StatefulWidget {
   ///
   /// ### Parameters:
   /// - `key`: An optional key to use for the widget.
-  /// - `podPoller`: A function that returns the `Pod<T>` instance to be polled.
+  /// - `podPoller`: A function that returns the Pod instance to be polled.
   ///   This function is called periodically to check for updates.
-  /// - `builder`: A required function that describes how to build the widget
-  ///   based on the current state of the polled `Pod<T>`.
+  /// - `builder`: A function that rebuilds the widget based on the current
+  ///   state of the observed Pod. It receives the build context, the optional
+  ///   `child` widget, and the value from the observed pod returned by
+  ///   `podPoller`.
   /// - `placeholderBuilder`: An optional function for creating a placeholder
-  ///   widget when the `Pod<T>` has no data.
+  ///   widget when the Pod has no data.
   /// - `child`: An optional child widget that is passed to the `builder` and
   ///   `placeholderBuilder` functions, useful for optimization if the child is
   ///   part of a larger widget that does not need to rebuild.
