@@ -131,7 +131,8 @@ class PollingPodBuilder<T> extends StatefulWidget {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> with WidgetsBindingObserver {
+class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>>
+    with WidgetsBindingObserver {
   //
   //
   //
