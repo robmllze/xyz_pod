@@ -8,69 +8,76 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
+
 import 'package:flutter/widgets.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// The `Pod<T>` class helps you manage state in Flutter apps. It works like
-/// `ValueNotifier<T>` but has extra features for better state handling.
+/// `Pod<T>` helps you manage state in Flutter apps. It works like
+/// `ValueNotifier<T>`, but with added bells and whistles.
 ///
 /// This class lets you update state asynchronously and mark some instances as
 /// temporary, which can be automatically cleaned up in certain situations.
 ///
-/// Generic Type:
-/// - `T`: The type of value the `Pod` holds.
+
 class Pod<T> extends ValueNotifier<T> {
   //
   //
   //
 
-  // Indicates if the `Pod` is temporary. Temporary ones can be cleaned up
-  // automatically in certain cases.
+  /// Whether this Pod is marked as temporary. Pods marked as temporary are
+  /// disposed by [PodBuilder], [PodListBuilder], [PollingPodBuilder], and [ResponsivePodListBuilder]
+  ///
   bool markedAsTemp;
 
   //
   //
   //
 
-  // Holds the latest value temporarily during asynchronous updates, ensuring
-  // the Pod's state is always current.
+  /// Holds the latest value temporarily during asynchronous updates, ensuring
+  /// the Pod's state is always current.
   T? _cachedValue;
 
   //
   //
   //
 
-  /// Create a new `Pod` with an initial value.
+  /// Create a new `Pod<T>` with an initial value.
   ///
   /// - `value`: The starting value.
-  /// - `temp` (optional): If true, the `Pod` is temporary. Defaults to false.
+  /// - `temp` (optional): If true, the `Pod<T>` is temporary. Defaults to false.
   Pod(super.value, {bool temp = false}) : markedAsTemp = temp;
 
   //
   //
   //
 
-  /// Creates a temporary `Pod` with an initial value. These get cleaned up automatically,
+  /// Creates a temporary `Pod<T>` with an initial value. These get cleaned up automatically,
   /// but you need to set this up in your widget's lifecycle.
   ///
-  /// - `initialValue`: The starting value for the temporary `Pod`.
+  /// - `initialValue`: The starting value for the temporary `Pod<T>`.
   Pod.temp(T initialValue) : this(initialValue, temp: true);
 
   //
   //
   //
 
+  /// Gets the `Pod<T>` value without notifying any listeners.
   @override
   T get value => _cachedValue ?? super.value;
 
+  //
+  //
+  //
+
+  /// Sets the `Pod<T>` value and notifies any listeners.
   set value(T newValue) => this.set(newValue);
 
   //
   //
   //
 
-  /// Gets the `Pod` value and notifies any listeners.
+  /// Gets the `Pod<T>` value and notifies any listeners.
   T call() {
     Future.delayed(Duration.zero, notifyListeners);
     return value;
@@ -80,7 +87,7 @@ class Pod<T> extends ValueNotifier<T> {
   //
   //
 
-  /// Set the `Pod` value asynchronously and notify any listeners.
+  /// Set the `Pod<T>` value asynchronously and notify any listeners.
   /// This is done after the current build phase to avoid UI issues.
   ///
   /// - `value`: The new value to set.
@@ -96,7 +103,7 @@ class Pod<T> extends ValueNotifier<T> {
   //
   //
 
-  /// Update the `Pod` value asynchronously with a function.
+  /// Update the `Pod<T>` value asynchronously with a function.
   /// Like `set`, but uses a function to determine the new value.
   ///
   /// - `updater`: Function to create the new value from the old one.
@@ -113,7 +120,7 @@ class Pod<T> extends ValueNotifier<T> {
   //
   //
 
-  /// Refresh the `Pod`, notifying listeners. Useful when the state changes
+  /// Refresh the `Pod<T>`, notifying listeners. Useful when the state changes
   /// in ways not shown by a simple value change.
   Future<void> refresh() async {
     await Future.delayed(Duration.zero, notifyListeners);
@@ -137,7 +144,7 @@ class Pod<T> extends ValueNotifier<T> {
   //
   //
 
-  /// Clean up the `Pod` if it's marked as temporary. This is for managing
+  /// Clean up the `Pod<T>` if it's marked as temporary. This is for managing
   /// resources efficiently.
   void disposeIfMarkedAsTemp() {
     if (markedAsTemp) {

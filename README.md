@@ -4,24 +4,32 @@ This package is designed to simplify state management in Flutter applications an
 
 [![pub package](https://img.shields.io/pub/v/xyz_pod.svg)](https://pub.dev/packages/xyz_pod)
 
+## Installation
+
+#### Add this to your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  xyz_pod: any # or the latest version
+```
+
 ## Documentation
 
 🔜 Documentation and video tutorials are coming soon. Feel free to contact me for more information.
 
-### Here are some resources to help you get started:
+## Resources
 
-#### Slides
-
-- [Modular Services State Management and Leveraging Pods for Flutter](https://docs.google.com/presentation/d/11lI1OmV06dB7GMnVSKnna-Yu5s2A1OgMLRbnFEI2m8w/edit?usp=sharing)
-
-## Examples
-
-### Here are some examples to help you get started:
+### Examples:
 
 - [Example 1: A basic example on how to use a Pod and PodBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_pod_builder/lib/main.dart)
 - [Example 2: A basic example on how to use PodList, PodListHelper and PodListBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_pod_list_builder/lib/main.dart)
 - [Example 3: Modular Services State Management with RespondingPodListBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_responding_pod_list_builder/lib/main.dart)
-- [Example 4: Temp Pods](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_temp_pods/lib/main.dart)
+- [Example 4: A basic example on how to use a PollingPodBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_polling_pod_builder/lib/main.dart)
+- [Example 5: Temp Pods](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_temp_pods/lib/main.dart)
+
+### Slides:
+
+- [Modular Services State Management and Leveraging Pods for Flutter](https://docs.google.com/presentation/d/11lI1OmV06dB7GMnVSKnna-Yu5s2A1OgMLRbnFEI2m8w/edit?usp=sharing)
 
 ### Here is a basic example on how to use a Pod and PodBuilder:
 

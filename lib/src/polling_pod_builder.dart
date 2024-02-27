@@ -9,32 +9,67 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'dart:async';
-
 import 'package:flutter/widgets.dart';
 
 import '/xyz_pod.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// The `PollingPodBuilder` widget periodically polls a `Pod<T>` instance until it
-/// receives a non-null pod and rebuilds its UI based on the polled data.
+/// A widget that periodically polls a `Pod<T>` for changes and rebuilds its
+/// child widget based on the latest data.
+///
+/// This widget uses Flutter's frame rendering callbacks to efficiently check
+/// for updates to a specified `Pod<T>` instance. It rebuilds its child widget
+/// whenever the polled data changes, ensuring the UI remains up-to-date with
+/// the latest state of the `Pod<T>`. This approach aligns the polling mechanism
+/// with the device's screen refresh rate, providing a responsive and
+/// resource-efficient way to reflect changes in the UI.
+///
+/// The polling process starts when the widget is inserted into the tree and
+/// stops when it is removed, automatically managing its lifecycle to avoid
+/// unnecessary processing when not visible. This makes `PollingPodBuilder<T>`
+/// an ideal solution for applications that require real-time data updates
+/// without compromising performance.
 ///
 /// Generic Type:
-/// - `T`: The type of data the `Pod` holds.
+/// - `T`: The type of data the `Pod` holds, determining the type of data this
+///   widget listens for and rebuilds upon changes.
+///
+/// Example Usage:
+/// ```dart
+/// PollingPodBuilder<MyDataType>(
+///   podPoller: () => myPodInstance,
+///   builder: (context, child, data) {
+///     return Text(data?.toString() ?? 'Waiting for data...');
+///   },
+/// )
+/// ```
+///
+/// Parameters:
+/// - `key`: An optional key to use for the widget.
+/// - `podPoller`: A function that returns the `Pod<T>` instance to be polled.
+///   This function is called periodically to check for updates.
+/// - `builder`: A required function that describes how to build the widget
+///   based on the current state of the polled `Pod<T>`.
+/// - `placeholderBuilder`: An optional function for creating a placeholder
+///   widget when the `Pod<T>` has no data.
+/// - `child`: An optional child widget that is passed to the `builder` and
+///   `placeholderBuilder` functions, useful for optimization if the child is
+///   part of a larger widget that does not need to rebuild.
 class PollingPodBuilder<T> extends StatefulWidget {
   //
   //
   //
 
-  /// A function that returns the `Pod` instance to be polled.
+  /// A function that returns the `Pod<T>?` to be polled.
   final Pod<T>? Function() podPoller;
 
   //
   //
   //
 
-  /// A function that rebuilds the widget based on the polled data.
+  /// A function to rebuild the widget based on the data received from
+  /// [podPoller].
   final Widget Function(
     BuildContext context,
     Widget? child,
@@ -45,8 +80,7 @@ class PollingPodBuilder<T> extends StatefulWidget {
   //
   //
 
-  /// A function to build a placeholder widget. It's used when there's no data
-  /// to show.
+  /// An optional function to create a placeholder widget when there's no data.
   final Widget? Function(
     BuildContext context,
     Widget? child,
@@ -56,32 +90,32 @@ class PollingPodBuilder<T> extends StatefulWidget {
   //
   //
 
-  /// An optional child widget that can be used within the [builder] function.
+  /// An optional static child widget that is passed to the [builder] and
+  /// [placeholderBuilder].
   final Widget? child;
 
   //
   //
   //
 
-  /// The interval between each poll operation.
-  final Duration pollingInterval;
-
   /// Creates a `PollingPodBuilder` widget.
   ///
   /// Parameters:
-  /// - `key`: A unique identifier for this widget in the widget tree.
-  /// - `poll`: A function to poll the `Pod` for data.
-  /// - `builder`: A function to rebuild the widget based on the polled data.
-  /// - `placeholderBuilder`: A function to create a placeholder widget when
-  ///   there's no data.
-  /// - `pollingInterval`: The interval between each poll operation. Defaults to zero.
-  /// - `child`: An optional widget used within the [builder] function.
+  /// - `key`: An optional key to use for the widget.
+  /// - `podPoller`: A function that returns the `Pod<T>` instance to be polled.
+  ///   This function is called periodically to check for updates.
+  /// - `builder`: A required function that describes how to build the widget
+  ///   based on the current state of the polled `Pod<T>`.
+  /// - `placeholderBuilder`: An optional function for creating a placeholder
+  ///   widget when the `Pod<T>` has no data.
+  /// - `child`: An optional child widget that is passed to the `builder` and
+  ///   `placeholderBuilder` functions, useful for optimization if the child is
+  ///   part of a larger widget that does not need to rebuild.
   const PollingPodBuilder({
     super.key,
     required this.podPoller,
     required this.builder,
     this.placeholderBuilder,
-    this.pollingInterval = Duration.zero,
     this.child,
   });
 
@@ -95,7 +129,7 @@ class PollingPodBuilder<T> extends StatefulWidget {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
+class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> with WidgetsBindingObserver {
   //
   //
   //
@@ -106,8 +140,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
   //
   //
 
-  Timer? _pollTimer;
-  late Pod<T>? _currentPod = widget.podPoller();
+  Pod<T>? _currentPod;
 
   //
   //
@@ -116,9 +149,8 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
   @override
   void initState() {
     super.initState();
-    if (_currentPod == null) {
-      _startPolling();
-    }
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkAndUpdate());
   }
 
   //
@@ -127,7 +159,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
 
   @override
   void dispose() {
-    _stopPolling();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -135,22 +167,15 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
   //
   //
 
-  void _startPolling() {
-    _pollTimer = Timer.periodic(widget.pollingInterval, (timer) {
-      _currentPod = widget.podPoller();
-      if (_currentPod != null) {
-        timer.cancel();
-        setState(() {});
-      }
-    });
-  }
+  void _checkAndUpdate() {
+    final tempPod = widget.podPoller();
+    if ((_currentPod?.value == null) != (tempPod?.value == null)) {
+      setState(() {
+        _currentPod = tempPod;
+      });
+    }
 
-  //
-  //
-  //
-
-  void _stopPolling() {
-    _pollTimer?.cancel();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkAndUpdate());
   }
 
   //
@@ -160,7 +185,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
   @override
   Widget build(BuildContext context) {
     return PodBuilder(
-      key: ValueKey(_currentPod == null),
+      key: UniqueKey(),
       pod: _currentPod,
       builder: widget.builder,
       placeholderBuilder: widget.placeholderBuilder,

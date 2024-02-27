@@ -107,20 +107,20 @@ void main() {
   - A Pod is a safer ValueNotifier.
   - A PodBuilder is a widget designed to pair with a Pod. It actively listens
     for any updates in its associated Pod and invokes its builder function each
-    time there's a change in the connected Pod. It works exactly the same as
-    the native ValueListenableBuilder.
+    time there's a change. It works exactly the same as the Flutter SDK's
+    ValueListenableBuilder.
 
   Additional Notes:
 
   - A ValueListenableBuilder can be used instead of a PodBuilder but it's
     recommended to use a PodBuilder for the following reasons:
-    - Pods can be marked as "temp" when you create them, and PodBuilders will
+    1. Pods can be marked as "temp" when you create them, and PodBuilders will
       dispose of Pods marked as "temp" when they themselves get automatically
       disposed of.
-    - Future versions of PodBuilder may have additional features that
+    2. Future versions of PodBuilder may have additional features that
       ValueListenableBuilder doesn't have.
-    - As well as the "update" method, Pods also have a "set" method and a
+    3. As well as the "update" method, Pods also have a "set" method and a
       "refresh" method.
-    - The Pod class is quite simple so if you want to know more about it, you
+    4. The Pod class is quite simple so if you want to know more about it, you
       can just read the source code.
  */

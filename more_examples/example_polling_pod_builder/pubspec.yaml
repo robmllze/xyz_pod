@@ -1,3 +1,4 @@
+
 ##.title
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 ##
@@ -9,17 +10,14 @@
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 ##.title~
 
-name: xyz_pod
-description: This package is designed to simplify state management in Flutter applications and is well-suited for use with the Modular Services State Management (MSSM) pattern.
-repository: https://github.com/robmllze/xyz_pod
-version: 0.18.0
+name: example_polling_pod_builder
 
 ## -----------------------------------------------------------------------------
 
 environment:
 
-  sdk: '>= 3.0.0 < 4.0.0'
-  flutter: '>= 3.0.0'
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">= 3.0.0"
 
 ## -----------------------------------------------------------------------------
 
@@ -28,8 +26,5 @@ dependencies:
   flutter:
     sdk: flutter
 
-## -----------------------------------------------------------------------------
-
-dev_dependencies:
-    
-  flutter_lints: ^3.0.1
+  xyz_pod:
+    path: ../../
