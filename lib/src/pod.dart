@@ -1,11 +1,12 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// XYZ Pod
+// X|Y|Z & Dev 
 //
-// Copyright (c) 2023 Robert Mollentze
-// See LICENSE for details.
-//
+// Copyright Ⓒ Robert Mollentze, xyzand.dev
+// 
+// Licensing details can be found in the LICENSE file in the root directory.
+// 
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
@@ -50,10 +51,12 @@ import '/_common.dart';
 /// pod.update((e) => e..add(3)); // This will notify listeners
 /// ```
 ///
-/// 4. Notifying listeners with `call`:
+/// 4. Notifying listeners with `call` or `updateValue`:
 ///
 /// ```dart
-/// pod().add(3); // This will notify listeners
+/// // These will notify listeners
+/// pod().add(3);
+/// pod.updateValue.add(3);
 /// ```
 ///
 /// ### Parameters:
@@ -135,11 +138,12 @@ class Pod<T> extends ValueNotifier<T> {
   /// pod.update((list) => list..add(4)); // This will notify listeners
   /// ```
   ///
-  /// 4. Notifying listeners with `call`:
+  /// 4. Notifying listeners with `call` or `updateValue`:
   ///
   /// ```dart
-  /// pod()..add(4); // This will notify listeners
-  /// ```
+  /// // These will notify listeners
+  /// pod().add(3);
+  /// pod.updateValue.add(3);
   @override
   T get value => _cachedValue ?? super.value;
 
@@ -152,7 +156,8 @@ class Pod<T> extends ValueNotifier<T> {
   /// ### Limitations
   ///
   /// If you want to change the mutable state within the value and notify
-  /// listeners, use [set], [update], [refresh] or [call] instead.
+  /// listeners, use [set], [update], [refresh], [call] or [updateValue]
+  /// instead.
   ///
   /// ### Solutions
   ///
@@ -176,11 +181,12 @@ class Pod<T> extends ValueNotifier<T> {
   /// pod.update((list) => list..add(4)); // This will notify listeners.
   /// ```
   ///
-  /// 4. Notifying listeners with `call`:
+  /// 4. Notifying listeners with `call` or `updateValue`:
   ///
   /// ```dart
-  /// pod()..add(4); // This will notify listeners.
-  /// ```
+  /// // These will notify listeners
+  /// pod().add(3);
+  /// pod.updateValue.add(3);
   ///
   /// ### Parameters:
   ///
@@ -197,9 +203,23 @@ class Pod<T> extends ValueNotifier<T> {
   ///
   /// ```dart
   /// final pod = Pod<List<int>>([0, 1, 2]);
-  /// pod()..add(3); // This will notify listeners.
+  /// pod().add(3); // This will notify listeners.
   /// ```
-  T call() {
+  T call() => updateValue;
+
+  //
+  //
+  //
+
+  /// Gets this Pod's value and notifies any listeners.
+  ///
+  /// ### Example:
+  ///
+  /// ```dart
+  /// final pod = Pod<List<int>>([0, 1, 2]);
+  /// pod.updateValue.add(3); // This will notify listeners.
+  /// ```
+  T get updateValue {
     Future.delayed(Duration.zero, notifyListeners);
     return value;
   }

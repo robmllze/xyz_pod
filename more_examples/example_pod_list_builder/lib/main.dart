@@ -1,12 +1,14 @@
-// -----------------------------------------------------------------------------
+//.title
+// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Example 2: A basic example on how to use PodList, PodListHelper and
-// PodListBuilder.
+// X|Y|Z & Dev 
 //
-// Copyright (c) 2023 Robert Mollentze
-// See LICENSE for details.
-//
-// -----------------------------------------------------------------------------
+// Copyright Ⓒ Robert Mollentze, xyzand.dev
+// 
+// Licensing details can be found in the LICENSE file in the root directory.
+// 
+// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//.title~
 
 import 'package:flutter/material.dart';
 
