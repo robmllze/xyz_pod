@@ -10,10 +10,10 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 // Step 1: Import the package.
-import 'package:xyz_pod/xyz_pod.dart';
+import "package:xyz_pod/xyz_pod.dart";
 
 // Step 2: Create a Pod of any type, that's initially null.
 Pod<int>? pCounter;
@@ -36,7 +36,7 @@ void main() {
                   );
                 },
                 placeholderBuilder: (context, child) {
-                  return Text("Waiting for pCounter's value...");
+                  return const Text("Waiting for pCounter's value...");
                 },
               ),
               const SizedBox(height: 16.0),
@@ -49,7 +49,7 @@ void main() {
                   // Then we'll update the value.
                   pCounter!.update((e) => ++e);
                 },
-                child: Text("Increment pCounter's value"),
+                child: const Text("Increment pCounter's value"),
               ),
             ],
           ),

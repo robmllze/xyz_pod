@@ -10,10 +10,10 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 // Step 1: Import the package.
-import 'package:xyz_pod/xyz_pod.dart';
+import "package:xyz_pod/xyz_pod.dart";
 
 // Step 2: Create a Pod of any type.
 final pCounter = Pod<int>(0);
@@ -66,7 +66,7 @@ void main() {
                   pCounter.update((e) => e++); // e++ vs. ++e
                   */
                 },
-                child: Text("Increment pCounter's value"),
+                child: const Text("Increment pCounter's value"),
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(
@@ -92,7 +92,7 @@ void main() {
                   // even if you update the value with the same value:
                   */
                 },
-                child: Text("Increment pCounterList's first value"),
+                child: const Text("Increment pCounterList's first value"),
               ),
             ],
           ),

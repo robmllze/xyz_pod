@@ -1,6 +1,6 @@
 # 🇽🇾🇿 Pod
 
-This package is designed to simplify state management in Flutter applications and is well-suited for use with the Modular Services State Management (MSSM) pattern.
+This package simplifies state management in Flutter applications and is well-suited for use with a Modular Services State Management (MSSM) pattern.
 
 [![pub package](https://img.shields.io/pub/v/xyz_pod.svg)](https://pub.dev/packages/xyz_pod)
 
@@ -86,7 +86,7 @@ Contributions are welcome. Here are a few ways you can help:
 
 ## License
 
-This package is released under the MIT License.
+This project is released under the MIT License. See [LICENSE](https://raw.githubusercontent.com/robmllze/xyz_pod/main/LICENSE) for more information.
 
 ## Contact
 

@@ -10,10 +10,10 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 // Step 1: Import the package.
-import 'package:xyz_pod/xyz_pod.dart';
+import "package:xyz_pod/xyz_pod.dart";
 
 // Step 2: Create a list of Pods with different types. You may wish to keep
 // these Pods in a separate file that holds the global state of your app.
@@ -39,13 +39,13 @@ void main() {
             children: [
               // Step 2: Use PodListBuilder to listen to changes in any of the Pods.
               PodListBuilder(
-                podList: WeatherPods().pods,
+                podList: const WeatherPods().pods,
                 //pods: [pTemperature, pWeatherCondition], // This works too!
                 builder: (context, child, pods) {
                   // Extracting values from the list of Pod values.
-                  final temperature = WeatherPods().temperature;
+                  final temperature = const WeatherPods().temperature;
                   //final temperature = pods.elementAt(0)!.value as double; // This works too!
-                  final weatherCondition = WeatherPods().weatherCondition;
+                  final weatherCondition = const WeatherPods().weatherCondition;
                   //final weatherCondition = pods.elementAt(1)!.value as String; // This works too!
                   return Text(
                     "Today is $weatherCondition and the temperature is $temperature°F.",
@@ -59,7 +59,7 @@ void main() {
                   // Incrementing temperature.
                   pTemperature.update((temp) => temp + 1.0);
                 },
-                child: Text("Increase Temperature"),
+                child: const Text("Increase Temperature"),
               ),
               const SizedBox(height: 8.0),
               ElevatedButton(
@@ -67,7 +67,7 @@ void main() {
                   // Changing weather condition.
                   pWeatherCondition.set("Rainy");
                 },
-                child: Text("Change Weather Condition to Rainy"),
+                child: const Text("Change Weather Condition to Rainy"),
               ),
               const SizedBox(height: 8.0),
               ElevatedButton(
@@ -75,7 +75,7 @@ void main() {
                   // Changing weather condition.
                   pWeatherCondition.set("Snowy");
                 },
-                child: Text("Change Weather Condition to Snowy"),
+                child: const Text("Change Weather Condition to Snowy"),
               ),
             ],
           ),
