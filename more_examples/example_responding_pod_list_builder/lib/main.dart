@@ -44,17 +44,19 @@ class UserProfileApp extends StatelessWidget {
                 child: const Text("Stop Services"),
               ),
               ElevatedButton(
-                  onPressed: () async {
-                    await appService.pAuthenticationService.value?.logIn();
-                    debugPrint("Logged in!");
-                  },
-                  child: const Text("Log In"),),
+                onPressed: () async {
+                  await appService.pAuthenticationService.value?.logIn();
+                  debugPrint("Logged in!");
+                },
+                child: const Text("Log In"),
+              ),
               ElevatedButton(
-                  onPressed: () async {
-                    await appService.pAuthenticationService.value?.logOut();
-                    debugPrint("Logged out!");
-                  },
-                  child: const Text("Log Out"),),
+                onPressed: () async {
+                  await appService.pAuthenticationService.value?.logOut();
+                  debugPrint("Logged out!");
+                },
+                child: const Text("Log Out"),
+              ),
               const SizedBox(height: 20),
               // RespondingPodListBuilder listens to changes in appService and updates
               // UI.
