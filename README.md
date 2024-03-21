@@ -38,7 +38,7 @@ import 'package:flutter/material.dart';
 import 'package:xyz_pod/xyz_pod.dart';
 
 final pTemperature = Pod<double>(68.0);
-final pWeatherCondition = Pod<String>("Sunny");
+final pWeatherCondition = Pod<String>('Sunny');
 
 class WeatherPods extends PodListHelper {
   const WeatherPods();
@@ -61,7 +61,7 @@ void main() {
                   final temperature = WeatherPods().temperature;
                   final weatherCondition = WeatherPods().weatherCondition;
                   return Text(
-                    "Today is $weatherCondition and the temperature is $temperature°F.",
+                    'Today is $weatherCondition and the temperature is $temperature°F.',
                   );
                 },
               ),
