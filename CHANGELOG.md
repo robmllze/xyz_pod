@@ -2,5 +2,5 @@
 
 ## [0.23.0]
 
-- Released @ 2024-03-21 02:08:50.039574Z
+- Released @ 2024-03-21 02:16:35.910741Z
 - Update dependencies
