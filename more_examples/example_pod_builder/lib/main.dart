@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// X|Y|Z & Dev
+// 🇽🇾🇿 & Dev
 //
 // Copyright Ⓒ Robert Mollentze, xyzand.dev
 //
@@ -117,13 +117,13 @@ void main() {
 
   - A ValueListenableBuilder can be used instead of a PodBuilder but it's
     recommended to use a PodBuilder for the following reasons:
-    1. Pods can be marked as "temp" when you create them, and PodBuilders will
-      dispose of Pods marked as "temp" when they themselves get automatically
+    1. Pods can be marked as 'temp' when you create them, and PodBuilders will
+      dispose of Pods marked as 'temp' when they themselves get automatically
       disposed of.
     2. Future versions of PodBuilder may have additional features that
       ValueListenableBuilder doesn't have.
-    3. As well as the "update" method, Pods also have a "set" method and a
-      "refresh" method.
+    3. As well as the 'update' method, Pods also have a 'set' method and a
+      'refresh' method.
     4. The Pod class is quite simple so if you want to know more about it, you
       can just read the source code.
  */

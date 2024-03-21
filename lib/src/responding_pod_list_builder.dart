@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// X|Y|Z & Dev
+// 🇽🇾🇿 & Dev
 //
 // Copyright Ⓒ Robert Mollentze, xyzand.dev
 //
@@ -49,7 +49,7 @@ import '/_common.dart';
 ///   builder: (context, child, values) {
 ///     final user = userSnapshot();
 ///     if (user != null) {
-///       return Text("User: ${user.email}");
+///       return Text('User: ${user.email}');
 ///     }
 ///     return Container(); // Use Container or another placeholder for null data.
 ///   },

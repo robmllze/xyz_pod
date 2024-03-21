@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// X|Y|Z & Dev
+// 🇽🇾🇿 & Dev
 //
 // Copyright Ⓒ Robert Mollentze, xyzand.dev
 //
@@ -209,7 +209,7 @@ final appService = AppService();
   - RespondingPodListBuilder is used to listen to changes in multiple Pods and
     update the UI accordingly.
   - PodListResponders are used to track and respond to changes in Pods. They
-    are abbreviated as "plr" in the code.
+    are abbreviated as 'plr' in the code.
   - Snapshots provide instant access to the current values of specific Pods.
 
   Additional Notes:
