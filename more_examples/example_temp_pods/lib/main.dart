@@ -10,10 +10,10 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "package:flutter/material.dart";
-import "package:xyz_pod/xyz_pod.dart";
+import 'package:flutter/material.dart';
+import 'package:xyz_pod/xyz_pod.dart';
 
-final pText = Pod<String>("Hello World");
+final pText = Pod<String>('Hello World');
 
 void main() {
   runApp(
@@ -24,7 +24,7 @@ void main() {
             MyText(
               // Create a temporary String Pod that will be disposed when the
               // MyText widget is disposed.
-              pText: Pod.temp("Hello World"),
+              pText: Pod.temp('Hello World'),
             ),
             // The Pod here is not temporary, so it will not be disposed by
             // MyText.

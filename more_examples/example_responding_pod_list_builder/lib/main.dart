@@ -10,10 +10,10 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 
 // Import the package.
-import "package:xyz_pod/xyz_pod.dart";
+import 'package:xyz_pod/xyz_pod.dart';
 
 void main() {
   runApp(UserProfileApp());
@@ -24,7 +24,7 @@ class UserProfileApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text("User Profile")),
+        appBar: AppBar(title: const Text('User Profile')),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -32,30 +32,30 @@ class UserProfileApp extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   await appService.startService();
-                  debugPrint("Services started!");
+                  debugPrint('Services started!');
                 },
-                child: const Text("Start Services"),
+                child: const Text('Start Services'),
               ),
               ElevatedButton(
                 onPressed: () async {
                   await appService.stopService();
-                  debugPrint("Services stopped!");
+                  debugPrint('Services stopped!');
                 },
-                child: const Text("Stop Services"),
+                child: const Text('Stop Services'),
               ),
               ElevatedButton(
                 onPressed: () async {
                   await appService.pAuthenticationService.value?.logIn();
-                  debugPrint("Logged in!");
+                  debugPrint('Logged in!');
                 },
-                child: const Text("Log In"),
+                child: const Text('Log In'),
               ),
               ElevatedButton(
                 onPressed: () async {
                   await appService.pAuthenticationService.value?.logOut();
-                  debugPrint("Logged out!");
+                  debugPrint('Logged out!');
                 },
-                child: const Text("Log Out"),
+                child: const Text('Log Out'),
               ),
               const SizedBox(height: 20),
               // RespondingPodListBuilder listens to changes in appService and updates
@@ -64,7 +64,7 @@ class UserProfileApp extends StatelessWidget {
                 podListResponder: appService.appServicePlr,
                 builder: (context, child, data) {
                   final idToken = appService.idTokenSnapshot();
-                  return Text("$idToken");
+                  return Text('$idToken');
                 },
               ),
             ],
@@ -103,7 +103,7 @@ class AuthenticationService with PodServiceMixin {
   Future<void> logIn() async {
     await Future.delayed(const Duration(seconds: 1));
     pIsAuthenticated.set(true);
-    pIdToken.set("sample-id-token");
+    pIdToken.set('sample-id-token');
   }
 
   Future<void> logOut() async {
@@ -126,7 +126,7 @@ class UserDataService with PodServiceMixin {
   Future<void> startService() async {
     await this.stopService();
     await Future.delayed(const Duration(seconds: 2));
-    pUserModel.set(UserModel(name: "Foo Bar", email: "foo.bar@hello.world"));
+    pUserModel.set(UserModel(name: 'Foo Bar', email: 'foo.bar@hello.world'));
   }
 
   @override

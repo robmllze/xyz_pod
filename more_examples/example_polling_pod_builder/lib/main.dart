@@ -10,10 +10,10 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 
 // Step 1: Import the package.
-import "package:xyz_pod/xyz_pod.dart";
+import 'package:xyz_pod/xyz_pod.dart';
 
 // Step 2: Create a Pod of any type, that's initially null.
 Pod<int>? pCounter;

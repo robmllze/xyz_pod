@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import "/_common.dart";
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -21,7 +21,7 @@ typedef XyzPodListHelper<T> = PodListHelper<T>;
 typedef XyzRespondingPodListBuilder = RespondingPodListBuilder;
 typedef XyzPollingPodBuilder<T extends Pod<T>> = PollingPodBuilder<T>;
 
-@Deprecated("This was renamed to `RespondingPodListBuilder`.")
+@Deprecated('This was renamed to `RespondingPodListBuilder`.')
 typedef ResponsivePodListBuilder = RespondingPodListBuilder;
 
 typedef TPodList<T extends Object?> = Iterable<Pod<T>?>;
