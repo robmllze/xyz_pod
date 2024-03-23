@@ -4,9 +4,9 @@
 ## 🇽🇾🇿 & Dev
 ##
 ## Copyright Ⓒ Robert Mollentze, xyzand.dev
-## 
-## Licensing details can be found in the LICENSE file in the root directory.
-## 
+##
+## Licencing details are in the LICENSE file in the root directory.
+##
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 ##.title~
 
@@ -15,14 +15,12 @@ name: example_pod_builder
 ## -----------------------------------------------------------------------------
 
 environment:
-
-  sdk: '>=3.0.0 <4.0.0'
-  flutter: '>= 3.0.0'
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">= 3.0.0"
 
 ## -----------------------------------------------------------------------------
 
 dependencies:
-
   flutter:
     sdk: flutter
 
