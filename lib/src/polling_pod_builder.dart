@@ -71,7 +71,7 @@ class PollingPodBuilder<T> extends StatefulWidget {
 
   /// A function to rebuild the widget based on the data received from
   /// [podPoller].
-  final Widget Function(
+  final Widget? Function(
     BuildContext context,
     Widget? child,
     T? value,
