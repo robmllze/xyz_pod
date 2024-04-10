@@ -24,6 +24,7 @@ import '/_common.dart';
 /// - `initialValues`: The initial values for the Pods.
 /// - `builder`: A function that is invoked initially and triggers a widget
 ///   rebuild whenever any of the provided Pods change.
+/// - `onDispose`: An optional function to call when the widget is disposed.
 class PodListWidget extends StatefulWidget {
   //
   //
@@ -55,6 +56,13 @@ class PodListWidget extends StatefulWidget {
   //
   //
 
+  /// An optional function to call when the widget is disposed.
+  final void Function()? onDispose;
+
+  //
+  //
+  //
+
   /// Constructs a `PodListWidget` widget.
   ///
   /// ### Parameters:
@@ -64,11 +72,13 @@ class PodListWidget extends StatefulWidget {
   /// - `initialValues`: The initial values for the Pods.
   /// - `builder`: A function that is invoked initially and triggers a widget
   ///   rebuild whenever any of the provided Pods change.
+  /// - `onDispose`: An optional function to call when the widget is disposed.
   const PodListWidget({
     super.key,
     this.child,
     required this.initialValues,
     required this.builder,
+    this.onDispose,
   });
 
   //
@@ -114,5 +124,15 @@ class _State extends State<PodListWidget> {
         _podList,
       ),
     );
+  }
+
+  //
+  //
+  //
+
+  @override
+  void dispose() {
+    widget.onDispose?.call();
+    super.dispose();
   }
 }

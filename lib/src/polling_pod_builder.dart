@@ -57,6 +57,7 @@ import '/_common.dart';
 /// - `child`: An optional child widget that is passed to the `builder` and
 ///   `placeholderBuilder` functions, useful for optimization if the child is
 ///   part of a larger widget that does not need to rebuild.
+/// - `onDispose`: An optional function to call when the widget is disposed.
 class PollingPodBuilder<T> extends StatefulWidget {
   //
   //
@@ -99,6 +100,13 @@ class PollingPodBuilder<T> extends StatefulWidget {
   //
   //
 
+  /// An optional function to call when the widget is disposed.
+  final void Function()? onDispose;
+
+  //
+  //
+  //
+
   /// Creates a `PollingPodBuilder` widget.
   ///
   /// ### Parameters:
@@ -114,12 +122,14 @@ class PollingPodBuilder<T> extends StatefulWidget {
   /// - `child`: An optional child widget that is passed to the `builder` and
   ///   `placeholderBuilder` functions, useful for optimization if the child is
   ///   part of a larger widget that does not need to rebuild.
+  /// - `onDispose`: An optional function to call when the widget is disposed.
   const PollingPodBuilder({
     super.key,
     required this.podPoller,
     required this.builder,
     this.placeholderBuilder,
     this.child,
+    this.onDispose,
   });
 
   //
@@ -132,8 +142,7 @@ class PollingPodBuilder<T> extends StatefulWidget {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>>
-    with WidgetsBindingObserver {
+class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> with WidgetsBindingObserver {
   //
   //
   //
@@ -164,6 +173,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    widget.onDispose?.call();
     super.dispose();
   }
 

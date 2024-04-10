@@ -29,6 +29,7 @@ import '/_common.dart';
 /// - `child`: An optional child widget that is passed to the `builder` and
 ///   `placeholderBuilder` functions, useful for optimization if the child is
 ///   part of a larger widget that does not need to rebuild.
+/// - `onDispose`: An optional function to call when the widget is disposed.
 class PodBuilder<T> extends StatefulWidget {
   //
   //
@@ -71,6 +72,13 @@ class PodBuilder<T> extends StatefulWidget {
   //
   //
 
+  /// An optional function to call when the widget is disposed.
+  final void Function()? onDispose;
+
+  //
+  //
+  //
+
   /// Constructs a `PodBuilder` widget.
   ///
   /// ### Parameters:
@@ -85,12 +93,14 @@ class PodBuilder<T> extends StatefulWidget {
   /// - `child`: An optional child widget that is passed to the `builder` and
   ///   `placeholderBuilder` functions, useful for optimization if the child is
   ///   part of a larger widget that does not need to rebuild.
+  /// - `onDispose`: An optional function to call when the widget is disposed.
   const PodBuilder({
     super.key,
     this.pod,
     this.builder,
     this.placeholderBuilder,
     this.child,
+    this.onDispose,
   });
 
   //
@@ -171,6 +181,7 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
   void dispose() {
     widget.pod?.removeListener(_update);
     widget.pod?.disposeIfMarkedAsTemp();
+    widget.onDispose?.call();
     super.dispose();
   }
 }

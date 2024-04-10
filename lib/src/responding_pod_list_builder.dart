@@ -117,6 +117,13 @@ class RespondingPodListBuilder extends StatefulWidget {
   //
   //
 
+  /// An optional function to call when the widget is disposed.
+  final void Function()? onDispose;
+
+  //
+  //
+  //
+
   /// Creates a `RespondingPodListBuilder` widget.
   ///
   /// ### Parameters:
@@ -136,12 +143,14 @@ class RespondingPodListBuilder extends StatefulWidget {
   /// - `child`: An optional child widget that is passed to the `builder` and
   ///   `placeholderBuilder` functions, useful for optimization if the child is
   ///   part of a larger widget that does not need to rebuild.
+  /// - `onDispose`: An optional function to call when the widget is disposed.
   const RespondingPodListBuilder({
     super.key,
     required this.podListResponder,
     required this.builder,
     this.placeholderBuilder,
     this.child,
+    this.onDispose,
   });
 
   //
@@ -149,8 +158,7 @@ class RespondingPodListBuilder extends StatefulWidget {
   //
 
   @override
-  State<RespondingPodListBuilder> createState() =>
-      _RespondingPodListBuilderState();
+  State<RespondingPodListBuilder> createState() => _RespondingPodListBuilderState();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -270,6 +278,7 @@ class _RespondingPodListBuilderState extends State<RespondingPodListBuilder> {
       pod?.removeListener(_update);
       pod?.disposeIfMarkedAsTemp();
     }
+    widget.onDispose?.call();
     super.dispose();
   }
 }
