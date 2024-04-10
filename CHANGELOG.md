@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.26.0]
+
+- Released @ 2024-04-10 07:05:28.430810Z
+- Add onDispose callback to builders
+
 ## [0.25.0]
 
 - Released @ 2024-03-26 03:34:21.330904Z
