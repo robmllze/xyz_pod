@@ -51,7 +51,7 @@ import '/_common.dart';
 ///     if (user != null) {
 ///       return Text('User: ${user.email}');
 ///     }
-///     return Container(); // Use Container or another placeholder for null data.
+///     return Container(); // Use Container or another fallback for null data.
 ///   },
 /// )
 /// ```
@@ -68,10 +68,10 @@ import '/_common.dart';
 ///   states of the observed Pods. It receives the build context, the optional
 ///   `child` widget, and the values from the observed pods returned by
 ///   `podListResponder`.
-/// - `placeholderBuilder`: An optional function to create a placeholder widget
+/// - `fallbackBuilder`: An optional function to create a fallback widget
 ///   when there's no data.
 /// - `child`: An optional child widget that is passed to the `builder` and
-///   `placeholderBuilder` functions, useful for optimization if the child is
+///   `fallbackBuilder` functions, useful for optimization if the child is
 ///   part of a larger widget that does not need to rebuild.
 class RespondingPodListBuilder extends StatefulWidget {
   //
@@ -99,18 +99,18 @@ class RespondingPodListBuilder extends StatefulWidget {
   //
   //
 
-  /// An optional function to create a placeholder widget when there's no data.
+  /// An optional function to create a fallback widget when there's no data.
   final Widget? Function(
     BuildContext context,
     Widget? child,
-  )? placeholderBuilder;
+  )? fallbackBuilder;
 
   //
   //
   //
 
   /// An optional static child widget that is passed to the [builder] and
-  /// [placeholderBuilder].
+  /// [fallbackBuilder].
   final Widget? child;
 
   //
@@ -138,17 +138,17 @@ class RespondingPodListBuilder extends StatefulWidget {
   ///   states of the observed Pod instances. It receives the build context,
   ///   an optional child widget, and the values from the observed pods, enabling
   ///   dynamic and responsive UI updates.
-  /// - `placeholderBuilder`: An optional function for creating a placeholder
+  /// - `fallbackBuilder`: An optional function for creating a fallback
   ///   widget when the Pod has no data.
   /// - `child`: An optional child widget that is passed to the `builder` and
-  ///   `placeholderBuilder` functions, useful for optimization if the child is
+  ///   `fallbackBuilder` functions, useful for optimization if the child is
   ///   part of a larger widget that does not need to rebuild.
   /// - `onDispose`: An optional function to call when the widget is disposed.
   const RespondingPodListBuilder({
     super.key,
     required this.podListResponder,
     required this.builder,
-    this.placeholderBuilder,
+    this.fallbackBuilder,
     this.child,
     this.onDispose,
   });
@@ -158,8 +158,7 @@ class RespondingPodListBuilder extends StatefulWidget {
   //
 
   @override
-  State<RespondingPodListBuilder> createState() =>
-      _RespondingPodListBuilderState();
+  State<RespondingPodListBuilder> createState() => _RespondingPodListBuilderState();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -244,7 +243,7 @@ class _RespondingPodListBuilderState extends State<RespondingPodListBuilder> {
   @override
   Widget build(BuildContext context) {
     final values = _currentWatchList.map((pod) => pod?.value);
-    if (values.nonNulls.isEmpty && widget.placeholderBuilder != null) {
+    if (values.nonNulls.isEmpty && widget.fallbackBuilder != null) {
       return _fallbackBuilder(context);
     } else {
       return widget.builder(
@@ -261,7 +260,7 @@ class _RespondingPodListBuilderState extends State<RespondingPodListBuilder> {
   //
 
   Widget _fallbackBuilder(BuildContext context) {
-    return widget.placeholderBuilder?.call(
+    return widget.fallbackBuilder?.call(
           context,
           _staticChild,
         ) ??

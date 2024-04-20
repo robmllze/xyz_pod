@@ -35,7 +35,7 @@ void main() {
                     "pCounter's value: $counter",
                   );
                 },
-                placeholderBuilder: (context, child) {
+                fallbackBuilder: (context, child) {
                   return const Text("Waiting for pCounter's value...");
                 },
               ),

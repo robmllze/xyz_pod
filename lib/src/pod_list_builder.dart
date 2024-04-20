@@ -24,10 +24,10 @@ import '/_common.dart';
 /// - `builder`: A function that rebuilds the widget based on the current
 ///   states of the observed Pods. It receives the build context, the optional
 ///   `child` widget, and the valued from the observed `podList`.
-/// - `placeholderBuilder`: An optional function to create a placeholder widget
+/// - `fallbackBuilder`: An optional function to create a fallback widget
 ///   when there's no data.
 /// - `child`: An optional child widget that is passed to the `builder` and
-///   `placeholderBuilder` functions, useful for optimization if the child is
+///   `fallbackBuilder` functions, useful for optimization if the child is
 ///   part of a larger widget that does not need to rebuild.
 /// - `onDispose`: An optional function to call when the widget is disposed.
 class PodListBuilder extends StatefulWidget {
@@ -61,11 +61,11 @@ class PodListBuilder extends StatefulWidget {
   //
   //
 
-  /// An optional function to create a placeholder widget when there's no data.
+  /// An optional function to create a fallback widget when there's no data.
   final Widget? Function(
     BuildContext context,
     Widget? child,
-  )? placeholderBuilder;
+  )? fallbackBuilder;
 
   //
   //
@@ -87,17 +87,17 @@ class PodListBuilder extends StatefulWidget {
   /// - `builder`: A function that rebuilds the widget based on the current
   ///   states of the observed Pods. It receives the build context, the optional
   ///   `child` widget, and the valued from the observed `podList`.
-  /// - `placeholderBuilder`: An optional function to create a placeholder widget
+  /// - `fallbackBuilder`: An optional function to create a fallback widget
   ///   when there's no data.
   /// - `child`: An optional child widget that is passed to the `builder` and
-  ///   `placeholderBuilder` functions, useful for optimization if the child is
+  ///   `fallbackBuilder` functions, useful for optimization if the child is
   ///   part of a larger widget that does not need to rebuild.
   /// - `onDispose`: An optional function to call when the widget is disposed.
   const PodListBuilder({
     super.key,
     required this.podList,
     required this.builder,
-    this.placeholderBuilder,
+    this.fallbackBuilder,
     this.child,
     this.onDispose,
   });
@@ -178,7 +178,7 @@ class _PodListBuilderState extends State<PodListBuilder> {
   @override
   Widget build(BuildContext context) {
     final values = widget.podList.map((e) => e?.value);
-    if (values.nonNulls.isEmpty && widget.placeholderBuilder != null) {
+    if (values.nonNulls.isEmpty && widget.fallbackBuilder != null) {
       return _fallbackBuilder(context);
     } else {
       return widget.builder(
@@ -195,7 +195,7 @@ class _PodListBuilderState extends State<PodListBuilder> {
   //
 
   Widget _fallbackBuilder(BuildContext context) {
-    return widget.placeholderBuilder?.call(
+    return widget.fallbackBuilder?.call(
           context,
           _staticChild,
         ) ??
