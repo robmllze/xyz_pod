@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.27.0]
+
+- Released @ 2024-04-20 12:32:50.037232Z
+- Renamed placeholderBuilder to fallbackBuilder
+
 ## [0.26.0]
 
 - Released @ 2024-04-10 07:05:28.430810Z
