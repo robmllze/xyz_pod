@@ -149,13 +149,12 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
   Widget build(BuildContext context) {
     final value = widget.pod?.value;
 
-      return widget.builder?.call(
-            context,
-            _staticChild,
-            value,
-          ) ??
-          _fallbackBuilder(context);
-    
+    return widget.builder?.call(
+          context,
+          _staticChild,
+          value,
+        ) ??
+        _fallbackBuilder(context);
   }
 
   //

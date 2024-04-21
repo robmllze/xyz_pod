@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.28.0]
+
+- Released @ 2024-04-21 04:07:27.756896Z
+- Fixed issue with Pod builders when Pod values are null
+
 ## [0.27.0]
 
 - Released @ 2024-04-20 12:32:50.037232Z
