@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.29.0]
+
+- Released @ 2024-04-21 04:14:16.008077Z
+- Fixed issue with handling nulls
+
 ## [0.28.0]
 
 - Released @ 2024-04-21 04:07:27.756896Z
