@@ -44,7 +44,7 @@ void main() {
                 pod: pCounterList,
                 builder: (context, child, counterList) {
                   return Text(
-                    "pCounterList's first value: ${counterList.firstOrNull}",
+                    "pCounterList's first value: ${counterList?.firstOrNull}",
                   );
                 },
               ),

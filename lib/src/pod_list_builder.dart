@@ -178,16 +178,12 @@ class _PodListBuilderState extends State<PodListBuilder> {
   @override
   Widget build(BuildContext context) {
     final values = widget.podList.map((e) => e?.value);
-    if (values.nonNulls.isEmpty && widget.fallbackBuilder != null) {
-      return _fallbackBuilder(context);
-    } else {
-      return widget.builder(
-            context,
-            _staticChild,
-            values,
-          ) ??
-          _fallbackBuilder(context);
-    }
+    return widget.builder(
+          context,
+          _staticChild,
+          values,
+        ) ??
+        _fallbackBuilder(context);
   }
 
   //

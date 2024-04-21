@@ -47,7 +47,7 @@ class PodBuilder<T> extends StatefulWidget {
   final Widget? Function(
     BuildContext context,
     Widget? child,
-    T data,
+    T? data,
   )? builder;
 
   //
@@ -148,16 +148,14 @@ class _PodBuilderState<T> extends State<PodBuilder<T>> {
   @override
   Widget build(BuildContext context) {
     final value = widget.pod?.value;
-    if (value == null) {
-      return _fallbackBuilder(context);
-    } else {
+
       return widget.builder?.call(
             context,
             _staticChild,
             value,
           ) ??
           _fallbackBuilder(context);
-    }
+    
   }
 
   //

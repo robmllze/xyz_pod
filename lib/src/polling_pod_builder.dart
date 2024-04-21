@@ -184,7 +184,7 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>>
 
   void _checkAndUpdate() {
     final tempPod = widget.podPoller();
-    if ((_currentPod?.value == null) != (tempPod?.value == null)) {
+    if ((_currentPod == null) != (tempPod == null)) {
       setState(() {
         _currentPod = tempPod;
       });

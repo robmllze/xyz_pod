@@ -158,8 +158,7 @@ class RespondingPodListBuilder extends StatefulWidget {
   //
 
   @override
-  State<RespondingPodListBuilder> createState() =>
-      _RespondingPodListBuilderState();
+  State<RespondingPodListBuilder> createState() => _RespondingPodListBuilderState();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -244,16 +243,12 @@ class _RespondingPodListBuilderState extends State<RespondingPodListBuilder> {
   @override
   Widget build(BuildContext context) {
     final values = _currentWatchList.map((pod) => pod?.value);
-    if (values.nonNulls.isEmpty && widget.fallbackBuilder != null) {
-      return _fallbackBuilder(context);
-    } else {
-      return widget.builder(
-            context,
-            _staticChild,
-            values,
-          ) ??
-          _fallbackBuilder(context);
-    }
+    return widget.builder(
+          context,
+          _staticChild,
+          values,
+        ) ??
+        _fallbackBuilder(context);
   }
 
   //
