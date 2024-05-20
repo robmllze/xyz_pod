@@ -2,7 +2,7 @@
 
 ## [0.30.0]
 
-- Released @ 2024-05-20 23:03:49.454148Z
+- Released @ 2024-05-20 23:06:15.975411Z
 - Removed fallbackBuilder. It wasn't used and added unecessary complication
 
 ## [0.29.0]
