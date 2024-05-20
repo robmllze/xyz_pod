@@ -3,7 +3,7 @@
 ## [0.30.0]
 
 - Released @ 2024-05-20 23:02:41.081505Z
-- Removed fallbackBuilder. It wasn't used and added unecessary complication.
+- Removed fallbackBuilder. It wasn't used and added unecessary complication
 
 ## [0.29.0]
 
