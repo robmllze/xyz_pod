@@ -52,10 +52,8 @@ import '/_common.dart';
 ///   state of the observed Pod. It receives the build context, the optional
 ///   `child` widget, and the value from the observed pod returned by
 ///   `podPoller`.
-/// - `fallbackBuilder`: An optional function for creating a fallback
-///   widget when the Pod has no data.
-/// - `child`: An optional child widget that is passed to the `builder` and
-///   `fallbackBuilder` functions, useful for optimization if the child is
+/// - `child`: An optional child widget that is passed to the `builder`, useful
+///   for optimization if the child is
 ///   part of a larger widget that does not need to rebuild.
 /// - `onDispose`: An optional function to call when the widget is disposed.
 class PollingPodBuilder<T> extends StatefulWidget {
@@ -72,28 +70,17 @@ class PollingPodBuilder<T> extends StatefulWidget {
 
   /// A function to rebuild the widget based on the data received from
   /// [podPoller].
-  final Widget? Function(
+  final Widget Function(
     BuildContext context,
     Widget? child,
-    T? value,
+    T? data,
   ) builder;
 
   //
   //
   //
 
-  /// An optional function to create a fallback widget when there's no data.
-  final Widget? Function(
-    BuildContext context,
-    Widget? child,
-  )? fallbackBuilder;
-
-  //
-  //
-  //
-
-  /// An optional static child widget that is passed to the [builder] and
-  /// [fallbackBuilder].
+  /// An optional static child widget that is passed to the [builder].
   final Widget? child;
 
   //
@@ -117,17 +104,14 @@ class PollingPodBuilder<T> extends StatefulWidget {
   ///   state of the observed Pod. It receives the build context, the optional
   ///   `child` widget, and the value from the observed pod returned by
   ///   `podPoller`.
-  /// - `fallbackBuilder`: An optional function for creating a fallback
-  ///   widget when the Pod has no data.
-  /// - `child`: An optional child widget that is passed to the `builder` and
-  ///   `fallbackBuilder` functions, useful for optimization if the child is
+  /// - `child`: An optional child widget that is passed to the `builder`,
+  ///   useful for optimization if the child is
   ///   part of a larger widget that does not need to rebuild.
   /// - `onDispose`: An optional function to call when the widget is disposed.
   const PollingPodBuilder({
     super.key,
     required this.podPoller,
     required this.builder,
-    this.fallbackBuilder,
     this.child,
     this.onDispose,
   });
@@ -142,8 +126,7 @@ class PollingPodBuilder<T> extends StatefulWidget {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>>
-    with WidgetsBindingObserver {
+class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> with WidgetsBindingObserver {
   //
   //
   //
@@ -203,7 +186,6 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>>
       key: UniqueKey(),
       pod: _currentPod,
       builder: widget.builder,
-      fallbackBuilder: widget.fallbackBuilder,
       child: _staticChild,
     );
   }

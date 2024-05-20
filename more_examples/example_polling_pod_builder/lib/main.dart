@@ -35,9 +35,6 @@ void main() {
                     "pCounter's value: $counter",
                   );
                 },
-                fallbackBuilder: (context, child) {
-                  return const Text("Waiting for pCounter's value...");
-                },
               ),
               const SizedBox(height: 16.0),
               // Step 4: Use the Pod's update method to update the value.

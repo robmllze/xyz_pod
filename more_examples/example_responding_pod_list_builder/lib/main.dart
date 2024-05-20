@@ -16,10 +16,12 @@ import 'package:flutter/material.dart';
 import 'package:xyz_pod/xyz_pod.dart';
 
 void main() {
-  runApp(UserProfileApp());
+  runApp(const UserProfileApp());
 }
 
 class UserProfileApp extends StatelessWidget {
+  const UserProfileApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

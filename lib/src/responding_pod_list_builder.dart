@@ -68,11 +68,9 @@ import '/_common.dart';
 ///   states of the observed Pods. It receives the build context, the optional
 ///   `child` widget, and the values from the observed pods returned by
 ///   `podListResponder`.
-/// - `fallbackBuilder`: An optional function to create a fallback widget
-///   when there's no data.
-/// - `child`: An optional child widget that is passed to the `builder` and
-///   `fallbackBuilder` functions, useful for optimization if the child is
-///   part of a larger widget that does not need to rebuild.
+/// - `child`: An optional child widget that is passed to the `builder`, useful
+///   for optimization if the child is part of a larger widget that does not
+///   need to rebuild.
 class RespondingPodListBuilder extends StatefulWidget {
   //
   //
@@ -89,7 +87,7 @@ class RespondingPodListBuilder extends StatefulWidget {
 
   /// A function to rebuild the widget based on the data received from
   /// [podListResponder].
-  final Widget? Function(
+  final Widget Function(
     BuildContext context,
     Widget? child,
     TPodDataList data,
@@ -99,18 +97,7 @@ class RespondingPodListBuilder extends StatefulWidget {
   //
   //
 
-  /// An optional function to create a fallback widget when there's no data.
-  final Widget? Function(
-    BuildContext context,
-    Widget? child,
-  )? fallbackBuilder;
-
-  //
-  //
-  //
-
-  /// An optional static child widget that is passed to the [builder] and
-  /// [fallbackBuilder].
+  /// An optional static child widget that is passed to the [builder].
   final Widget? child;
 
   //
@@ -138,17 +125,14 @@ class RespondingPodListBuilder extends StatefulWidget {
   ///   states of the observed Pod instances. It receives the build context,
   ///   an optional child widget, and the values from the observed pods, enabling
   ///   dynamic and responsive UI updates.
-  /// - `fallbackBuilder`: An optional function for creating a fallback
-  ///   widget when the Pod has no data.
-  /// - `child`: An optional child widget that is passed to the `builder` and
-  ///   `fallbackBuilder` functions, useful for optimization if the child is
-  ///   part of a larger widget that does not need to rebuild.
+  /// - `child`: An optional child widget that is passed to the `builder` and,
+  ///   useful for optimization if the child is part of a larger widget that
+  ///   does not need to rebuild.
   /// - `onDispose`: An optional function to call when the widget is disposed.
   const RespondingPodListBuilder({
     super.key,
     required this.podListResponder,
     required this.builder,
-    this.fallbackBuilder,
     this.child,
     this.onDispose,
   });
@@ -158,8 +142,7 @@ class RespondingPodListBuilder extends StatefulWidget {
   //
 
   @override
-  State<RespondingPodListBuilder> createState() =>
-      _RespondingPodListBuilderState();
+  State<RespondingPodListBuilder> createState() => _RespondingPodListBuilderState();
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -245,24 +228,10 @@ class _RespondingPodListBuilderState extends State<RespondingPodListBuilder> {
   Widget build(BuildContext context) {
     final values = _currentWatchList.map((pod) => pod?.value);
     return widget.builder(
-          context,
-          _staticChild,
-          values,
-        ) ??
-        _fallbackBuilder(context);
-  }
-
-  //
-  //
-  //
-
-  Widget _fallbackBuilder(BuildContext context) {
-    return widget.fallbackBuilder?.call(
-          context,
-          _staticChild,
-        ) ??
-        _staticChild ??
-        const SizedBox.shrink();
+      context,
+      _staticChild,
+      values,
+    );
   }
 
   //
