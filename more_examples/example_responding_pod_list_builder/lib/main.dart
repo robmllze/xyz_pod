@@ -185,6 +185,7 @@ class AppService with PodServiceMixin {
   }
 
   // Targeted PodListResponder for user model updates.
+  // ignore: prefer_function_declarations_over_variables
   late final TPodListResponder userModelPlr = () {
     return [
       pUserDataService,
