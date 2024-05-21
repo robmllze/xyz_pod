@@ -27,6 +27,28 @@ typedef TPodListResponder<T extends Object?> = TPodList<T> Function();
 
 typedef XyzPodServiceMixin = PodServiceMixin;
 
+typedef TOnDataBuilder<T> = Widget Function(
+  BuildContext context,
+  Widget? child,
+  T snapshot,
+);
+
+typedef TOnLoadingBuilder = Widget Function(
+  BuildContext context,
+  Widget? child,
+);
+
+typedef TOnNoDataBuilder = Widget Function(
+  BuildContext context,
+  Widget? child,
+);
+
+typedef TRespondingBuilder<T> = Widget Function(
+  BuildContext context,
+  Widget? child,
+  RespondingBuilderSnapshot<T> snapshot,
+);
+
 mixin PodServiceMixin {
   Future<void> startService();
   Future<void> stopService();
