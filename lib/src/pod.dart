@@ -84,6 +84,15 @@ class Pod<T> extends ValueNotifier<T> {
   //
   //
 
+  /// Whether this Pod is disposable. If `false`, the Pod will not be disposed
+  /// when [dispose] is called. Instead, it will continue to exist until the
+  /// application is closed.
+  bool disposable;
+
+  //
+  //
+  //
+
   /// Creates a `Pod<T>`.
   ///
   /// ### Parameters:
@@ -93,7 +102,12 @@ class Pod<T> extends ValueNotifier<T> {
   Pod(
     super.value, {
     bool temp = false,
-  }) : markedAsTemp = temp;
+    this.disposable = true,
+  })  : markedAsTemp = temp,
+        assert(
+          temp && disposable || !temp,
+          'Temporary Pods must be disposable.',
+        );
 
   //
   //
@@ -344,4 +358,24 @@ class Pod<T> extends ValueNotifier<T> {
       dispose();
     }
   }
+
+  //
+  //
+  //
+
+  @override
+  void dispose() {
+    if (disposable) {
+      super.dispose();
+    } else {
+      throw DoNotDisposePodException();
+    }
+  }
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+class DoNotDisposePodException extends PodException {
+  DoNotDisposePodException()
+      : super('"dispose" was called on a Pod that was explicitly maked as non-disposable.');
 }
