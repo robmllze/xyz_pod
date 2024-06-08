@@ -377,5 +377,6 @@ class Pod<T> extends ValueNotifier<T> {
 
 class DoNotDisposePodException extends PodException {
   DoNotDisposePodException()
-      : super('"dispose" was called on a Pod that was explicitly maked as non-disposable.');
+      : super(
+            '"dispose" was called on a Pod that was explicitly maked as non-disposable.',);
 }
