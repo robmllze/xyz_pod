@@ -20,12 +20,11 @@ typedef XyzPodListBuilder<T> = PodListBuilder;
 typedef XyzPodListHelper<T> = PodListHelper<T>;
 typedef XyzRespondingPodListBuilder = RespondingPodListBuilder;
 typedef XyzPollingPodBuilder<T extends Pod<T>> = PollingPodBuilder<T>;
+typedef XyzPodServiceMixin = PodServiceMixin;
 
-typedef TPodList<T extends Object?> = Iterable<Pod<T>?>;
+typedef TPodList<T extends Object?> = Iterable<PodListenable<T>?>;
 typedef TPodDataList<T extends Object?> = Iterable<T>;
 typedef TPodListResponder<T extends Object?> = TPodList<T> Function();
-
-typedef XyzPodServiceMixin = PodServiceMixin;
 
 typedef TOnDataBuilder<T> = Widget Function(
   BuildContext context,

@@ -34,7 +34,7 @@ class PodBuilder<T> extends StatefulWidget {
   //
 
   /// The Pod that this builder listens to.
-  final Pod<T>? pod;
+  final PodListenable<T>? pod;
 
   //
   //

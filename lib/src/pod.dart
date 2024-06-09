@@ -63,7 +63,7 @@ import '/_common.dart';
 ///
 /// - `value`: The initial value for the `Pod`.
 /// - `temp`: An optional flag to mark the `Pod` as temporary.
-class Pod<T> extends ValueNotifier<T> {
+class Pod<T> extends PodListenable<T> {
   //
   //
   //
@@ -321,13 +321,14 @@ class Pod<T> extends ValueNotifier<T> {
   /// ### Parameters:
   ///
   /// - `listener`: The listener to be called only once.
+  @override
   void addSingleExecutionListener(VoidCallback listener) {
-    late final VoidCallback tempLlistener;
-    tempLlistener = () {
+    late final VoidCallback templistener;
+    templistener = () {
       listener();
-      removeListener(tempLlistener);
+      removeListener(templistener);
     };
-    addListener(tempLlistener);
+    addListener(templistener);
   }
 
   //
@@ -353,6 +354,7 @@ class Pod<T> extends ValueNotifier<T> {
   ///   super.dispose();
   ///   myPod.disposeIfMarkedAsTemp();
   /// }
+  @override
   void disposeIfMarkedAsTemp() {
     if (markedAsTemp) {
       dispose();

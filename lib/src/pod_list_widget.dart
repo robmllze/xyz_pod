@@ -49,7 +49,7 @@ class PodListWidget extends StatefulWidget {
   final Widget Function(
     BuildContext context,
     Widget? child,
-    Iterable<Pod> podList,
+    TPodList podList,
   ) builder;
 
   //
