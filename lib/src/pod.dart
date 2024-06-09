@@ -380,5 +380,6 @@ class Pod<T> extends PodListenable<T> {
 class DoNotDisposePodException extends PodException {
   DoNotDisposePodException()
       : super(
-            '"dispose" was called on a Pod that was explicitly maked as non-disposable.',);
+          '"dispose" was called on a Pod that was explicitly maked as non-disposable.',
+        );
 }
