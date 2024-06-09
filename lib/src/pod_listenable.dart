@@ -12,6 +12,8 @@
 
 import 'package:flutter/foundation.dart';
 
+import '/_common.dart';
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract class PodListenable<T> extends ValueNotifier<T> {
@@ -32,4 +34,11 @@ abstract class PodListenable<T> extends ValueNotifier<T> {
   //
 
   void disposeIfMarkedAsTemp();
+
+  //
+  //
+  //
+
+  @nonVirtual
+  Pod<T>? get podOrNull => this is Pod<T> ? this as Pod<T> : null;
 }
