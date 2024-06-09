@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.34.0]
+
+- Released @ 2024-06-09 12:26:53.083186Z
+- Add podOrNull method to PodListenable
+
 ## [0.33.0]
 
 - Released @ 2024-06-09 11:54:05.080811Z
