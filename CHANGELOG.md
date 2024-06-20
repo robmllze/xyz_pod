@@ -2,8 +2,9 @@
 
 ## [0.34.0]
 
-- Released @ 2024-06-09 12:26:53.083186Z
+- Released @ 2024-06-20 06:34:30.523266Z
 - Add podOrNull method to PodListenable
+- Add Lazy, which allows for lazy initialization of values, providing mechanisms to check initialization status, access the value, and asynchronously wait for initialization completion.
 
 ## [0.33.0]
 
