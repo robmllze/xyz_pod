@@ -8,6 +8,8 @@
 //.title~
 
 export 'lazy.dart';
+export 'lint_rules_plugin.dart';
+export 'lint_rules/must_dispose_pods_rule.dart';
 export 'pod_builder.dart';
 export 'pod_exception.dart';
 export 'pod_list_builder.dart';
