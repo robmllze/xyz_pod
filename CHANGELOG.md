@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.36.0]
+
+- Released @ 2024-06-21 10:51:50.963795Z
+- Add must_dispose_pods lint rule
+
 ## [0.35.0]
 
 - Released @ 2024-06-20 06:36:22.367071Z

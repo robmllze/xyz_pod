@@ -25,7 +25,8 @@ class MustDisposePodsRule extends DartLintRule {
           code: const LintCode(
             name: 'must_dispose_pods',
             problemMessage: 'Instances of Pod must call dispose().',
-            correctionMessage: 'Ensure that dispose() is called for each Pod instance.',
+            correctionMessage:
+                'Ensure that dispose() is called for each Pod instance.',
             errorSeverity: ErrorSeverity.WARNING,
           ),
         );
@@ -66,7 +67,8 @@ class MustDisposePodsRule extends DartLintRule {
     });
 
     context.registry.addMethodInvocation((node) {
-      if (_isPodType(node.target?.staticType) && node.methodName.name == 'dispose') {
+      if (_isPodType(node.target?.staticType) &&
+          node.methodName.name == 'dispose') {
         final t = node.target?.beginToken;
         if (t != null) {
           // Save the method's target token. This is an instance token too.
@@ -83,7 +85,8 @@ class MustDisposePodsRule extends DartLintRule {
       // Get offsets for current file to check. Offsets for other files are not available.
       final methodOffsets = _methods[p]!.map((e) => e.offset).toSet();
       for (final t in instances) {
-        if (!methodStrings.contains(t.toString()) && !methodOffsets.contains(t.offset)) {
+        if (!methodStrings.contains(t.toString()) &&
+            !methodOffsets.contains(t.offset)) {
           reporter.reportErrorForToken(
             code,
             t,
