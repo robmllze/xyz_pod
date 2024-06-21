@@ -14,13 +14,7 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef XyzPod<T> = Pod<T>;
-typedef XyzPodBuilder<T> = PodBuilder<T>;
-typedef XyzPodListBuilder<T> = PodListBuilder;
-typedef XyzPodListHelper<T> = PodListHelper<T>;
-typedef XyzRespondingPodListBuilder = RespondingPodListBuilder;
-typedef XyzPollingPodBuilder<T extends Pod<T>> = PollingPodBuilder<T>;
-typedef XyzPodServiceMixin = PodServiceMixin;
+typedef P = PodListenable;
 
 typedef TPodList<T extends Object?> = Iterable<PodListenable<T>?>;
 typedef TPodDataList<T extends Object?> = Iterable<T>;
