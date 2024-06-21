@@ -2,7 +2,7 @@
 
 ## [0.36.0]
 
-- Released @ 2024-06-21 10:51:50.963795Z
+- Released @ 2024-06-21 10:53:30.047169Z
 - Add must_dispose_pods lint rule
 
 ## [0.35.0]
