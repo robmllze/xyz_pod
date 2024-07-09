@@ -2,8 +2,9 @@
 
 ## [0.37.0]
 
-- Released @ 2024-07-09 04:12:31.466577Z
+- Released @ 2024-07-09 04:14:02.227565Z
 - Fix PollingPodBuilder bug
+- Remove lint rules for now until it's thoroughly tested
 
 ## [0.36.0]
 
