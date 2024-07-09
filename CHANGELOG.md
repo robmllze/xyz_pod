@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.38.0]
+
+- Released @ 2024-07-09 04:36:05.694818Z
+- Added Pod.from method
+
 ## [0.37.1]
 
 - Released @ 2024-07-09 04:24:52.409027Z
