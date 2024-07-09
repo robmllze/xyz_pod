@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.39.0]
+
+- Released @ 2024-07-09 04:41:07.355418Z
+- Renamed Pod.from to Pod.cast
+
 ## [0.38.0]
 
 - Released @ 2024-07-09 04:36:05.694818Z
