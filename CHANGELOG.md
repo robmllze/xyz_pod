@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.37.1]
+
+- Released @ 2024-07-09 04:24:52.409027Z
+- Refactor typedef P to be generic in types.dart
+
 ## [0.37.0]
 
 - Released @ 2024-07-09 04:14:02.227565Z
