@@ -113,7 +113,7 @@ class Pod<T> extends PodListenable<T> {
   //
   //
 
-  static Pod<T> from<T>(PodListenable<T> other) {
+  static Pod<T> cast<T>(PodListenable<T> other) {
     return other as Pod<T>;
   }
 
