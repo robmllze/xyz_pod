@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.37.0]
+
+- Released @ 2024-07-09 04:12:31.466577Z
+- Fix PollingPodBuilder bug
+
 ## [0.36.0]
 
 - Released @ 2024-06-21 10:56:31.739773Z
