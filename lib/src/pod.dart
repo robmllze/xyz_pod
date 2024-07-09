@@ -113,6 +113,14 @@ class Pod<T> extends PodListenable<T> {
   //
   //
 
+  static Pod<T> from<T>(PodListenable<T> other) {
+    return other as Pod<T>;
+  }
+
+  //
+  //
+  //
+
   /// Creates a temporary `Pod<T>`.
   ///
   /// - `value`: The initial value for the `Pod`.
