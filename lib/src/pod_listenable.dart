@@ -34,11 +34,4 @@ abstract class PodListenable<T> extends ValueNotifier<T> {
   //
 
   void disposeIfMarkedAsTemp();
-
-  //
-  //
-  //
-
-  @nonVirtual
-  Pod<T>? get podOrNull => this is Pod<T> ? this as Pod<T> : null;
 }

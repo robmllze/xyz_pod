@@ -77,7 +77,9 @@ extension LazyWaiterExtension<T> on Lazy<T> {
   Future<(bool, T)> get wait async {
     final completer = Completer<bool>();
     this._pIsInitialized.addSingleExecutionListener(() async {
-      completer.complete(this._pIsInitialized.value);
+      if (!completer.isCompleted) {
+        completer.complete(this._pIsInitialized.value);
+      }
     });
 
     final isInitialized = await completer.future;

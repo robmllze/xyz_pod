@@ -126,8 +126,7 @@ class PollingPodBuilder<T> extends StatefulWidget {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>>
-    with WidgetsBindingObserver {
+class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>> {
   //
   //
   //
@@ -147,7 +146,6 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) => _checkAndUpdate());
   }
 
@@ -157,7 +155,6 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>>
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     widget.onDispose?.call();
     super.dispose();
   }
@@ -168,12 +165,15 @@ class _PollingPodBuilderState<T> extends State<PollingPodBuilder<T>>
 
   void _checkAndUpdate() {
     final tempPod = widget.podPoller();
-    if ((_currentPod == null) != (tempPod == null)) {
+    if (_currentPod != tempPod) {
       setState(() {
         _currentPod = tempPod;
       });
+      if (_currentPod != null) {
+        // Stop polling once we have a valid pod.
+        return;
+      }
     }
-
     WidgetsBinding.instance.addPostFrameCallback((_) => _checkAndUpdate());
   }
 
