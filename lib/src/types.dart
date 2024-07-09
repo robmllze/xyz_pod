@@ -14,7 +14,7 @@ import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef P = PodListenable;
+typedef P<T> = PodListenable<T>;
 
 typedef TPodList<T extends Object?> = Iterable<PodListenable<T>?>;
 typedef TPodDataList<T extends Object?> = Iterable<T>;
