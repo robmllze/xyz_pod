@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.41.0]
+
+- Released @ 2024-07-27 15:56:48.998275Z
+- refactor: Update ChildPod class to support multiple parents
+
 ## [0.40.0]
 
 - Released @ 2024-07-27 15:29:53.940834Z
