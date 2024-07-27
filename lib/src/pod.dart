@@ -335,7 +335,7 @@ class Pod<T> extends PodListenable<T> {
 
   /// Adds a [child] to this Pod.
   void _addChild(ChildPod child) {
-    if (child.parent != this) {
+    if (!child.parents.contains(this)) {
       throw WrongParentPodException();
     }
     if (this._children.contains(child)) {
@@ -362,21 +362,19 @@ class Pod<T> extends PodListenable<T> {
   //
   //
 
-  /// Creates a new non-temp Pod that maps the value of this Pod to a new Pod
-  /// via [mapper].
-  Pod<B> child<B>(B Function(T value) mapper) {
+  /// Maps this Pod to a new Pod via [mapper].
+  Pod<B> map<B>(B Function(T value) mapper) {
     return ChildPod<T, B>(
-      parent: this,
-      mapper: mapper,
+      parents: [this],
+      mapper: (e) => mapper(e.first),
     );
   }
 
-  /// Creates a new temp Pod that maps the value of this Pod to a new Pod
-  /// via [mapper].
-  Pod<B> temp<B>(B Function(T value) mapper) {
+  /// Maps this Pod to a new temp Pod via [mapper].
+  Pod<B> mapToTemp<B>(B Function(T value) mapper) {
     return ChildPod<T, B>(
-      parent: this,
-      mapper: mapper,
+      parents: [this],
+      mapper: (e) => mapper(e.first),
       temp: true,
     );
   }

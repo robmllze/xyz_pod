@@ -19,19 +19,22 @@ class ChildPod<A, B> extends Pod<B> {
   //
   //
 
-  final Pod<A> parent;
-  final B Function(A parentValue) mapper;
+  final List<Pod<A>> parents;
+  final B Function(List<A> parentValues) mapper;
 
   //
   //
   //
 
   ChildPod({
-    required this.parent,
+    required this.parents,
     required this.mapper,
     bool temp = false,
-  }) : super(mapper(parent.value), temp: temp) {
-    parent._addChild(this);
+  }) : super(mapper(parents.map((p) => p.value).toList()), temp: temp) {
+    for (var parent in parents) {
+      parent._addChild(this);
+      parent.addListener(refresh);
+    }
   }
 
   //
@@ -39,11 +42,11 @@ class ChildPod<A, B> extends Pod<B> {
   //
 
   factory ChildPod.temp({
-    required Pod<A> parent,
-    required B Function(A parentValue) mapper,
+    required List<Pod<A>> parents,
+    required B Function(List<A> parentValues) mapper,
   }) {
     return ChildPod(
-      parent: parent,
+      parents: parents,
       mapper: mapper,
       temp: true,
     );
@@ -55,7 +58,8 @@ class ChildPod<A, B> extends Pod<B> {
 
   @override
   Future<void> refresh() async {
-    await this.set(mapper(parent.value));
+    final newValue = mapper(parents.map((p) => p.value).toList());
+    await this.set(newValue);
   }
 
   //
@@ -64,7 +68,23 @@ class ChildPod<A, B> extends Pod<B> {
 
   @override
   void dispose() {
-    parent._removeChild(this);
+    for (var parent in parents) {
+      parent._removeChild(this);
+      parent.removeListener(refresh);
+    }
     super.dispose();
+  }
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+extension MapOnPodIterableExtension on Iterable<Pod> {
+  ChildPod<dynamic, T> map<T>(
+    T Function(List<dynamic> parentValues) mapper,
+  ) {
+    return ChildPod<dynamic, T>(
+      parents: this.toList(),
+      mapper: mapper,
+    );
   }
 }
