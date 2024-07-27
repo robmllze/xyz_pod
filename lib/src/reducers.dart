@@ -16,8 +16,8 @@ import '/_common.dart';
 
 extension ReducePodsOnPodIterableExtension on Iterable<Pod> {
   /// Reduces a set of [Pod] instances to a single [ChildPod] instance.
-  ChildPod<dynamic, T> reduceToSinglePod<T>(
-    T Function(_Pods values) reducer,
+  ChildPod<dynamic, T> reduceManyPods<T>(
+    T Function(ManyPods values) reducer,
   ) {
     return _reduceToSinglePod(this, reducer);
   }
@@ -26,21 +26,21 @@ extension ReducePodsOnPodIterableExtension on Iterable<Pod> {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Reduces a set of [Pod] instances to a single [ChildPod] instance.
-ChildPod<A, B> reduceToSinglePod<A, B>(
+ChildPod<A, B> reduceManyPods<A, B>(
   final Iterable<Pod<A>> pods,
-  B Function(_Pods values) reducer,
+  B Function(ManyPods values) reducer,
 ) {
   return ChildPod<A, B>(
     parents: pods.toList(),
-    reducer: (_) => reducer(_Pods(pods)),
+    reducer: (_) => reducer(ManyPods(pods)),
   );
 }
 
-const _reduceToSinglePod = reduceToSinglePod;
+const _reduceToSinglePod = reduceManyPods;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class _Pods<A> {
+final class ManyPods<A> {
   //
   //
   //
@@ -51,7 +51,7 @@ class _Pods<A> {
   //
   //
 
-  const _Pods(this.pods);
+  const ManyPods(this.pods);
 
   //
   //
@@ -77,9 +77,9 @@ class _Pods<A> {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Reduces a set of 2 [Pod] instances to a single [ChildPod] instance.
-ChildPod<dynamic, T> reduce2Pods<T, A, B>(
-  PodSet2<A, B> values,
-  T Function(PodSet2<A, B> values) reducer,
+ChildPod<dynamic, T> reduceTwoPods<T, A, B>(
+  TwoPods<A, B> values,
+  T Function(TwoPods<A, B> values) reducer,
 ) {
   return ChildPod<dynamic, T>(
     parents: values.pods.nonNulls.toList(),
@@ -87,12 +87,12 @@ ChildPod<dynamic, T> reduce2Pods<T, A, B>(
   );
 }
 
-/// A set of 2 [Pod] instances to be used with [reduce2Pods].
-final class PodSet2<A, B> {
+/// A set of 2 [Pod] instances to be used with [reduceTwoPods].
+final class TwoPods<A, B> {
   final Pod<A>? pA;
   final Pod<B>? pB;
 
-  PodSet2([
+  TwoPods([
     this.pA,
     this.pB,
   ]);
@@ -107,9 +107,9 @@ final class PodSet2<A, B> {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Reduces a set of 3 [Pod] instances to a single [ChildPod] instance.
-ChildPod<dynamic, T> reduce3Pods<T, A, B, C>(
-  PodSet3<A, B, C> values,
-  T Function(PodSet3<A, B, C> values) reducer,
+ChildPod<dynamic, T> reduceThreePods<T, A, B, C>(
+  ThreePods<A, B, C> values,
+  T Function(ThreePods<A, B, C> values) reducer,
 ) {
   return ChildPod<dynamic, T>(
     parents: values.pods.nonNulls.toList(),
@@ -117,13 +117,13 @@ ChildPod<dynamic, T> reduce3Pods<T, A, B, C>(
   );
 }
 
-/// A set of 3 [Pod] instances to be used with [reduce3Pods].
-final class PodSet3<A, B, C> {
+/// A set of 3 [Pod] instances to be used with [reduceThreePods].
+final class ThreePods<A, B, C> {
   final Pod<A>? pA;
   final Pod<B>? pB;
   final Pod<C>? pC;
 
-  PodSet3([
+  ThreePods([
     this.pA,
     this.pB,
     this.pC,
@@ -140,9 +140,9 @@ final class PodSet3<A, B, C> {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Reduces a set of 4 [Pod] instances to a single [ChildPod] instance.
-ChildPod<dynamic, T> reduce4Pods<T, A, B, C, D>(
-  PodSet4<A, B, C, D> values,
-  T Function(PodSet4<A, B, C, D> values) reducer,
+ChildPod<dynamic, T> reduceFourPods<T, A, B, C, D>(
+  FourPods<A, B, C, D> values,
+  T Function(FourPods<A, B, C, D> values) reducer,
 ) {
   return ChildPod<dynamic, T>(
     parents: values.pods.nonNulls.toList(),
@@ -150,14 +150,14 @@ ChildPod<dynamic, T> reduce4Pods<T, A, B, C, D>(
   );
 }
 
-/// A set of 4 [Pod] instances to be used with [reduce4Pods].
-final class PodSet4<A, B, C, D> {
+/// A set of 4 [Pod] instances to be used with [reduceFourPods].
+final class FourPods<A, B, C, D> {
   final Pod<A>? pA;
   final Pod<B>? pB;
   final Pod<C>? pC;
   final Pod<D>? pD;
 
-  PodSet4([
+  FourPods([
     this.pA,
     this.pB,
     this.pC,
@@ -176,9 +176,9 @@ final class PodSet4<A, B, C, D> {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Reduces a set of 5 [Pod] instances to a single [ChildPod] instance.
-ChildPod<dynamic, T> reduce5Pods<T, A, B, C, D, E>(
-  PodSet5<A, B, C, D, E> values,
-  T Function(PodSet5<A, B, C, D, E> values) reducer,
+ChildPod<dynamic, T> reduceFivePods<T, A, B, C, D, E>(
+  FivePods<A, B, C, D, E> values,
+  T Function(FivePods<A, B, C, D, E> values) reducer,
 ) {
   return ChildPod<dynamic, T>(
     parents: values.pods.nonNulls.toList(),
@@ -186,15 +186,15 @@ ChildPod<dynamic, T> reduce5Pods<T, A, B, C, D, E>(
   );
 }
 
-/// A set of 5 [Pod] instances to be used with [reduce5Pods].
-final class PodSet5<A, B, C, D, E> {
+/// A set of 5 [Pod] instances to be used with [reduceFivePods].
+final class FivePods<A, B, C, D, E> {
   final Pod<A>? pA;
   final Pod<B>? pB;
   final Pod<C>? pC;
   final Pod<D>? pD;
   final Pod<E>? pE;
 
-  PodSet5([
+  FivePods([
     this.pA,
     this.pB,
     this.pC,
@@ -215,9 +215,9 @@ final class PodSet5<A, B, C, D, E> {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Reduces a set of 6 [Pod] instances to a single [ChildPod] instance.
-ChildPod<dynamic, T> reduce6Pods<T, A, B, C, D, E, F>(
-  PodSet6<A, B, C, D, E, F> values,
-  T Function(PodSet6<A, B, C, D, E, F> values) reducer,
+ChildPod<dynamic, T> reduceSixPods<T, A, B, C, D, E, F>(
+  SixPods<A, B, C, D, E, F> values,
+  T Function(SixPods<A, B, C, D, E, F> values) reducer,
 ) {
   return ChildPod<dynamic, T>(
     parents: values.pods.nonNulls.toList(),
@@ -225,8 +225,8 @@ ChildPod<dynamic, T> reduce6Pods<T, A, B, C, D, E, F>(
   );
 }
 
-/// A set of 6 [Pod] instances to be used with [reduce6Pods].
-final class PodSet6<A, B, C, D, E, F> {
+/// A set of 6 [Pod] instances to be used with [reduceSixPods].
+final class SixPods<A, B, C, D, E, F> {
   final Pod<A>? pA;
   final Pod<B>? pB;
   final Pod<C>? pC;
@@ -234,7 +234,7 @@ final class PodSet6<A, B, C, D, E, F> {
   final Pod<E>? pE;
   final Pod<F>? pF;
 
-  PodSet6([
+  SixPods([
     this.pA,
     this.pB,
     this.pC,
