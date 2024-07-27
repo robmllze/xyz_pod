@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.42.0]
+
+- Released @ 2024-07-27 16:00:19.045361Z
+- refactor: Update Pod.map and Pod.mapToTemp to return ChildPod instead of Pod
+
 ## [0.41.0]
 
 - Released @ 2024-07-27 15:56:48.998275Z
