@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.43.0]
+
+- Released @ 2024-07-27 17:29:46.293137Z
+- refactor: Add static factory methods to ChildPod for reducing multiple Pods into a single ChildPod instance
+
 ## [0.42.0]
 
 - Released @ 2024-07-27 17:05:53.656333Z
