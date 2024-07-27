@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.43.1]
+
+- Released @ 2024-07-27 17:35:40.894374Z
+- fix: Fix type casting issue in ChildPod
+
 ## [0.43.0]
 
 - Released @ 2024-07-27 17:34:44.653531Z
