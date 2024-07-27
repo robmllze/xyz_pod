@@ -66,7 +66,7 @@ class ChildPod<A, B> extends Pod<B> {
   /// Reduces a set of 3 [Pod] instances to a single [ChildPod] instance.
   static ChildPod<dynamic, T> from3<T, A, B, C>(
     Pods3<A, B, C> values,
-    T Function(Pods3<A, B, C>  values) reducer,
+    T Function(Pods3<A, B, C> values) reducer,
   ) {
     return reduce3Pods(
       values,
