@@ -6,12 +6,7 @@ This package simplifies state management in Flutter applications and is well-sui
 
 ## Installation
 
-#### Add this to your `pubspec.yaml` file:
-
-```yaml
-dependencies:
-  xyz_pod: any # or the latest version
-```
+Use this package as a dependency by adding it to your `pubspec.yaml` file (see [here](https://pub.dev/packages/xyz_pod/install)).
 
 ## Documentation
 
@@ -27,7 +22,7 @@ dependencies:
 - [Example 4: A basic example on how to use a PollingPodBuilder](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_polling_pod_builder/lib/main.dart)
 - [Example 5: Temp Pods](https://github.com/robmllze/xyz_pod/blob/main/more_examples/example_temp_pods/lib/main.dart)
 
-### Slides:
+### Slides (Outdated):
 
 - [Modular Services State Management and Leveraging Pods for Flutter](https://docs.google.com/presentation/d/11lI1OmV06dB7GMnVSKnna-Yu5s2A1OgMLRbnFEI2m8w/edit?usp=sharing)
 
@@ -75,21 +70,22 @@ void main() {
 }
 ```
 
-## Contributing
+## Contributing and Discussions
 
-Contributions are welcome. Here are a few ways you can help:
+This is an open-source project, and contributions are welcome from everyone, regardless of experience level. Contributing to projects is a great way to learn, share knowledge, and showcase your skills to the community. Join the discussions to ask questions, report bugs, suggest features, share ideas, or find out how you can contribute.
 
-- Report bugs and make feature requests.
-- Add new features.
-- Improve the existing code.
-- Help with documentation and tutorials.
+### Join GitHub Discussions:
+
+💬 https://github.com/robmllze/xyz_pod/discussions
+
+### Join Reddit Discussions:
+
+💬 https://www.reddit.com/r/xyz_pod/
+
+### Chief Maintainer:
+
+📧 Email _Robert Mollentze_ at robmllze@gmail.com
 
 ## License
 
 This project is released under the MIT License. See [LICENSE](https://raw.githubusercontent.com/robmllze/xyz_pod/main/LICENSE) for more information.
-
-## Contact
-
-**Author:** Robert Mollentze
-
-**Email:** robmllze@gmail.com
