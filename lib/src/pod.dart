@@ -366,7 +366,7 @@ class Pod<T> extends PodListenable<T> {
   ChildPod<T, B> map<B>(B Function(T value) mapper) {
     return ChildPod<T, B>(
       parents: [this],
-      mapper: (e) => mapper(e.first),
+      reducer: (e) => mapper(e.first),
     );
   }
 
@@ -374,7 +374,7 @@ class Pod<T> extends PodListenable<T> {
   ChildPod<T, B> mapToTemp<B>(B Function(T value) mapper) {
     return ChildPod<T, B>(
       parents: [this],
-      mapper: (e) => mapper(e.first),
+      reducer: (e) => mapper(e.first),
       temp: true,
     );
   }

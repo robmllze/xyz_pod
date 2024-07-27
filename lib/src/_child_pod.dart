@@ -20,7 +20,7 @@ class ChildPod<A, B> extends Pod<B> {
   //
 
   final List<Pod<A>> parents;
-  final B Function(List<A> parentValues) mapper;
+  final B Function(List<A> parentValues) reducer;
 
   //
   //
@@ -28,9 +28,9 @@ class ChildPod<A, B> extends Pod<B> {
 
   ChildPod({
     required this.parents,
-    required this.mapper,
+    required this.reducer,
     bool temp = false,
-  }) : super(mapper(parents.map((p) => p.value).toList()), temp: temp) {
+  }) : super(reducer(parents.map((p) => p.value).toList()), temp: temp) {
     for (var parent in parents) {
       parent._addChild(this);
       parent.addListener(refresh);
@@ -47,7 +47,7 @@ class ChildPod<A, B> extends Pod<B> {
   }) {
     return ChildPod(
       parents: parents,
-      mapper: mapper,
+      reducer: mapper,
       temp: true,
     );
   }
@@ -58,7 +58,7 @@ class ChildPod<A, B> extends Pod<B> {
 
   @override
   Future<void> refresh() async {
-    final newValue = mapper(parents.map((p) => p.value).toList());
+    final newValue = reducer(parents.map((p) => p.value).toList());
     await this.set(newValue);
   }
 
@@ -73,18 +73,5 @@ class ChildPod<A, B> extends Pod<B> {
       parent.removeListener(refresh);
     }
     super.dispose();
-  }
-}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-extension MapOnPodIterableExtension on Iterable<Pod> {
-  ChildPod<dynamic, T> map<T>(
-    T Function(List<dynamic> parentValues) mapper,
-  ) {
-    return ChildPod<dynamic, T>(
-      parents: this.toList(),
-      mapper: mapper,
-    );
   }
 }
