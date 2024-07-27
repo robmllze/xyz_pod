@@ -4,7 +4,6 @@
 
 - Released @ 2024-07-27 17:34:44.653531Z
 - refactor: Add static factory methods to ChildPod for reducing multiple Pods into a single ChildPod instance
-- fix: Fix type casting issue in ChildPod
 
 ## [0.42.0]
 
