@@ -2,8 +2,9 @@
 
 ## [0.42.0]
 
-- Released @ 2024-07-27 17:00:52.573724Z
+- Released @ 2024-07-27 17:05:53.656333Z
 - refactor: Update Pod.map and Pod.mapToTemp to return ChildPod instead of Pod
+- refactor: Update Pod reducers to support mapping multiple Pods into a single Pod
 
 ## [0.41.0]
 
