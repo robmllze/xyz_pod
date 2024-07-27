@@ -12,6 +12,8 @@
 
 import '/_common.dart';
 
+part '_child_pod.dart';
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A versatile alternative to [ValueNotifier].
@@ -88,6 +90,13 @@ class Pod<T> extends PodListenable<T> {
   /// when [dispose] is called. Instead, it will continue to exist until the
   /// application is closed.
   bool disposable;
+
+  //
+  //
+  //
+
+  /// Holds all the children of this Pod.
+  final List<ChildPod> _children = [];
 
   //
   //
@@ -324,6 +333,58 @@ class Pod<T> extends PodListenable<T> {
   //
   //
 
+  /// Adds a [child] to this Pod.
+  void _addChild(ChildPod child) {
+    if (child.parent != this) {
+      throw WrongParentPodException();
+    }
+    if (this._children.contains(child)) {
+      throw ChildAlreadyAddedPodException();
+    }
+    addListener(child.refresh);
+    _children.add(child);
+  }
+
+  //
+  //
+  //
+
+  /// Removes a [child] from this Pod.
+  void _removeChild(ChildPod child) {
+    final didRemove = this._children.remove(child);
+    if (!didRemove) {
+      throw NoRemoveChildPodException();
+    }
+    removeListener(child.refresh);
+  }
+
+  //
+  //
+  //
+
+  /// Creates a new non-temp Pod that maps the value of this Pod to a new Pod
+  /// via [mapper].
+  Pod<B> child<B>(B Function(T value) mapper) {
+    return ChildPod<T, B>(
+      parent: this,
+      mapper: mapper,
+    );
+  }
+
+  /// Creates a new temp Pod that maps the value of this Pod to a new Pod
+  /// via [mapper].
+  Pod<B> temp<B>(B Function(T value) mapper) {
+    return ChildPod<T, B>(
+      parent: this,
+      mapper: mapper,
+      temp: true,
+    );
+  }
+
+  //
+  //
+  //
+
   /// Adds a listener to this Pod that is called only once.
   ///
   /// ### Parameters:
@@ -376,6 +437,9 @@ class Pod<T> extends PodListenable<T> {
   @override
   void dispose() {
     if (disposable) {
+      for (final child in _children) {
+        child.dispose();
+      }
       super.dispose();
     } else {
       throw DoNotDisposePodException();
@@ -389,5 +453,26 @@ class DoNotDisposePodException extends PodException {
   DoNotDisposePodException()
       : super(
           '"dispose" was called on a Pod that was explicitly maked as non-disposable.',
+        );
+}
+
+class WrongParentPodException extends PodException {
+  WrongParentPodException()
+      : super(
+          "The child's parent must be this Pod instance.",
+        );
+}
+
+class ChildAlreadyAddedPodException extends PodException {
+  ChildAlreadyAddedPodException()
+      : super(
+          'The child is already added to this Pod.',
+        );
+}
+
+class NoRemoveChildPodException extends PodException {
+  NoRemoveChildPodException()
+      : super(
+          'Cannot remove a child that is not added to this Pod.',
         );
 }
