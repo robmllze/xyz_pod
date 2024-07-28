@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.45.1]
+
+- Released @ 2024-07-28 07:21:19.009026Z
+- chore: Update BindWithMixin to return ValueNotifier in bind method
+
 ## [0.45.0]
 
 - Released @ 2024-07-28 07:17:41.670789Z
