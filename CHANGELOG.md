@@ -1,5 +1,6 @@
 # Changelog
 
+<<<<<<< HEAD
 ## [0.49.0]
 
 - Released @ 2024-07-28 11:04:37.450953Z
@@ -10,6 +11,8 @@
 - Released @ 2024-07-28 11:02:30.211524Z
 - refactor: Rename bind to bindParent and _bind to bindChild for better understanding
 
+=======
+>>>>>>> f0f0006 (Update)
 ## [0.47.0]
 
 - Released @ 2024-07-28 07:51:18.834118Z

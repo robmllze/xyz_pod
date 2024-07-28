@@ -136,23 +136,6 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
   //
   //
 
-  /// Creates a new Pod that binds to [other]. The new Pod will be automatically
-  /// disposed of when [other] is disposed. The value of the new Pod is the
-  /// state of [other].
-  static Pod<T> of<T>(ValueNotifier<T> other) {
-    return other.bindParent(Pod<T>(other.value));
-  }
-
-  /// Creates a new Pod that binds to [other]. The new Pod will be automatically
-  /// disposed of when [other] is disposed. The value of the new Pod is [other].
-  static Pod<T> of1<T extends ChangeNotifier>(T other) {
-    return other.bindParent(Pod<T>(other));
-  }
-
-  //
-  //
-  //
-
   /// Creates a temporary `Pod<T>`.
   ///
   /// - `value`: The initial value for the Pod.
@@ -576,8 +559,7 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class _DisposablePodListenable<T> extends PodListenable<T>
-    implements Disposable {
+abstract class _DisposablePodListenable<T> extends PodListenable<T> implements Disposable {
   _DisposablePodListenable(super.value);
 }
 
