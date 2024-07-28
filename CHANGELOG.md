@@ -4,7 +4,6 @@
 
 - Released @ 2024-07-28 07:50:15.816880Z
 - refactor: Update Pod.bindWith method to use bind instead of bindWith
-- chore: Update bind to use ChangeNotifier instead of ValueNotifier
 
 ## [0.45.2]
 
