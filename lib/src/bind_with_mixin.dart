@@ -44,8 +44,8 @@ mixin BindWithMixin on Disposable {
 
   @override
   void dispose() {
-    for (final child in binded) {
-      child.dispose();
+    for (final b in binded) {
+      b.dispose();
     }
     super.dispose();
   }
@@ -67,5 +67,5 @@ abstract class _BindWithMixinState<T extends StatefulWidget> extends State<T>
 ///   late final pStatus = Pod<String>('init', bindWith: this);
 /// }
 /// ```
-abstract class BindWithMixinState<T extends StatefulWidget>
-    extends _BindWithMixinState<T> with BindWithMixin {}
+abstract class BindWithMixinState<T extends StatefulWidget> extends _BindWithMixinState<T>
+    with BindWithMixin {}
