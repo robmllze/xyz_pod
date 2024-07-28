@@ -114,11 +114,6 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
           temp && disposable == true || !temp,
           'Temporary Pods must be disposable.',
         );
-  //
-  //
-  //
-
-  Pod<T> bindWith(BindWithMixin parent) => parent.bind(this);
 
   //
   //
@@ -444,7 +439,7 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     if (!child.parents.contains(this)) {
       throw WrongParentPodException();
     }
-    if (this.$binded.contains(child)) {
+    if ($binded.contains(child)) {
       throw ChildAlreadyAddedPodException();
     }
     addListener(child.refresh);

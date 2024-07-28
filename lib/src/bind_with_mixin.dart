@@ -28,15 +28,15 @@ mixin BindWithMixin on Disposable {
   //
 
   @protected
-  final List<ValueNotifier> $binded = [];
+  final List<ChangeNotifier> $binded = [];
 
   //
   //
   //
 
-  T bind<T extends ValueNotifier>(T valueNotifier) {
-    $binded.add(valueNotifier);
-    return valueNotifier;
+  T _bind<T extends ChangeNotifier>(T b) {
+    $binded.add(b);
+    return b;
   }
 
   //
@@ -50,6 +50,12 @@ mixin BindWithMixin on Disposable {
     }
     super.dispose();
   }
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+extension BindToChangeNotifierExtension<T extends ChangeNotifier> on T {
+  T bind(BindWithMixin parent) => parent._bind(this);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -68,5 +74,5 @@ abstract class _BindWithMixinState<T extends StatefulWidget> extends State<T>
 ///   late final pStatus = Pod<String>('init', bindWith: this);
 /// }
 /// ```
-abstract class BindWithMixinState<T extends StatefulWidget>
-    extends _BindWithMixinState<T> with BindWithMixin {}
+abstract class BindWithMixinState<T extends StatefulWidget> extends _BindWithMixinState<T>
+    with BindWithMixin {}

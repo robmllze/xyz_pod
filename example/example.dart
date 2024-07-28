@@ -27,7 +27,7 @@ class UserProfileApp extends StatefulWidget {
 }
 
 class _UserProfileAppState extends BindWithMixinState<UserProfileApp> {
-  late final pTest = Pod(55).bindWith(this);
+  late final pTest = Pod(55).bind(this);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
