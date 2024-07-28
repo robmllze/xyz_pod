@@ -59,13 +59,13 @@ mixin BindWithMixin on Disposable {
 extension BindParentOnChangeNotifierExtension<T extends ChangeNotifier> on T {
   /// Binds this ChangeNotifier to [parent] so that it will be disposed when
   /// [parent] is disposed.
-  P bindParent<P extends BindWithMixin>(P parent) => parent..bindChild(this);
+  T bindParent<P extends BindWithMixin>(P parent) => parent.bindChild(this);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class _StatefulWidgetWithDisposable<T extends StatefulWidget>
-    extends State<T> implements Disposable {}
+abstract class _StatefulWidgetWithDisposable<T extends StatefulWidget> extends State<T>
+    implements Disposable {}
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -78,5 +78,5 @@ abstract class _StatefulWidgetWithDisposable<T extends StatefulWidget>
 ///   late final pStatus = Pod<String>('init', bindWith: this);
 /// }
 /// ```
-abstract class BindWithMixinState<T extends StatefulWidget>
-    extends _StatefulWidgetWithDisposable<T> with BindWithMixin {}
+abstract class BindWithMixinState<T extends StatefulWidget> extends _StatefulWidgetWithDisposable<T>
+    with BindWithMixin {}
