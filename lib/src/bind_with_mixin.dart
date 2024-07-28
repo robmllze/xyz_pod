@@ -63,8 +63,8 @@ extension BindParentOnChangeNotifierExtension<T extends ChangeNotifier> on T {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class _StatefulWidgetWithDisposable<T extends StatefulWidget> extends State<T>
-    implements Disposable {}
+abstract class _StatefulWidgetWithDisposable<T extends StatefulWidget>
+    extends State<T> implements Disposable {}
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -77,5 +77,5 @@ abstract class _StatefulWidgetWithDisposable<T extends StatefulWidget> extends S
 ///   late final pStatus = Pod<String>('init', bindWith: this);
 /// }
 /// ```
-abstract class BindWithMixinState<T extends StatefulWidget> extends _StatefulWidgetWithDisposable<T>
-    with BindWithMixin {}
+abstract class BindWithMixinState<T extends StatefulWidget>
+    extends _StatefulWidgetWithDisposable<T> with BindWithMixin {}
