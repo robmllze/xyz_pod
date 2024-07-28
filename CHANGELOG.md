@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.47.0]
+
+- Released @ 2024-07-28 07:51:18.834118Z
+- chore: Update bind to use ChangeNotifier instead of ValueNotifier
+
 ## [0.46.0]
 
 - Released @ 2024-07-28 07:50:15.816880Z
