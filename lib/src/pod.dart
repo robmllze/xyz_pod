@@ -583,7 +583,8 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class _DisposablePodListenable<T> extends PodListenable<T> implements Disposable {
+abstract class _DisposablePodListenable<T> extends PodListenable<T>
+    implements Disposable {
   _DisposablePodListenable(super.value);
 }
 
