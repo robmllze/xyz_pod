@@ -28,14 +28,14 @@ mixin BindWithMixin on Disposable {
   //
 
   @protected
-  final List<ValueNotifier> binded = [];
+  final List<ValueNotifier> $binded = [];
 
   //
   //
   //
 
   T bind<T extends ValueNotifier>(T valueNotifier) {
-    binded.add(valueNotifier);
+    $binded.add(valueNotifier);
     return valueNotifier;
   }
 
@@ -45,7 +45,7 @@ mixin BindWithMixin on Disposable {
 
   @override
   void dispose() {
-    for (final b in binded) {
+    for (final b in $binded) {
       b.dispose();
     }
     super.dispose();

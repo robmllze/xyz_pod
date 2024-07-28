@@ -109,16 +109,16 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     super.value, {
     bool temp = false,
     this.disposable = true,
-    BindWithMixin? bindWith,
   })  : markedAsTemp = temp,
         assert(
           temp && disposable == true || !temp,
           'Temporary Pods must be disposable.',
-        ) {
-    if (bindWith != null) {
-      bindWith.bind(this);
-    }
-  }
+        );
+  //
+  //
+  //
+
+  Pod<T> bindWith(BindWithMixin parent) => parent.bind(this);
 
   //
   //
@@ -146,24 +146,6 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
   ///
   /// - `value`: The initial value for the Pod.
   Pod.temp(T value) : this(value, temp: true);
-
-  //
-  //
-  //
-
-  /// Creates a binded `Pod<T>`.
-  ///
-  /// - `value`: The initial value for the Pod.
-  /// - `bindWith`: The class to bind itself with. This means this Pod will
-  /// dispose when this class disposes.
-  Pod.bind(
-    T value,
-    BindWithMixin bindWith,
-  ) : this(
-          value,
-          temp: false,
-          bindWith: bindWith,
-        );
 
   //
   //
@@ -462,11 +444,11 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     if (!child.parents.contains(this)) {
       throw WrongParentPodException();
     }
-    if (this.binded.contains(child)) {
+    if (this.$binded.contains(child)) {
       throw ChildAlreadyAddedPodException();
     }
     addListener(child.refresh);
-    binded.add(child);
+    $binded.add(child);
   }
 
   //
@@ -475,7 +457,7 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
 
   /// Removes a [child] from this Pod.
   void _removeChild(ChildPod child) {
-    final didRemove = this.binded.remove(child);
+    final didRemove = this.$binded.remove(child);
     if (!didRemove) {
       throw NoRemoveChildPodException();
     }
@@ -583,8 +565,7 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class _DisposablePodListenable<T> extends PodListenable<T>
-    implements Disposable {
+abstract class _DisposablePodListenable<T> extends PodListenable<T> implements Disposable {
   _DisposablePodListenable(super.value);
 }
 
