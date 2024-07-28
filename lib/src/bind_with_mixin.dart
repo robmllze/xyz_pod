@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-part of 'pod.dart';
+import '/_common.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -27,14 +27,15 @@ mixin BindWithMixin on Disposable {
   //
   //
 
-  final List<ValueNotifier> _children = [];
+  @protected
+  final List<ValueNotifier> binded = [];
 
   //
   //
   //
 
   void bind(ValueNotifier valueNotifier) {
-    _children.add(valueNotifier);
+    binded.add(valueNotifier);
   }
 
   //
@@ -43,7 +44,7 @@ mixin BindWithMixin on Disposable {
 
   @override
   void dispose() {
-    for (final child in _children) {
+    for (final child in binded) {
       child.dispose();
     }
     super.dispose();

@@ -13,7 +13,6 @@
 import '/_common.dart';
 
 part '_child_pod.dart';
-part '_bind_with_mixin.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -463,11 +462,11 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     if (!child.parents.contains(this)) {
       throw WrongParentPodException();
     }
-    if (this._children.contains(child)) {
+    if (this.binded.contains(child)) {
       throw ChildAlreadyAddedPodException();
     }
     addListener(child.refresh);
-    _children.add(child);
+    binded.add(child);
   }
 
   //
@@ -476,7 +475,7 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
 
   /// Removes a [child] from this Pod.
   void _removeChild(ChildPod child) {
-    final didRemove = this._children.remove(child);
+    final didRemove = this.binded.remove(child);
     if (!didRemove) {
       throw NoRemoveChildPodException();
     }
@@ -584,8 +583,7 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class _DisposablePodListenable<T> extends PodListenable<T>
-    implements Disposable {
+abstract class _DisposablePodListenable<T> extends PodListenable<T> implements Disposable {
   _DisposablePodListenable(super.value);
 }
 
