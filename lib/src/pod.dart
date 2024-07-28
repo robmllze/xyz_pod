@@ -117,7 +117,7 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
           'Temporary Pods must be disposable.',
         ) {
     if (bindWith != null) {
-      bindWith._bind(this);
+      bindWith.bind(this);
     }
   }
 
@@ -584,8 +584,7 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class _DisposablePodListenable<T> extends PodListenable<T>
-    implements Disposable {
+abstract class _DisposablePodListenable<T> extends PodListenable<T> implements Disposable {
   _DisposablePodListenable(super.value);
 }
 

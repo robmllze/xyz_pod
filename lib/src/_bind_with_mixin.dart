@@ -27,13 +27,13 @@ mixin BindWithMixin on Disposable {
   //
   //
 
-  final List<Pod> _children = [];
+  final List<ValueNotifier> _children = [];
 
   //
   //
   //
 
-  void _bind(Pod pod) {
+  void bind(ValueNotifier pod) {
     _children.add(pod);
   }
 
@@ -66,5 +66,5 @@ abstract class _BindWithMixinState<T extends StatefulWidget> extends State<T>
 ///   late final pStatus = Pod<String>('init', bindWith: this);
 /// }
 /// ```
-abstract class BindWithMixinState<T extends StatefulWidget>
-    extends _BindWithMixinState<T> with BindWithMixin {}
+abstract class BindWithMixinState<T extends StatefulWidget> extends _BindWithMixinState<T>
+    with BindWithMixin {}
