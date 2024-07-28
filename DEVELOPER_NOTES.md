@@ -1,13 +1,5 @@
 # Developer Notes
 
-## TODO
-
-1. Set up automatic publishing with GitHub.
-1. Write more examples for developers.
-1. Write tests for each feature.
-1. Write a manual.
-1. Update the slide.
-
 ## Publishing
 
 1. Make your changes.
@@ -22,6 +14,7 @@
 ## macOS and Linux
 
 ### Fetching Generators
+
 ```bash
 rm -rf ___generators/
 git clone https://github.com/robmllze/___generators.git
@@ -29,6 +22,7 @@ dart pub get -C ___generators
 ```
 
 ### Adding the Workflow
+
 ```bash
 rm -rf .github/
 git clone https://github.com/robmllze/pub.dev_package_workflow.git .github
@@ -36,6 +30,7 @@ rm -rf .github/.git
 ```
 
 ### Deleting .DS_Store files
+
 ```bash
 cd your/project/path
 find . -name '.DS_Store' -type f -delete
@@ -44,6 +39,7 @@ find . -name '.DS_Store' -type f -delete
 ## Windows
 
 ### Fetching Generators
+
 ```bash
 rmdir /s /q ___generators/
 git clone https://github.com/robmllze/___generators.git
@@ -52,6 +48,7 @@ rmdir /s /q ___generators/.git
 ```
 
 ### Adding the Workflow
+
 ```bash
 rmdir /s /q .github/
 git clone https://github.com/robmllze/pub.dev_package_workflow.git .github

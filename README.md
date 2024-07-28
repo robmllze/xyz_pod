@@ -74,6 +74,17 @@ void main() {
 
 This is an open-source project, and contributions are welcome from everyone, regardless of experience level. Contributing to projects is a great way to learn, share knowledge, and showcase your skills to the community. Join the discussions to ask questions, report bugs, suggest features, share ideas, or find out how you can contribute.
 
+### TODO:
+
+1. Set up automatic publishing with GitHub.
+1. Write more examples for developers.
+1. Write Flutter tests for each feature.
+1. Add comments where absent.
+1. Improve comments.
+1. Improve file structure.
+1. Write a manual.
+1. Update the slide.
+
 ### Join GitHub Discussions:
 
 💬 https://github.com/robmllze/xyz_pod/discussions
