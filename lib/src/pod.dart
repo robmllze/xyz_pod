@@ -439,11 +439,11 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     if (!child.parents.contains(this)) {
       throw WrongParentPodException();
     }
-    if ($binded.contains(child)) {
+    if ($children.contains(child)) {
       throw ChildAlreadyAddedPodException();
     }
     addListener(child.refresh);
-    $binded.add(child);
+    $children.add(child);
   }
 
   //
@@ -452,7 +452,7 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
 
   /// Removes a [child] from this Pod.
   void _removeChild(ChildPod child) {
-    final didRemove = this.$binded.remove(child);
+    final didRemove = this.$children.remove(child);
     if (!didRemove) {
       throw NoRemoveChildPodException();
     }

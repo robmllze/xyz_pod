@@ -28,15 +28,17 @@ mixin BindWithMixin on Disposable {
   //
 
   @protected
-  final List<ChangeNotifier> $binded = [];
+  final List<ChangeNotifier> $children = [];
 
   //
   //
   //
 
-  T _bind<T extends ChangeNotifier>(T b) {
-    $binded.add(b);
-    return b;
+  /// Binds the ChangeNotifier [child] to this (the parent) so that the child
+  /// will be disposed when this is disposed.
+  T bindChild<T extends ChangeNotifier>(T child) {
+    $children.add(child);
+    return child;
   }
 
   //
@@ -45,8 +47,8 @@ mixin BindWithMixin on Disposable {
 
   @override
   void dispose() {
-    for (final b in $binded) {
-      b.dispose();
+    for (final child in $children) {
+      child.dispose();
     }
     super.dispose();
   }
@@ -54,13 +56,14 @@ mixin BindWithMixin on Disposable {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-extension BindToChangeNotifierExtension<T extends ChangeNotifier> on T {
-  T bind(BindWithMixin parent) => parent._bind(this);
+extension BindParentOnChangeNotifierExtension<T extends ChangeNotifier> on T {
+  /// Binds this ChangeNotifier to [parent] so that it will be disposed when [parent] is disposed.
+  T bindParent(BindWithMixin parent) => parent.bindChild(this);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class _BindWithMixinState<T extends StatefulWidget> extends State<T>
+abstract class _StatefulWidgetWithDisposable<T extends StatefulWidget> extends State<T>
     implements Disposable {}
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -74,5 +77,5 @@ abstract class _BindWithMixinState<T extends StatefulWidget> extends State<T>
 ///   late final pStatus = Pod<String>('init', bindWith: this);
 /// }
 /// ```
-abstract class BindWithMixinState<T extends StatefulWidget>
-    extends _BindWithMixinState<T> with BindWithMixin {}
+abstract class BindWithMixinState<T extends StatefulWidget> extends _StatefulWidgetWithDisposable<T>
+    with BindWithMixin {}
