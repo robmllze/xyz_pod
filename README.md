@@ -76,14 +76,18 @@ This is an open-source project, and contributions are welcome from everyone, reg
 
 ### TODO:
 
-1. Set up automatic publishing with GitHub.
-1. Write more examples for developers.
-1. Write Flutter tests for each feature.
-1. Add comments where absent.
-1. Improve comments.
-1. Improve file structure.
-1. Write a manual.
-1. Update the slide.
+- [ ] Set up automatic publishing with GitHub.
+- [ ] Write more examples for developers.
+- [ ] Write Flutter tests for each feature.
+- [ ] Add comments where absent.
+- [ ] Improve comments.
+- [ ] Improve file structure.
+- [ ] Write a manual.
+- [ ] Update the slide.
+- [ ] Write a blog post.
+- [ ] Add a video tutorial.
+- [ ] Seek advice and feedback from community.
+- [ ] Add useful content to GitHub and Reddit discussions.
 
 ### Join GitHub Discussions:
 
