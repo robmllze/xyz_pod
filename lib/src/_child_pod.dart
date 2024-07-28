@@ -19,8 +19,9 @@ class ChildPod<A, B> extends Pod<B> {
   //
   //
 
-  final List<Pod<A>> parents;
-  final B Function(List<A> parentValues) reducer;
+  final Iterable<Pod<A>> parents;
+  final B Function(Iterable<A> parentValues) reducer;
+  final Iterable<A> Function(B childValue)? updateParents;
 
   //
   //
@@ -29,8 +30,12 @@ class ChildPod<A, B> extends Pod<B> {
   ChildPod({
     required this.parents,
     required this.reducer,
+    required this.updateParents,
     bool temp = false,
-  }) : super(reducer(parents.map((p) => p.value).toList()), temp: temp) {
+  }) : super(
+          reducer(parents.map((p) => p.value).toList()),
+          temp: temp,
+        ) {
     for (var parent in parents) {
       parent._addChild(this);
       parent.addListener(refresh);
@@ -42,12 +47,14 @@ class ChildPod<A, B> extends Pod<B> {
   //
 
   factory ChildPod.temp({
-    required List<Pod<A>> parents,
-    required B Function(List<A> parentValues) mapper,
+    required Iterable<Pod<A>> parents,
+    required B Function(Iterable<A> parentValues) reducer,
+    Iterable<A> Function(B childValue)? updateParents,
   }) {
     return ChildPod(
       parents: parents,
-      reducer: mapper,
+      reducer: reducer,
+      updateParents: updateParents,
       temp: true,
     );
   }
@@ -60,6 +67,21 @@ class ChildPod<A, B> extends Pod<B> {
   Future<void> refresh() async {
     final newValue = reducer(parents.map((p) => p.value).toList());
     await this.set(newValue);
+  }
+
+  //
+  //
+  //
+
+  @override
+  void notifyListeners() {
+    super.notifyListeners();
+    if (this.updateParents != null) {
+      final parentValues = updateParents!(this.value);
+      for (var n = 0; n < parents.length; n++) {
+        parents.elementAt(n).set(parentValues.elementAt(n));
+      }
+    }
   }
 
   //

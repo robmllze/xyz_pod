@@ -13,6 +13,7 @@
 import '/_common.dart';
 
 part '_child_pod.dart';
+part '_bind_with_mixin.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -63,9 +64,10 @@ part '_child_pod.dart';
 ///
 /// ### Parameters:
 ///
-/// - `value`: The initial value for the `Pod`.
-/// - `temp`: An optional flag to mark the `Pod` as temporary.
-class Pod<T> extends PodListenable<T> {
+/// - `value`: The initial value for the Pod.
+/// - `temp`: An optional flag to mark the Pod as temporary.
+
+class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
   //
   //
   //
@@ -95,28 +97,39 @@ class Pod<T> extends PodListenable<T> {
   //
   //
 
-  /// Holds all the children of this Pod.
-  final List<ChildPod> _children = [];
-
-  //
-  //
-  //
-
   /// Creates a `Pod<T>`.
   ///
   /// ### Parameters:
   ///
-  /// - `value`: The initial value for the `Pod`.
-  /// - `temp`: An optional flag to mark the `Pod` as temporary.
+  /// - `value`: The initial value for the Pod.
+  /// - `temp`: An optional flag to mark the Pod as temporary.
+  /// - `disposable`: Whether this Pod can be disposed or not.
+  /// - `bindWith`: The class to bind itself with. This means this Pod will
+  /// dispose when this class disposes.
   Pod(
     super.value, {
     bool temp = false,
     this.disposable = true,
+    BindWithMixin? bindWith,
   })  : markedAsTemp = temp,
         assert(
-          temp && disposable || !temp,
+          temp && disposable == true || !temp,
           'Temporary Pods must be disposable.',
-        );
+        ) {
+    if (bindWith != null) {
+      bindWith._bind(this);
+    }
+  }
+
+  //
+  //
+  //
+
+  /// A flag indicating whether the Pod has been disposed.
+  bool _isDisposed = false;
+
+  /// Whether the Pod has been disposed.
+  bool get isDisposed => this._isDisposed;
 
   //
   //
@@ -132,80 +145,118 @@ class Pod<T> extends PodListenable<T> {
 
   /// Creates a temporary `Pod<T>`.
   ///
-  /// - `value`: The initial value for the `Pod`.
+  /// - `value`: The initial value for the Pod.
   Pod.temp(T value) : this(value, temp: true);
 
   //
   //
   //
 
+  /// Creates a binded `Pod<T>`.
+  ///
+  /// - `value`: The initial value for the Pod.
+  /// - `bindWith`: The class to bind itself with. This means this Pod will
+  /// dispose when this class disposes.
+  Pod.bind(
+    T value,
+    BindWithMixin bindWith,
+  ) : this(
+          value,
+          temp: false,
+          bindWith: bindWith,
+        );
+
   //
   //
   //
 
-  /// Reduces many [Pod] instances to a single [ChildPod] instance.
+  /// Reduces many [Pod] - [instances] to a single [ChildPod] instance via
+  /// [reducer]. Optionally provide [updateParents] to define how parent Pods
+  /// should be updated when this Pod changes.
   static ChildPod<A, B> fromMany<A, B>(
-    Iterable<Pod<A>> pods,
-    B Function(ManyPods<A> values) reducer,
+    Iterable<Pod<A>> instances,
+    B Function(ManyPods<A> instances) reducer,
+    Iterable<A> Function(B childValue)? updateParents,
   ) {
     return reduceManyPods(
-      pods,
+      instances,
       reducer,
+      updateParents,
     );
   }
 
-  /// Reduces a set of 2 [Pod] instances to a single [ChildPod] instance.
+  /// Reduces a tuple 2 [Pod] - [instances] to a single [ChildPod] instance via
+  /// [reducer]. Optionally provide [updateParents] to define how parent Pods
+  /// should be updated when this Pod changes.
   static ChildPod<dynamic, T> from2<T, A, B>(
-    Pods2<A, B> values,
-    T Function(Pods2<A, B> values) reducer,
+    Pods2<A, B> instances,
+    T Function(Pods2<A, B> instances) reducer,
+    (A?, B?) Function(T childValue)? updateParents,
   ) {
     return reduce2Pods(
-      values,
+      instances,
       reducer,
+      updateParents,
     );
   }
 
-  /// Reduces a set of 3 [Pod] instances to a single [ChildPod] instance.
+  /// Reduces a tuple 3 [Pod] - [instances] to a single [ChildPod] instance via
+  /// [reducer]. Optionally provide [updateParents] to define how parent Pods
+  /// should be updated when this Pod changes.
   static ChildPod<dynamic, T> from3<T, A, B, C>(
-    Pods3<A, B, C> values,
-    T Function(Pods3<A, B, C> values) reducer,
+    Pods3<A, B, C> instances,
+    T Function(Pods3<A, B, C> instances) reducer,
+    (A?, B?, C?) Function(T childValue)? updateParents,
   ) {
     return reduce3Pods(
-      values,
+      instances,
       reducer,
+      updateParents,
     );
   }
 
-  /// Reduces a set of 4 [Pod] instances to a single [ChildPod] instance.
+  /// Reduces a tuple 4 [Pod] - [instances] to a single [ChildPod] instance via
+  /// [reducer]. Optionally provide [updateParents] to define how parent Pods
+  /// should be updated when this Pod changes.
   static ChildPod<dynamic, T> from4<T, A, B, C, D>(
-    Pods4<A, B, C, D> values,
-    T Function(Pods4<A, B, C, D> values) reducer,
+    Pods4<A, B, C, D> instances,
+    T Function(Pods4<A, B, C, D> instances) reducer,
+    (A?, B?, C?, D?) Function(T childValue)? updateParents,
   ) {
     return reduce4Pods(
-      values,
+      instances,
       reducer,
+      updateParents,
     );
   }
 
-  /// Reduces a set of 5 [Pod] instances to a single [ChildPod] instance.
+  /// Reduces a tuple 5 [Pod] - [instances] to a single [ChildPod] instance via
+  /// [reducer]. Optionally provide [updateParents] to define how parent Pods
+  /// should be updated when this Pod changes.
   static ChildPod<dynamic, T> from5<T, A, B, C, D, E>(
-    Pods5<A, B, C, D, E> values,
-    T Function(Pods5<A, B, C, D, E> values) reducer,
+    Pods5<A, B, C, D, E> instances,
+    T Function(Pods5<A, B, C, D, E> instances) reducer,
+    (A?, B?, C?, D?, E?) Function(T childValue)? updateParents,
   ) {
     return reduce5Pods(
-      values,
+      instances,
       reducer,
+      updateParents,
     );
   }
 
-  /// Reduces a set of 6 [Pod] instances to a single [ChildPod] instance.
+  /// Reduces a tuple 6 [Pod] - [instances] to a single [ChildPod] instance via
+  /// [reducer]. Optionally provide [updateParents] to define how parent Pods
+  /// should be updated when this Pod changes.
   static ChildPod<dynamic, T> from6<T, A, B, C, D, E, F>(
-    Pods6<A, B, C, D, E, F> values,
-    T Function(Pods6<A, B, C, D, E, F> values) reducer,
+    Pods6<A, B, C, D, E, F> instances,
+    T Function(Pods6<A, B, C, D, E, F> instances) reducer,
+    (A?, B?, C?, D?, E?, F?) Function(T childValue)? updateParents,
   ) {
     return reduce6Pods(
-      values,
+      instances,
       reducer,
+      updateParents,
     );
   }
 
@@ -436,19 +487,31 @@ class Pod<T> extends PodListenable<T> {
   //
   //
 
-  /// Maps this Pod to a new Pod via [mapper].
-  ChildPod<T, B> map<B>(B Function(T value) mapper) {
+  /// Maps this Pod to a new Pod using the specified [reducer]. Optionally,
+  /// provide [updateParents] to define how parent Pods should be updated when
+  /// this Pod changes.
+  ChildPod<T, B> map<B>(
+    B Function(T value) reducer,
+    List<T> Function(B)? updateParents,
+  ) {
     return ChildPod<T, B>(
       parents: [this],
-      reducer: (e) => mapper(e.first),
+      reducer: (e) => reducer(e.first),
+      updateParents: updateParents,
     );
   }
 
-  /// Maps this Pod to a new temp Pod via [mapper].
-  ChildPod<T, B> mapToTemp<B>(B Function(T value) mapper) {
+  /// Maps this Pod to a new temp Pod using the specified [reducer]. Optionally,
+  /// provide [updateParents] to define how parent Pods should be updated when
+  /// this Pod changes.
+  ChildPod<T, B> mapToTemp<B>(
+    B Function(T value) reducer,
+    List<T> Function(B)? updateParents,
+  ) {
     return ChildPod<T, B>(
       parents: [this],
-      reducer: (e) => mapper(e.first),
+      reducer: (e) => reducer(e.first),
+      updateParents: updateParents,
       temp: true,
     );
   }
@@ -508,15 +571,21 @@ class Pod<T> extends PodListenable<T> {
 
   @override
   void dispose() {
-    if (disposable) {
-      for (final child in _children) {
-        child.dispose();
+    if (!_isDisposed) {
+      if (disposable) {
+        super.dispose();
+        this._isDisposed = true;
+      } else {
+        throw DoNotDisposePodException();
       }
-      super.dispose();
-    } else {
-      throw DoNotDisposePodException();
     }
   }
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+abstract class _DisposablePodListenable<T> extends PodListenable<T> implements Disposable {
+  _DisposablePodListenable(super.value);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

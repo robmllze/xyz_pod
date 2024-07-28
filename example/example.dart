@@ -16,12 +16,18 @@ import 'package:flutter/material.dart';
 import 'package:xyz_pod/xyz_pod.dart';
 
 void main() {
-  runApp(const UserProfileApp());
+  runApp(UserProfileApp());
 }
 
-class UserProfileApp extends StatelessWidget {
+class UserProfileApp extends StatefulWidget {
   const UserProfileApp({super.key});
 
+  @override
+  State<UserProfileApp> createState() => _UserProfileAppState();
+}
+
+class _UserProfileAppState extends BindWithMixinState<UserProfileApp> {
+  late final pTest = Pod.bind(55, this);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
