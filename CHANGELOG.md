@@ -2,7 +2,7 @@
 
 ## [0.45.0]
 
-- Released @ 2024-07-28 07:16:23.692102Z
+- Released @ 2024-07-28 07:17:41.670789Z
 - chore: Update BindWithMixin to use ValueNotifier instead of Pod
 
 ## [0.44.0]
