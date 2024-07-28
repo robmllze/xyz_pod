@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.43.2]
+
+- Released @ 2024-07-28 04:20:34.662349Z
+- refactor: Move static constructors from ChildPod to Pod and update comments
+
 ## [0.43.1]
 
 - Released @ 2024-07-27 17:35:40.894374Z
