@@ -86,6 +86,7 @@ This is an open-source project, and contributions are welcome from everyone, reg
 - [ ] Update the slide.
 - [ ] Write a blog post.
 - [ ] Add a video tutorial.
+- [ ] Compare with other state management solutions and see where we can improve.
 - [ ] Seek advice and feedback from community.
 - [ ] Add useful content to GitHub and Reddit discussions.
 
