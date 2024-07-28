@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.46.0]
+
+- Released @ 2024-07-28 07:34:47.588869Z
+- refactor: Update Pod.bindWith method to use bind instead of bindWith
+
 ## [0.45.2]
 
 - Released @ 2024-07-28 07:25:51.308863Z
