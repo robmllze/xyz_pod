@@ -3,7 +3,7 @@
 //
 // 🇽🇾🇿 & Dev
 //
-// Copyright Ⓒ Robert Mollentze, xyzand.dev
+// Copyright Ⓒ Robert Mollentze
 //
 // Licencing details are in the LICENSE file in the root directory.
 //
@@ -51,8 +51,7 @@ class RespondingBuilder<T> extends StatelessWidget {
       builder: (context, staticChild, _) {
         final data = this.getData();
         final hasData = data is T;
-        final hasUsableData =
-            hasData && (this.isUsableData?.call(data) ?? true);
+        final hasUsableData = hasData && (this.isUsableData?.call(data) ?? true);
         final snapshot = RespondingBuilderSnapshot<T>(
           data: data,
           hasData: hasData,

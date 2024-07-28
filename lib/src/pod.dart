@@ -3,7 +3,7 @@
 //
 // 🇽🇾🇿 & Dev
 //
-// Copyright Ⓒ Robert Mollentze, xyzand.dev
+// Copyright Ⓒ Robert Mollentze
 //
 // Licencing details are in the LICENSE file in the root directory.
 //
@@ -134,6 +134,80 @@ class Pod<T> extends PodListenable<T> {
   ///
   /// - `value`: The initial value for the `Pod`.
   Pod.temp(T value) : this(value, temp: true);
+
+  //
+  //
+  //
+
+  //
+  //
+  //
+
+  /// Reduces many [Pod] instances to a single [ChildPod] instance.
+  static ChildPod<A, B> fromMany<A, B>(
+    Iterable<Pod<A>> pods,
+    B Function(ManyPods<A> values) reducer,
+  ) {
+    return reduceManyPods(
+      pods,
+      reducer,
+    );
+  }
+
+  /// Reduces a set of 2 [Pod] instances to a single [ChildPod] instance.
+  static ChildPod<dynamic, T> from2<T, A, B>(
+    Pods2<A, B> values,
+    T Function(Pods2<A, B> values) reducer,
+  ) {
+    return reduce2Pods(
+      values,
+      reducer,
+    );
+  }
+
+  /// Reduces a set of 3 [Pod] instances to a single [ChildPod] instance.
+  static ChildPod<dynamic, T> from3<T, A, B, C>(
+    Pods3<A, B, C> values,
+    T Function(Pods3<A, B, C> values) reducer,
+  ) {
+    return reduce3Pods(
+      values,
+      reducer,
+    );
+  }
+
+  /// Reduces a set of 4 [Pod] instances to a single [ChildPod] instance.
+  static ChildPod<dynamic, T> from4<T, A, B, C, D>(
+    Pods4<A, B, C, D> values,
+    T Function(Pods4<A, B, C, D> values) reducer,
+  ) {
+    return reduce4Pods(
+      values,
+      reducer,
+    );
+  }
+
+  /// Reduces a set of 5 [Pod] instances to a single [ChildPod] instance.
+  static ChildPod<dynamic, T> from5<T, A, B, C, D, E>(
+    Pods5<A, B, C, D, E> values,
+    T Function(Pods5<A, B, C, D, E> values) reducer,
+  ) {
+    return reduce5Pods(
+      values,
+      reducer,
+    );
+  }
+
+  /// Reduces a set of 6 [Pod] instances to a single [ChildPod] instance.
+  static ChildPod<dynamic, T> from6<T, A, B, C, D, E, F>(
+    Pods6<A, B, C, D, E, F> values,
+    T Function(Pods6<A, B, C, D, E, F> values) reducer,
+  ) {
+    return reduce6Pods(
+      values,
+      reducer,
+    );
+  }
 
   //
   //

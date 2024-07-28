@@ -1,5 +1,13 @@
 # Developer Notes
 
+## TODO
+
+1. Set up automatic publishing with GitHub.
+1. Write more examples for developers.
+1. Write tests for each feature.
+1. Write a manual.
+1. Update the slide.
+
 ## Publishing
 
 1. Make your changes.
