@@ -4,7 +4,6 @@
 
 - Released @ 2024-07-28 11:02:30.211524Z
 - refactor: Rename bind to bindParent and _bind to bindChild for better understanding
-- refactor: Add Pod.of and Pod.of1 to help mapping ValueNotifiers and ChangeNotifiers to Pods.
 
 ## [0.47.0]
 
