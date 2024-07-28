@@ -1,11 +1,15 @@
 # Changelog
 
+## [0.44.0]
+
+- Released @ 2024-07-28 06:54:01.784760Z
+- chore: Add BindWithMixin to facilitate auto-disposal of Pods when the classes they're binded with dispose
+
 ## [0.43.2]
 
 - Released @ 2024-07-28 04:30:25.278266Z
 - refactor: Move static constructors from ChildPod to Pod and update comments
 - chore: Update readme with a list of TODOs
-
 
 ## [0.43.1]
 
