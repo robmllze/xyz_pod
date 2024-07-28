@@ -68,5 +68,5 @@ abstract class _BindWithMixinState<T extends StatefulWidget> extends State<T>
 ///   late final pStatus = Pod<String>('init', bindWith: this);
 /// }
 /// ```
-abstract class BindWithMixinState<T extends StatefulWidget> extends _BindWithMixinState<T>
-    with BindWithMixin {}
+abstract class BindWithMixinState<T extends StatefulWidget>
+    extends _BindWithMixinState<T> with BindWithMixin {}

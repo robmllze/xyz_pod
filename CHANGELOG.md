@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.45.2]
+
+- Released @ 2024-07-28 07:25:51.308863Z
+- fix: Fix return type of bind method in BindWithMixin
+
 ## [0.45.1]
 
 - Released @ 2024-07-28 07:21:19.009026Z
