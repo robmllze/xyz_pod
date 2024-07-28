@@ -1,17 +1,9 @@
 # Changelog
 
-## [0.49.0]
-
-- Released @ 2024-07-28 11:09:51.943452Z
-- chore: Add Pod.of and Pod.of1 to help mapping ValueNotifiers and ChangeNotifiers to Pods
-- Update
-
 ## [0.48.0]
 
 - Released @ 2024-07-28 11:02:30.211524Z
-- refactor: Rename bind to bindParent and _bind to bindChild for better understanding
-- =======
-- >>>>>>> f0f0006 (Update)
+- refactor: Rename bind to bindParent and \_bind to bindChild for better understanding
 
 ## [0.47.0]
 
