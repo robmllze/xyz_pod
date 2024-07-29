@@ -384,8 +384,9 @@ ChildPod<dynamic, T> reduce7Pods<T, A, B, C, D, E, F, G>(
   Pods7<A, B, C, D, E, F, G> instances,
   T Function(Pods7<A, B, C, D, E, F, G> instances) reducer,
   (A?, B?, C?, D?, E?, F?, G?) Function(
-          Tuple7<A, B, C, D, E, F, G>, T childValue,)?
-      updateParents,
+    Tuple7<A, B, C, D, E, F, G>,
+    T childValue,
+  )? updateParents,
 ) {
   return ChildPod<dynamic, T>(
     parents: instances.pods.nonNulls.toList(),

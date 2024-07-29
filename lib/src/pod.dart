@@ -216,8 +216,9 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     Pods5<A, B, C, D, E> instances,
     T Function(Pods5<A, B, C, D, E> instances) reducer,
     (A?, B?, C?, D?, E?) Function(
-            Tuple5<A, B, C, D, E> parentValues, T childValue,)?
-        updateParents,
+      Tuple5<A, B, C, D, E> parentValues,
+      T childValue,
+    )? updateParents,
   ) {
     return reduce5Pods(
       instances,
@@ -233,8 +234,9 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     Pods6<A, B, C, D, E, F> instances,
     T Function(Pods6<A, B, C, D, E, F> instances) reducer,
     (A?, B?, C?, D?, E?, F?) Function(
-            Tuple6<A, B, C, D, E, F> parentValues, T childValue,)?
-        updateParents,
+      Tuple6<A, B, C, D, E, F> parentValues,
+      T childValue,
+    )? updateParents,
   ) {
     return reduce6Pods(
       instances,
@@ -250,8 +252,9 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     Pods7<A, B, C, D, E, F, G> instances,
     T Function(Pods7<A, B, C, D, E, F, G> instances) reducer,
     (A?, B?, C?, D?, E?, F?, G?) Function(
-            Tuple7<A, B, C, D, E, F, G> parentValues, T childValue,)?
-        updateParents,
+      Tuple7<A, B, C, D, E, F, G> parentValues,
+      T childValue,
+    )? updateParents,
   ) {
     return reduce7Pods(
       instances,
