@@ -28,6 +28,7 @@ dependencies:
     sdk: flutter
 
   analyzer: ^6.4.1
+  tuple: ^2.0.2
   #custom_lint_builder: ^0.6.4
 
 ## -----------------------------------------------------------------------------

@@ -10,6 +10,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'package:tuple/tuple.dart';
+
 import '/_common.dart';
 
 part '_child_pod.dart';
@@ -149,9 +151,9 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
   /// [reducer]. Optionally provide [updateParents] to define how parent Pods
   /// should be updated when this Pod changes.
   static ChildPod<A, B> fromMany<A, B>(
-    Iterable<Pod<A>> instances,
+    List<Pod<A>> instances,
     B Function(ManyPods<A> instances) reducer,
-    Iterable<A> Function(B childValue)? updateParents,
+    List<A> Function(List<A> parentValues, B childValue)? updateParents,
   ) {
     return reduceManyPods(
       instances,
@@ -160,13 +162,13 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     );
   }
 
-  /// Reduces a tuple 2 [Pod] - [instances] to a single [ChildPod] instance via
+  /// Reduces a tuple of 2 [Pod] * [instances]to a single [ChildPod] instance via
   /// [reducer]. Optionally provide [updateParents] to define how parent Pods
   /// should be updated when this Pod changes.
   static ChildPod<dynamic, T> from2<T, A, B>(
     Pods2<A, B> instances,
     T Function(Pods2<A, B> instances) reducer,
-    (A?, B?) Function(T childValue)? updateParents,
+    (A?, B?) Function(Tuple2<A, B> parentValues, T childValue)? updateParents,
   ) {
     return reduce2Pods(
       instances,
@@ -175,13 +177,13 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     );
   }
 
-  /// Reduces a tuple 3 [Pod] - [instances] to a single [ChildPod] instance via
+  /// Reduces a tuple of 3 [Pod] * [instances]to a single [ChildPod] instance via
   /// [reducer]. Optionally provide [updateParents] to define how parent Pods
   /// should be updated when this Pod changes.
   static ChildPod<dynamic, T> from3<T, A, B, C>(
     Pods3<A, B, C> instances,
     T Function(Pods3<A, B, C> instances) reducer,
-    (A?, B?, C?) Function(T childValue)? updateParents,
+    (A?, B?, C?) Function(Tuple3<A, B, C> parentValues, T childValue)? updateParents,
   ) {
     return reduce3Pods(
       instances,
@@ -190,13 +192,13 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     );
   }
 
-  /// Reduces a tuple 4 [Pod] - [instances] to a single [ChildPod] instance via
+  /// Reduces a tuple of 4 [Pod] * [instances]to a single [ChildPod] instance via
   /// [reducer]. Optionally provide [updateParents] to define how parent Pods
   /// should be updated when this Pod changes.
   static ChildPod<dynamic, T> from4<T, A, B, C, D>(
     Pods4<A, B, C, D> instances,
     T Function(Pods4<A, B, C, D> instances) reducer,
-    (A?, B?, C?, D?) Function(T childValue)? updateParents,
+    (A?, B?, C?, D?) Function(Tuple4<A, B, C, D> parentValues, T childValue)? updateParents,
   ) {
     return reduce4Pods(
       instances,
@@ -205,13 +207,13 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     );
   }
 
-  /// Reduces a tuple 5 [Pod] - [instances] to a single [ChildPod] instance via
+  /// Reduces a tuple of 5 [Pod] * [instances]to a single [ChildPod] instance via
   /// [reducer]. Optionally provide [updateParents] to define how parent Pods
   /// should be updated when this Pod changes.
   static ChildPod<dynamic, T> from5<T, A, B, C, D, E>(
     Pods5<A, B, C, D, E> instances,
     T Function(Pods5<A, B, C, D, E> instances) reducer,
-    (A?, B?, C?, D?, E?) Function(T childValue)? updateParents,
+    (A?, B?, C?, D?, E?) Function(Tuple5<A, B, C, D, E> parentValues, T childValue)? updateParents,
   ) {
     return reduce5Pods(
       instances,
@@ -220,15 +222,32 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
     );
   }
 
-  /// Reduces a tuple 6 [Pod] - [instances] to a single [ChildPod] instance via
+  /// Reduces a tuple of 7 [Pod] * [instances]to a single [ChildPod] instance via
   /// [reducer]. Optionally provide [updateParents] to define how parent Pods
   /// should be updated when this Pod changes.
   static ChildPod<dynamic, T> from6<T, A, B, C, D, E, F>(
     Pods6<A, B, C, D, E, F> instances,
     T Function(Pods6<A, B, C, D, E, F> instances) reducer,
-    (A?, B?, C?, D?, E?, F?) Function(T childValue)? updateParents,
+    (A?, B?, C?, D?, E?, F?) Function(Tuple6<A, B, C, D, E, F> parentValues, T childValue)?
+        updateParents,
   ) {
     return reduce6Pods(
+      instances,
+      reducer,
+      updateParents,
+    );
+  }
+
+  /// Reduces a tuple of 7 [Pod] * [instances]to a single [ChildPod] instance via
+  /// [reducer]. Optionally provide [updateParents] to define how parent Pods
+  /// should be updated when this Pod changes.
+  static ChildPod<dynamic, T> from7<T, A, B, C, D, E, F, G>(
+    Pods7<A, B, C, D, E, F, G> instances,
+    T Function(Pods7<A, B, C, D, E, F, G> instances) reducer,
+    (A?, B?, C?, D?, E?, F?, G?) Function(Tuple7<A, B, C, D, E, F, G> parentValues, T childValue)?
+        updateParents,
+  ) {
+    return reduce7Pods(
       instances,
       reducer,
       updateParents,
@@ -466,9 +485,9 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
   /// provide [updateParents] to define how parent Pods should be updated when
   /// this Pod changes.
   ChildPod<T, B> map<B>(
-    B Function(T value) reducer,
-    List<T> Function(B)? updateParents,
-  ) {
+    B Function(T value) reducer, [
+    List<T> Function(List parentValues, B childValue)? updateParents,
+  ]) {
     return ChildPod<T, B>(
       parents: [this],
       reducer: (e) => reducer(e.first),
@@ -480,9 +499,9 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
   /// provide [updateParents] to define how parent Pods should be updated when
   /// this Pod changes.
   ChildPod<T, B> mapToTemp<B>(
-    B Function(T value) reducer,
-    List<T> Function(B)? updateParents,
-  ) {
+    B Function(T value) reducer, [
+    List<T> Function(List parentValues, B childValue)? updateParents,
+  ]) {
     return ChildPod<T, B>(
       parents: [this],
       reducer: (e) => reducer(e.first),
@@ -559,8 +578,7 @@ class Pod<T> extends _DisposablePodListenable<T> with BindWithMixin {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class _DisposablePodListenable<T> extends PodListenable<T>
-    implements Disposable {
+abstract class _DisposablePodListenable<T> extends PodListenable<T> implements Disposable {
   _DisposablePodListenable(super.value);
 }
 

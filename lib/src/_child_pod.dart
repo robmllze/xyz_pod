@@ -19,9 +19,9 @@ class ChildPod<A, B> extends Pod<B> {
   //
   //
 
-  final Iterable<Pod<A>> parents;
-  final B Function(Iterable<A> parentValues) reducer;
-  final Iterable<A> Function(B childValue)? updateParents;
+  final List<Pod<A>> parents;
+  final B Function(List<A> parentValues) reducer;
+  final List<A> Function(List<A> parentValues, B childValue)? updateParents;
 
   //
   //
@@ -47,9 +47,9 @@ class ChildPod<A, B> extends Pod<B> {
   //
 
   factory ChildPod.temp({
-    required Iterable<Pod<A>> parents,
-    required B Function(Iterable<A> parentValues) reducer,
-    Iterable<A> Function(B childValue)? updateParents,
+    required List<Pod<A>> parents,
+    required B Function(List<A> parentValues) reducer,
+    List<A> Function(List<A> parentValues, B childValue)? updateParents,
   }) {
     return ChildPod(
       parents: parents,
@@ -77,9 +77,10 @@ class ChildPod<A, B> extends Pod<B> {
   void notifyListeners() {
     super.notifyListeners();
     if (this.updateParents != null) {
-      final parentValues = updateParents!(this.value);
+      final oldParentValues = parents.map((e) => e.value).toList();
+      final newParentValues = updateParents!(oldParentValues, this.value);
       for (var n = 0; n < parents.length; n++) {
-        parents.elementAt(n).set(parentValues.elementAt(n));
+        parents.elementAt(n).set(newParentValues.elementAt(n));
       }
     }
   }
