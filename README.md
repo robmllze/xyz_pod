@@ -81,6 +81,7 @@ This is an open-source project, and contributions are welcome from everyone, reg
 - [ ] Improve integration with ValueNotifier and ChangeNotifier.
 - [ ] Write Flutter tests for each feature.
 - [ ] Add comments where absent.
+- [ ] Consider changing Pod to extend ChangeNotifer and implementing ValueListenable directly instead of ValueNotifier.
 - [ ] Improve comments.
 - [ ] Improve file structure.
 - [ ] Write a manual.
