@@ -2,8 +2,9 @@
 
 ## [0.49.0]
 
-- Released @ 2024-07-28 11:33:56.497878Z
+- Released @ 2024-07-29 06:10:25.403267Z
 - Update
+- refactor: Improve Pod reducers to use standard Dart Tuples
 
 ## [0.48.0]
 

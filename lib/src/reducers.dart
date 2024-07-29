@@ -20,7 +20,8 @@ extension ReduceManyPodsOnPodIterableExtension on List<Pod> {
   /// Reduces a set of [Pod] instances to a single [ChildPod] instance.
   ChildPod<dynamic, T> reduceManyPods<T>(
     T Function(ManyPods values) reducer,
-    List<dynamic> Function(List<dynamic> parentValues, T childValue)? updateParents,
+    List<dynamic> Function(List<dynamic> parentValues, T childValue)?
+        updateParents,
   ) {
     return _reduceToSinglePod(
       this,
@@ -143,7 +144,8 @@ final class Pods2<A, B> extends Tuple2<A?, B?> implements ManyPods {
 ChildPod<dynamic, T> reduce3Pods<T, A, B, C>(
   Pods3<A, B, C> instances,
   T Function(Pods3<A, B, C> values) reducer,
-  (A?, B?, C?) Function(Tuple3<A, B, C> parentValues, T childValue)? updateParents,
+  (A?, B?, C?) Function(Tuple3<A, B, C> parentValues, T childValue)?
+      updateParents,
 ) {
   return ChildPod<dynamic, T>(
     parents: instances.pods.nonNulls.toList(),
@@ -195,7 +197,8 @@ final class Pods3<A, B, C> extends Tuple3<A?, B?, C?> implements ManyPods {
 ChildPod<dynamic, T> reduce4Pods<T, A, B, C, D>(
   Pods4<A, B, C, D> instances,
   T Function(Pods4<A, B, C, D> values) reducer,
-  (A?, B?, C?, D?) Function(Tuple4<A, B, C, D> parentValues, T childValue)? updateParents,
+  (A?, B?, C?, D?) Function(Tuple4<A, B, C, D> parentValues, T childValue)?
+      updateParents,
 ) {
   return ChildPod<dynamic, T>(
     parents: instances.pods.nonNulls.toList(),
@@ -213,7 +216,8 @@ ChildPod<dynamic, T> reduce4Pods<T, A, B, C, D>(
 }
 
 /// A tuple of 4 [Pod] instances.
-final class Pods4<A, B, C, D> extends Tuple4<A?, B?, C?, D?> implements ManyPods {
+final class Pods4<A, B, C, D> extends Tuple4<A?, B?, C?, D?>
+    implements ManyPods {
   final Pod<A>? pA;
   final Pod<B>? pB;
   final Pod<C>? pC;
@@ -251,7 +255,8 @@ final class Pods4<A, B, C, D> extends Tuple4<A?, B?, C?, D?> implements ManyPods
 ChildPod<dynamic, T> reduce5Pods<T, A, B, C, D, E>(
   Pods5<A, B, C, D, E> instances,
   T Function(Pods5<A, B, C, D, E> values) reducer,
-  (A?, B?, C?, D?, E?) Function(Tuple5<A, B, C, D, E>, T childValue)? updateParents,
+  (A?, B?, C?, D?, E?) Function(Tuple5<A, B, C, D, E>, T childValue)?
+      updateParents,
 ) {
   return ChildPod<dynamic, T>(
     parents: instances.pods.nonNulls.toList(),
@@ -269,7 +274,8 @@ ChildPod<dynamic, T> reduce5Pods<T, A, B, C, D, E>(
 }
 
 /// A tuple of 5 [Pod] instances.
-final class Pods5<A, B, C, D, E> extends Tuple5<A?, B?, C?, D?, E?> implements ManyPods {
+final class Pods5<A, B, C, D, E> extends Tuple5<A?, B?, C?, D?, E?>
+    implements ManyPods {
   final Pod<A>? pA;
   final Pod<B>? pB;
   final Pod<C>? pC;
@@ -311,7 +317,8 @@ final class Pods5<A, B, C, D, E> extends Tuple5<A?, B?, C?, D?, E?> implements M
 ChildPod<dynamic, T> reduce6Pods<T, A, B, C, D, E, F>(
   Pods6<A, B, C, D, E, F> instances,
   T Function(Pods6<A, B, C, D, E, F> instances) reducer,
-  (A?, B?, C?, D?, E?, F?) Function(Tuple6<A, B, C, D, E, F>, T childValue)? updateParents,
+  (A?, B?, C?, D?, E?, F?) Function(Tuple6<A, B, C, D, E, F>, T childValue)?
+      updateParents,
 ) {
   return ChildPod<dynamic, T>(
     parents: instances.pods.nonNulls.toList(),
@@ -329,7 +336,8 @@ ChildPod<dynamic, T> reduce6Pods<T, A, B, C, D, E, F>(
 }
 
 /// A tuple of 6 [Pod] instances.
-final class Pods6<A, B, C, D, E, F> extends Tuple6<A?, B?, C?, D?, E?, F?> implements ManyPods {
+final class Pods6<A, B, C, D, E, F> extends Tuple6<A?, B?, C?, D?, E?, F?>
+    implements ManyPods {
   final Pod<A>? pA;
   final Pod<B>? pB;
   final Pod<C>? pC;
@@ -375,7 +383,9 @@ final class Pods6<A, B, C, D, E, F> extends Tuple6<A?, B?, C?, D?, E?, F?> imple
 ChildPod<dynamic, T> reduce7Pods<T, A, B, C, D, E, F, G>(
   Pods7<A, B, C, D, E, F, G> instances,
   T Function(Pods7<A, B, C, D, E, F, G> instances) reducer,
-  (A?, B?, C?, D?, E?, F?, G?) Function(Tuple7<A, B, C, D, E, F, G>, T childValue)? updateParents,
+  (A?, B?, C?, D?, E?, F?, G?) Function(
+          Tuple7<A, B, C, D, E, F, G>, T childValue,)?
+      updateParents,
 ) {
   return ChildPod<dynamic, T>(
     parents: instances.pods.nonNulls.toList(),
@@ -386,15 +396,23 @@ ChildPod<dynamic, T> reduce7Pods<T, A, B, C, D, E, F, G>(
               Tuple7.fromList(oldParentValues),
               childValue,
             );
-            return [temp.$1, temp.$2, temp.$3, temp.$4, temp.$5, temp.$6, temp.$7];
+            return [
+              temp.$1,
+              temp.$2,
+              temp.$3,
+              temp.$4,
+              temp.$5,
+              temp.$6,
+              temp.$7,
+            ];
           }
         : null,
   );
 }
 
 /// A tuple of 7 [Pod] instances.
-final class Pods7<A, B, C, D, E, F, G> extends Tuple7<A?, B?, C?, D?, E?, F?, G?>
-    implements ManyPods {
+final class Pods7<A, B, C, D, E, F, G>
+    extends Tuple7<A?, B?, C?, D?, E?, F?, G?> implements ManyPods {
   final Pod<A>? pA;
   final Pod<B>? pB;
   final Pod<C>? pC;
