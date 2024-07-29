@@ -64,19 +64,73 @@ extension BindParentOnChangeNotifierExtension<T extends ChangeNotifier> on T {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract class _StatefulWidgetWithDisposable<T extends StatefulWidget>
-    extends State<T> implements Disposable {}
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+abstract class _StatefulWidgetWithDisposable<T extends StatefulWidget> extends State<T>
+    implements Disposable {}
 
 /// Use `BindWithMixinState<T>` instead of `State<T>` to incorporate
 /// `BindWithMixin`.
 ///
 /// Example:
 /// ```dart
-/// class _MyWidgetState extends BindWithMixinState<MyWidget> {
-///   late final pStatus = Pod<String>('init', bindWith: this);
+/// class ExampleState extends BindWithMixinState<ExampleWidget> {
+///   late final pStatus = Pod<String>('init').bindParent(this);
 /// }
 /// ```
-abstract class BindWithMixinState<T extends StatefulWidget>
-    extends _StatefulWidgetWithDisposable<T> with BindWithMixin {}
+abstract class BindWithMixinState<T extends StatefulWidget> extends _StatefulWidgetWithDisposable<T>
+    with BindWithMixin {}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+abstract class _ValueNotifierWithDisposable<T> extends ValueNotifier<T> implements Disposable {
+  _ValueNotifierWithDisposable(super.value);
+}
+
+/// Use `BindWithMixinValueNotifier<T>` instead of ValueNotifier<T> to incorporate
+/// `BindWithMixin`.
+///
+/// Example:
+/// ```dart
+/// class ExampleValueNotifier<T> extends BindWithMixinValueNotifier<T>> {
+///   late final pStatus = Pod<String>('init').bindParent(this);;
+/// }
+/// ```
+abstract class BindWithMixinValueNotifier<T> extends _ValueNotifierWithDisposable<T>
+    with BindWithMixin {
+  BindWithMixinValueNotifier(super.value);
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+abstract class _ChangeNotifierWithDisposable extends ChangeNotifier implements Disposable {}
+
+/// Use `BindWithMixinChangeNotifier` instead of ChangeNotifier to incorporate
+/// `BindWithMixin`.
+///
+/// Example:
+/// ```dart
+/// class MyChangeNotifier extends BindWithMixinChangeNotifier> {
+///   late final pStatus = Pod<String>('init').bindParent(this);;
+/// }
+/// ```
+abstract class BindWithMixinChangeNotifier extends _ChangeNotifierWithDisposable
+    with BindWithMixin {}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+abstract class _PodListenableWithDisposable<T> extends PodListenable<T> implements Disposable {
+  _PodListenableWithDisposable(super.value);
+}
+
+/// Use `BindWithMixinPodListenable<T>` instead of PodListenable<T> to incorporate
+/// `BindWithMixin`.
+///
+/// Example:
+/// ```dart
+/// class ExamplePodListenable<T> extends BindWithMixinPodListenable<T>> {
+///   late final pStatus = Pod<String>('init').bindParent(this);;
+/// }
+/// ```
+abstract class BindWithMixinPodListenable<T> extends _PodListenableWithDisposable<T>
+    with BindWithMixin {
+  BindWithMixinPodListenable(super.value);
+}
