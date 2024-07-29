@@ -78,6 +78,7 @@ This is an open-source project, and contributions are welcome from everyone, reg
 
 - [ ] Set up automatic publishing with GitHub.
 - [ ] Write more examples for developers.
+- [ ] Improve integration with ValueNotifier and ChangeNotifier.
 - [ ] Write Flutter tests for each feature.
 - [ ] Add comments where absent.
 - [ ] Improve comments.
